@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/Dialog"
 import { Button } from "@/components/ui/Button"
 import { entriesToCSV, csvToEntries, validateCSV } from "@/utils/CsvUtils"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 type Settings = {
   theme: string
@@ -46,7 +47,7 @@ export default function SettingsPage() {
   const { toast } = useToast()
   const { setTheme } = useTheme()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [settings, setSettings] = useState<Settings>({
+  const [settings, setSettings] = useLocalStorage<Settings>("appSettings", {
     theme: "system",
     highContrastMode: false,
     fontSize: 16,
@@ -59,30 +60,23 @@ export default function SettingsPage() {
   const [importError, setImportError] = useState<string | null>(null)
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavigation, setPendingNavigation] = useState<string | null>(null)
+  const [trackingEntries, setTrackingEntries] = useLocalStorage<any[]>("trackingEntries", [])
 
   useEffect(() => {
-    // Load settings from localStorage
-    const savedSettings = localStorage.getItem("appSettings")
-    if (savedSettings) {
-      const parsedSettings = JSON.parse(savedSettings)
-      setSettings(parsedSettings)
-      setOriginalSettings(parsedSettings)
-
-      // Apply theme and high contrast settings
-      if (parsedSettings.theme) {
-        setTheme(parsedSettings.theme)
-      }
-
-      if (parsedSettings.highContrastMode) {
-        document.documentElement.classList.add("high-contrast")
-      } else {
-        document.documentElement.classList.remove("high-contrast")
-      }
-
-      // Apply font size
-      document.documentElement.style.fontSize = `${parsedSettings.fontSize / 16}rem`
+    // Load settings from localStorage (now from useLocalStorage)
+    setOriginalSettings(settings)
+    // Apply theme and high contrast settings
+    if (settings.theme) {
+      setTheme(settings.theme)
     }
-  }, [setTheme])
+    if (settings.highContrastMode) {
+      document.documentElement.classList.add("high-contrast")
+    } else {
+      document.documentElement.classList.remove("high-contrast")
+    }
+    // Apply font size
+    document.documentElement.style.fontSize = `${settings.fontSize / 16}rem`
+  }, [settings, setTheme])
 
   // Check if settings have been modified
   const hasUnsavedChanges = () => {
@@ -125,25 +119,15 @@ export default function SettingsPage() {
   }
 
   const saveSettings = () => {
-    // Apply theme and high contrast settings
     setTheme(settings.theme)
-
     if (settings.highContrastMode) {
       document.documentElement.classList.add("high-contrast")
     } else {
       document.documentElement.classList.remove("high-contrast")
     }
-
-    // Apply font size
     document.documentElement.style.fontSize = `${settings.fontSize / 16}rem`
-
-    // Save to localStorage
-    localStorage.setItem("appSettings", JSON.stringify(settings))
-    localStorage.setItem("highContrast", String(settings.highContrastMode))
-
-    // Update original settings to match current settings
+    setSettings(settings)
     setOriginalSettings({ ...settings })
-
     toast({
       title: "Settings saved",
       description: "Your preferences have been updated.",
@@ -151,40 +135,28 @@ export default function SettingsPage() {
   }
 
   const exportData = () => {
-    // Get tracking entries
-    const trackingEntries = JSON.parse(localStorage.getItem("trackingEntries") || "[]")
-
     if (settings.exportFormat === "json") {
-      // JSON export (existing code)
       const exportData = {
         trackingEntries,
         exportDate: new Date().toISOString(),
         settings,
       }
-
-      // Create download
       const dataStr = JSON.stringify(exportData, null, 2)
       const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`
-
       const exportFileDefaultName = `energy-tracker-export-${new Date().toISOString().slice(0, 10)}.json`
-
       const linkElement = document.createElement("a")
       linkElement.setAttribute("href", dataUri)
       linkElement.setAttribute("download", exportFileDefaultName)
       linkElement.click()
     } else if (settings.exportFormat === "csv") {
-      // CSV export
       const csvContent = entriesToCSV(trackingEntries)
       const dataUri = `data:text/csv;charset=utf-8,${encodeURIComponent(csvContent)}`
-
       const exportFileDefaultName = `energy-tracker-export-${new Date().toISOString().slice(0, 10)}.csv`
-
       const linkElement = document.createElement("a")
       linkElement.setAttribute("href", dataUri)
       linkElement.setAttribute("download", exportFileDefaultName)
       linkElement.click()
     }
-
     toast({
       title: "Data exported",
       description: `Your data has been exported successfully as ${settings.exportFormat.toUpperCase()}.`,
@@ -201,152 +173,65 @@ export default function SettingsPage() {
     setImportError(null)
     const file = event.target.files?.[0]
     if (!file) return
-
     const reader = new FileReader()
     reader.onload = (e) => {
       try {
-        // Check file extension to determine format
         const isCSV = file.name.toLowerCase().endsWith(".csv")
-
         if (isCSV) {
-          // Handle CSV import
           const csvContent = e.target?.result as string
-
-          // Validate CSV format
           const validation = validateCSV(csvContent)
-          if (!validation.valid) {
-            throw new Error(validation.message || "Invalid CSV format")
-          }
-
-          // Parse CSV to entries
+          if (!validation.valid) throw new Error(validation.message || "Invalid CSV format")
           const importedEntries = csvToEntries(csvContent)
-
-          if (importedEntries.length === 0) {
-            throw new Error("No valid entries found in the CSV file")
-          }
-
-          // Ask user if they want to replace or merge data
-          const existingEntries = JSON.parse(localStorage.getItem("trackingEntries") || "[]")
-
-          if (existingEntries.length > 0) {
-            if (
-              confirm(
-                "Do you want to replace your existing data? Click 'OK' to replace or 'Cancel' to merge with existing data.",
-              )
-            ) {
-              // Replace data
-              localStorage.setItem("trackingEntries", JSON.stringify(importedEntries))
+          if (importedEntries.length === 0) throw new Error("No valid entries found in the CSV file")
+          if (trackingEntries.length > 0) {
+            if (confirm("Do you want to replace your existing data? Click 'OK' to replace or 'Cancel' to merge with existing data.")) {
+              setTrackingEntries(importedEntries)
             } else {
-              // Merge data - create a map of existing entries by timestamp to avoid duplicates
               const entriesMap = new Map()
-              existingEntries.forEach((entry: any) => {
-                entriesMap.set(entry.timestamp, entry)
-              })
-
-              // Add new entries, overwriting if same timestamp
-              importedEntries.forEach((entry: any) => {
-                entriesMap.set(entry.timestamp, entry)
-              })
-
-              // Convert map back to array
+              trackingEntries.forEach((entry: any) => { entriesMap.set(entry.timestamp, entry) })
+              importedEntries.forEach((entry: any) => { entriesMap.set(entry.timestamp, entry) })
               const mergedEntries = Array.from(entriesMap.values())
-              localStorage.setItem("trackingEntries", JSON.stringify(mergedEntries))
+              setTrackingEntries(mergedEntries)
             }
           } else {
-            // No existing data, just import
-            localStorage.setItem("trackingEntries", JSON.stringify(importedEntries))
+            setTrackingEntries(importedEntries)
           }
-
-          toast({
-            title: "Data imported",
-            description: `Successfully imported ${importedEntries.length} entries from CSV.`,
-          })
+          toast({ title: "Data imported", description: `Successfully imported ${importedEntries.length} entries from CSV.` })
+        }
+        const jsonData = JSON.parse(e.target?.result as string) as ImportData
+        if (!jsonData.trackingEntries || !Array.isArray(jsonData.trackingEntries)) throw new Error("Invalid data format: Missing or invalid tracking entries")
+        for (const entry of jsonData.trackingEntries) {
+          if (typeof entry.timestamp !== "string" || typeof entry.energyLevel !== "number" || typeof entry.stimulationLevel !== "number" || typeof entry.stimulationType !== "string") {
+            throw new Error("Invalid entry format: Missing required fields")
+          }
+        }
+        if (trackingEntries.length > 0) {
+          if (confirm("Do you want to replace your existing data? Click 'OK' to replace or 'Cancel' to merge with existing data.")) {
+            setTrackingEntries(jsonData.trackingEntries)
+          } else {
+            const entriesMap = new Map()
+            trackingEntries.forEach((entry: any) => { entriesMap.set(entry.timestamp, entry) })
+            jsonData.trackingEntries.forEach((entry: any) => { entriesMap.set(entry.timestamp, entry) })
+            const mergedEntries = Array.from(entriesMap.values())
+            setTrackingEntries(mergedEntries)
+          }
         } else {
-          // Handle JSON import (existing code)
-          const jsonData = JSON.parse(e.target?.result as string) as ImportData
-
-          // Validate the data structure
-          if (!jsonData.trackingEntries || !Array.isArray(jsonData.trackingEntries)) {
-            throw new Error("Invalid data format: Missing or invalid tracking entries")
-          }
-
-          // Validate each entry has required fields
-          for (const entry of jsonData.trackingEntries) {
-            if (
-              typeof entry.timestamp !== "string" ||
-              typeof entry.energyLevel !== "number" ||
-              typeof entry.stimulationLevel !== "number" ||
-              typeof entry.stimulationType !== "string"
-            ) {
-              throw new Error("Invalid entry format: Missing required fields")
-            }
-          }
-
-          // Ask user if they want to replace or merge data
-          const existingEntries = JSON.parse(localStorage.getItem("trackingEntries") || "[]")
-
-          if (existingEntries.length > 0) {
-            if (
-              confirm(
-                "Do you want to replace your existing data? Click 'OK' to replace or 'Cancel' to merge with existing data.",
-              )
-            ) {
-              // Replace data
-              localStorage.setItem("trackingEntries", JSON.stringify(jsonData.trackingEntries))
-            } else {
-              // Merge data - create a map of existing entries by timestamp to avoid duplicates
-              const entriesMap = new Map()
-              existingEntries.forEach((entry: any) => {
-                entriesMap.set(entry.timestamp, entry)
-              })
-
-              // Add new entries, overwriting if same timestamp
-              jsonData.trackingEntries.forEach((entry: any) => {
-                entriesMap.set(entry.timestamp, entry)
-              })
-
-              // Convert map back to array
-              const mergedEntries = Array.from(entriesMap.values())
-              localStorage.setItem("trackingEntries", JSON.stringify(mergedEntries))
-            }
+          setTrackingEntries(jsonData.trackingEntries)
+        }
+        if (jsonData.settings) {
+          setSettings(jsonData.settings)
+          setOriginalSettings(jsonData.settings)
+          // Apply theme and high contrast settings
+          if (jsonData.settings.theme) setTheme(jsonData.settings.theme)
+          if (jsonData.settings.highContrastMode) {
+            document.documentElement.classList.add("high-contrast")
           } else {
-            // No existing data, just import
-            localStorage.setItem("trackingEntries", JSON.stringify(jsonData.trackingEntries))
+            document.documentElement.classList.remove("high-contrast")
           }
-
-          // Import settings if available
-          if (jsonData.settings) {
-            setSettings(jsonData.settings)
-            setOriginalSettings(jsonData.settings)
-            localStorage.setItem("appSettings", JSON.stringify(jsonData.settings))
-
-            // Apply theme and high contrast settings
-            if (jsonData.settings.theme) {
-              setTheme(jsonData.settings.theme)
-            }
-
-            if (jsonData.settings.highContrastMode) {
-              document.documentElement.classList.add("high-contrast")
-              localStorage.setItem("highContrast", "true")
-            } else {
-              document.documentElement.classList.remove("high-contrast")
-              localStorage.setItem("highContrast", "false")
-            }
-
-            // Apply font size
-            document.documentElement.style.fontSize = `${jsonData.settings.fontSize / 16}rem`
-          }
-
-          toast({
-            title: "Data imported",
-            description: `Successfully imported ${jsonData.trackingEntries.length} entries.`,
-          })
+          document.documentElement.style.fontSize = `${jsonData.settings.fontSize / 16}rem`
         }
-
-        // Reset file input
-        if (fileInputRef.current) {
-          fileInputRef.current.value = ""
-        }
+        toast({ title: "Data imported", description: `Successfully imported ${jsonData.trackingEntries.length} entries.` })
+        if (fileInputRef.current) fileInputRef.current.value = ""
       } catch (error) {
         console.error("Import error:", error)
         setImportError(error instanceof Error ? error.message : "Failed to import data")
@@ -357,8 +242,7 @@ export default function SettingsPage() {
 
   const clearAllData = () => {
     if (confirm("Are you sure you want to delete all your data? This action cannot be undone.")) {
-      localStorage.removeItem("trackingEntries")
-
+      setTrackingEntries([])
       toast({
         title: "Data cleared",
         description: "All your data has been deleted.",

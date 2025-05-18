@@ -12,6 +12,7 @@ import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fn
 import { useToast } from "@/hooks/useToast"
 import { Input } from "@/components/ui/Input"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 type TrackingEntry = {
   timestamp: string
@@ -25,20 +26,12 @@ type TrackingEntry = {
 
 export default function ArchivePage() {
   const { toast } = useToast()
-  const [entries, setEntries] = useState<TrackingEntry[]>([])
+  const [entries, setEntries] = useLocalStorage<TrackingEntry[]>("trackingEntries", [])
   const [timeRange, setTimeRange] = useState("all")
   const [sortBy, setSortBy] = useState("newest")
   const [viewMode, setViewMode] = useState("compact")
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredEntries, setFilteredEntries] = useState<TrackingEntry[]>([])
-
-  useEffect(() => {
-    // Load tracking entries from localStorage
-    const savedEntries = localStorage.getItem("trackingEntries")
-    if (savedEntries) {
-      setEntries(JSON.parse(savedEntries))
-    }
-  }, [])
 
   useEffect(() => {
     if (entries.length > 0) {
@@ -85,8 +78,6 @@ export default function ArchivePage() {
     if (confirm("Are you sure you want to delete this entry?")) {
       const updatedEntries = entries.filter((entry) => entry.timestamp !== timestamp)
       setEntries(updatedEntries)
-      localStorage.setItem("trackingEntries", JSON.stringify(updatedEntries))
-
       toast({
         title: "Entry deleted",
         description: "The tracking entry has been removed.",

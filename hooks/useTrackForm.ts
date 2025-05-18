@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useToast } from "@/hooks/useToast"
-import { TRIGGER_CATEGORIES, DEFAULT_TRIGGERS, TriggerTag } from "@/components/track/triggerConstants"
+import { TRIGGER_CATEGORIES, DEFAULT_TRIGGERS, TriggerTag } from "@/consts/triggerConstants"
+import { useLocalStorage } from "./useLocalStorage"
+import { trackingPageCopy } from "@/copy/track"
 
 export function useTrackForm(dateTimeValue: string) {
   const router = useRouter()
@@ -14,7 +16,7 @@ export function useTrackForm(dateTimeValue: string) {
   const [searchQuery, setSearchQuery] = useState("")
   const [triggerTags, setTriggerTags] = useState<string[]>([])
   const [suggestions, setSuggestions] = useState<TriggerTag[]>([])
-  const [previousTags, setPreviousTags] = useState<TriggerTag[]>([])
+  const [previousTags, setPreviousTags] = useLocalStorage<TriggerTag[]>("triggerTags", DEFAULT_TRIGGERS)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [activities, setActivities] = useState("")
@@ -26,49 +28,7 @@ export function useTrackForm(dateTimeValue: string) {
   const inputRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>
   const suggestionsRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const suggestionItemsRef = useRef<(HTMLLIElement | null)[]>([])
-
-  // Load previously used tags or initialize with defaults
-  useEffect(() => {
-    const savedTags = localStorage.getItem("triggerTags")
-    if (savedTags) {
-      try {
-        const parsed = JSON.parse(savedTags)
-        if (parsed.length > 0 && typeof parsed[0] === "string") {
-          const converted = parsed.map((tag: string) => {
-            const matchedDefault = DEFAULT_TRIGGERS.find((dt) => dt.text.toLowerCase() === tag.toLowerCase())
-            return {
-              text: tag,
-              category: matchedDefault?.category || "custom",
-            }
-          })
-          setPreviousTags(converted)
-          localStorage.setItem("triggerTags", JSON.stringify(converted))
-        } else {
-          setPreviousTags(parsed)
-        }
-      } catch (e) {
-        setPreviousTags(DEFAULT_TRIGGERS)
-        localStorage.setItem("triggerTags", JSON.stringify(DEFAULT_TRIGGERS))
-      }
-    } else {
-      setPreviousTags(DEFAULT_TRIGGERS)
-      localStorage.setItem("triggerTags", JSON.stringify(DEFAULT_TRIGGERS))
-    }
-    const savedSettings = localStorage.getItem("appSettings")
-    if (savedSettings) {
-      try {
-        const settings = JSON.parse(savedSettings)
-        if (settings.theme) {
-          setTheme(settings.theme)
-        }
-        if (settings.highContrastMode) {
-          document.documentElement.classList.add("high-contrast")
-        } else {
-          document.documentElement.classList.remove("high-contrast")
-        }
-      } catch (e) {}
-    }
-  }, [setTheme])
+  const [trackingEntries, setTrackingEntries] = useLocalStorage<any[]>("trackingEntries", [])
 
   useEffect(() => {
     if (
@@ -153,8 +113,7 @@ export function useTrackForm(dateTimeValue: string) {
       activities,
       notes,
     }
-    const existingEntries = JSON.parse(localStorage.getItem("trackingEntries") || "[]")
-    localStorage.setItem("trackingEntries", JSON.stringify([...existingEntries, entry]))
+    setTrackingEntries([...trackingEntries, entry])
     const newTagObjects = triggerTags.map((tag) => {
       const existingTag = previousTags.find((pt) => pt.text === tag)
       if (existingTag) {
@@ -172,11 +131,10 @@ export function useTrackForm(dateTimeValue: string) {
         uniqueTags.push(newTag)
       }
     })
-    localStorage.setItem("triggerTags", JSON.stringify(uniqueTags))
     setPreviousTags(uniqueTags)
     toast({
-      title: "Entry saved",
-      description: "Your tracking entry has been saved successfully.",
+      title: trackingPageCopy.dialogs.entrySaved.title,
+      description: trackingPageCopy.dialogs.entrySaved.description,
     })
     setFormModified(false)
     router.push("/")
@@ -263,10 +221,9 @@ export function useTrackForm(dateTimeValue: string) {
         const newTag = { text: tag, category: "custom" }
         const updatedTags = [...previousTags, newTag]
         setPreviousTags(updatedTags)
-        localStorage.setItem("triggerTags", JSON.stringify(updatedTags))
         toast({
-          title: "New tag created",
-          description: `"${tag}" has been added to your custom tags.`,
+          title: trackingPageCopy.dialogs.newTagCreated.title,
+          description: trackingPageCopy.dialogs.newTagCreated.description(tag),
           duration: 3000,
         })
       }

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button"
 import { Slider } from "@/components/ui/Slider"
 import { Minus, Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { energyDescriptions, stimulationDescriptions } from "@/copy/track"
+import { trackingPageCopy } from "@/copy/track"
 
 interface LevelSliderProps {
   value: number
@@ -41,8 +41,8 @@ export const LevelSlider: React.FC<LevelSliderProps> = ({
 }) => {
   const colorClass = type === "energy" ? getEnergyColor(value) : getStimulationColor(value)
   const description = type === "energy"
-    ? energyDescriptions[value] || energyDescriptions[5]
-    : stimulationDescriptions[value] || stimulationDescriptions[5]
+    ? trackingPageCopy.energy.descriptions[value] || trackingPageCopy.energy.descriptions[5]
+    : trackingPageCopy.stimulation.descriptions[value] || trackingPageCopy.stimulation.descriptions[5]
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">

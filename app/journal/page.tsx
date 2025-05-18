@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/Button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Textarea } from "@/components/ui/Textarea"
@@ -9,6 +9,7 @@ import { ChevronLeft, Save, Clock, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/useToast"
 import { format } from "date-fns"
 import Link from "next/link"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 type JournalEntry = {
   id: string
@@ -20,18 +21,10 @@ type JournalEntry = {
 
 export default function JournalPage() {
   const { toast } = useToast()
-  const [entries, setEntries] = useState<JournalEntry[]>([])
+  const [entries, setEntries] = useLocalStorage<JournalEntry[]>("journalEntries", [])
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [copingStrategies, setCopingStrategies] = useState("")
-
-  useEffect(() => {
-    // Load journal entries from localStorage
-    const savedEntries = localStorage.getItem("journalEntries")
-    if (savedEntries) {
-      setEntries(JSON.parse(savedEntries))
-    }
-  }, [])
 
   const saveEntry = () => {
     if (!title.trim()) {
@@ -53,7 +46,6 @@ export default function JournalPage() {
 
     const updatedEntries = [newEntry, ...entries]
     setEntries(updatedEntries)
-    localStorage.setItem("journalEntries", JSON.stringify(updatedEntries))
 
     // Reset form
     setTitle("")
@@ -69,7 +61,6 @@ export default function JournalPage() {
   const deleteEntry = (id: string) => {
     const updatedEntries = entries.filter((entry) => entry.id !== id)
     setEntries(updatedEntries)
-    localStorage.setItem("journalEntries", JSON.stringify(updatedEntries))
 
     toast({
       title: "Entry deleted",

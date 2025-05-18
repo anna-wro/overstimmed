@@ -1,5 +1,5 @@
 import React from "react"
-import { TriggerCategory } from "./triggerConstants"
+import { TriggerCategory } from "@/consts/triggerConstants"
 
 export function getCategoryIcon(categoryId: string, categories: TriggerCategory[]) {
   const category = categories.find((c) => c.id === categoryId)

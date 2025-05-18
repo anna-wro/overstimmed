@@ -5,65 +5,46 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/Button"
 import { Moon, Sun, Contrast } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/DropdownMenu"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const [highContrast, setHighContrast] = useState(false)
+  const [highContrast, setHighContrast] = useLocalStorage<boolean>("highContrast", false)
+  const [settings, setSettings] = useLocalStorage<any>("appSettings", {
+    theme: "system",
+    highContrastMode: false,
+    fontSize: 16,
+    reminders: false,
+    reminderFrequency: "hourly",
+    dataRetentionPeriod: "forever",
+    exportFormat: "json",
+  })
 
-  // Load high contrast setting from localStorage
   useEffect(() => {
     setMounted(true)
-    const savedHighContrast = localStorage.getItem("highContrast") === "true"
-    setHighContrast(savedHighContrast)
-
-    if (savedHighContrast) {
+    if (highContrast) {
       document.documentElement.classList.add("high-contrast")
     } else {
       document.documentElement.classList.remove("high-contrast")
     }
-
-    // Load theme settings from appSettings
-    const savedSettings = localStorage.getItem("appSettings")
-    if (savedSettings) {
-      try {
-        const settings = JSON.parse(savedSettings)
-        if (settings.theme) {
-          setTheme(settings.theme)
-        }
-        if (settings.highContrastMode !== undefined) {
-          setHighContrast(settings.highContrastMode)
-          localStorage.setItem("highContrast", String(settings.highContrastMode))
-          if (settings.highContrastMode) {
-            document.documentElement.classList.add("high-contrast")
-          } else {
-            document.documentElement.classList.remove("high-contrast")
-          }
-        }
-      } catch (e) {
-        console.error("Error parsing settings:", e)
+    if (settings.theme) {
+      setTheme(settings.theme)
+    }
+    if (settings.highContrastMode !== undefined) {
+      setHighContrast(settings.highContrastMode)
+      if (settings.highContrastMode) {
+        document.documentElement.classList.add("high-contrast")
+      } else {
+        document.documentElement.classList.remove("high-contrast")
       }
     }
-  }, [setTheme])
+  }, [setTheme, highContrast, settings])
 
-  // Toggle high contrast mode
   const toggleHighContrast = () => {
     const newValue = !highContrast
     setHighContrast(newValue)
-    localStorage.setItem("highContrast", String(newValue))
-
-    // Update settings
-    const savedSettings = localStorage.getItem("appSettings")
-    if (savedSettings) {
-      try {
-        const settings = JSON.parse(savedSettings)
-        settings.highContrastMode = newValue
-        localStorage.setItem("appSettings", JSON.stringify(settings))
-      } catch (e) {
-        console.error("Error updating settings:", e)
-      }
-    }
-
+    setSettings({ ...settings, highContrastMode: newValue })
     if (newValue) {
       document.documentElement.classList.add("high-contrast")
     } else {
@@ -71,33 +52,9 @@ export function ThemeToggle() {
     }
   }
 
-  // Update theme in settings
   const updateTheme = (newTheme: string) => {
     setTheme(newTheme)
-
-    // Update settings
-    const savedSettings = localStorage.getItem("appSettings")
-    if (savedSettings) {
-      try {
-        const settings = JSON.parse(savedSettings)
-        settings.theme = newTheme
-        localStorage.setItem("appSettings", JSON.stringify(settings))
-      } catch (e) {
-        console.error("Error updating settings:", e)
-      }
-    } else {
-      // Create new settings object
-      const settings = {
-        theme: newTheme,
-        highContrastMode: highContrast,
-        fontSize: 16,
-        reminders: false,
-        reminderFrequency: "hourly",
-        dataRetentionPeriod: "forever",
-        exportFormat: "json",
-      }
-      localStorage.setItem("appSettings", JSON.stringify(settings))
-    }
+    setSettings({ ...settings, theme: newTheme })
   }
 
   if (!mounted) {

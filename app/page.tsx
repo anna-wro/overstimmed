@@ -23,6 +23,7 @@ import {
   LineChart,
   Calendar,
   Sliders,
+  Loader2,
 } from "lucide-react"
 import { format, subDays } from "date-fns"
 import { ThemeToggle } from "@/components/ThemeToggle"
@@ -35,6 +36,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "@/components/ui/Chart"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 type TrackingEntry = {
   timestamp: string
@@ -48,7 +50,7 @@ type TrackingEntry = {
 
 export default function Home() {
   const [latestEntry, setLatestEntry] = useState<TrackingEntry | null>(null)
-  const [entries, setEntries] = useState<TrackingEntry[]>([])
+  const [entries, setEntries] = useLocalStorage<TrackingEntry[]>("trackingEntries", [])
   const [recentEntries, setRecentEntries] = useState<any[]>([])
   const [stats, setStats] = useState({
     totalEntries: 0,
@@ -59,56 +61,50 @@ export default function Home() {
     neutralCount: 0,
   })
   const { setTheme } = useTheme()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Load tracking entries from localStorage
-    const savedEntries = localStorage.getItem("trackingEntries")
-    if (savedEntries) {
-      const parsedEntries: TrackingEntry[] = JSON.parse(savedEntries)
-      setEntries(parsedEntries)
+    if (entries.length > 0) {
+      // Sort by timestamp (newest first) and get the latest entry
+      const sorted = [...entries].sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+      )
+      setLatestEntry(sorted[0])
 
-      if (parsedEntries.length > 0) {
-        // Sort by timestamp (newest first) and get the latest entry
-        const sorted = [...parsedEntries].sort(
-          (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-        )
-        setLatestEntry(sorted[0])
+      // Calculate statistics
+      const totalEntries = entries.length
+      const avgEnergy =
+        Math.round((entries.reduce((sum, entry) => sum + entry.energyLevel, 0) / totalEntries) * 10) / 10
+      const avgStimulation =
+        Math.round((entries.reduce((sum, entry) => sum + entry.stimulationLevel, 0) / totalEntries) * 10) / 10
 
-        // Calculate statistics
-        const totalEntries = parsedEntries.length
-        const avgEnergy =
-          Math.round((parsedEntries.reduce((sum, entry) => sum + entry.energyLevel, 0) / totalEntries) * 10) / 10
-        const avgStimulation =
-          Math.round((parsedEntries.reduce((sum, entry) => sum + entry.stimulationLevel, 0) / totalEntries) * 10) / 10
+      // Count by type
+      const positiveCount = entries.filter((entry) => entry.stimulationType === "positive").length
+      const negativeCount = entries.filter((entry) => entry.stimulationType === "negative").length
+      const neutralCount = entries.filter((entry) => entry.stimulationType === "neutral").length
 
-        // Count by type
-        const positiveCount = parsedEntries.filter((entry) => entry.stimulationType === "positive").length
-        const negativeCount = parsedEntries.filter((entry) => entry.stimulationType === "negative").length
-        const neutralCount = parsedEntries.filter((entry) => entry.stimulationType === "neutral").length
+      setStats({
+        totalEntries,
+        avgEnergy,
+        avgStimulation,
+        positiveCount,
+        negativeCount,
+        neutralCount,
+      })
 
-        setStats({
-          totalEntries,
-          avgEnergy,
-          avgStimulation,
-          positiveCount,
-          negativeCount,
-          neutralCount,
-        })
+      // Get recent entries for chart (last 7 days)
+      const sevenDaysAgo = subDays(new Date(), 7).getTime()
+      const recent = sorted
+        .filter((entry) => new Date(entry.timestamp).getTime() > sevenDaysAgo)
+        .slice(0, 7)
+        .reverse()
+        .map((entry) => ({
+          date: format(new Date(entry.timestamp), "MM/dd"),
+          energy: entry.energyLevel,
+          stimulation: entry.stimulationLevel,
+        }))
 
-        // Get recent entries for chart (last 7 days)
-        const sevenDaysAgo = subDays(new Date(), 7).getTime()
-        const recent = sorted
-          .filter((entry) => new Date(entry.timestamp).getTime() > sevenDaysAgo)
-          .slice(0, 7)
-          .reverse()
-          .map((entry) => ({
-            date: format(new Date(entry.timestamp), "MM/dd"),
-            energy: entry.energyLevel,
-            stimulation: entry.stimulationLevel,
-          }))
-
-        setRecentEntries(recent)
-      }
+      setRecentEntries(recent)
     }
 
     // Load theme settings
@@ -128,7 +124,8 @@ export default function Home() {
         console.error("Error parsing settings:", e)
       }
     }
-  }, [setTheme])
+    setLoading(false)
+  }, [entries, setTheme])
 
   const getEnergyColor = (level: number) => {
     if (level === 0) return "bg-gray-300 dark:bg-gray-500"
@@ -288,7 +285,26 @@ export default function Home() {
           </div>
         </div>
 
-        {latestEntry ? (
+        {loading ? (
+          <div className="flex justify-center items-center mb-20">
+            <Loader2 className="animate-spin h-8 w-8 text-muted-foreground" />
+          </div>
+        ) : !latestEntry ? (
+          <Card className="mb-10 border-dashed bg-sand-50/80 shadow-sm backdrop-blur-sm dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white bg-white dark:bg-lavender-900">
+            <CardContent className="flex flex-col items-center justify-center p-8 text-center">
+              <AlertCircle className="mb-2 h-10 w-10 text-muted-foreground" />
+              <h2 className="mb-1 text-xl font-medium">No entries yet</h2>
+              <p className="mb-4 text-muted-foreground">
+                Start tracking your energy and stimulation levels to see your data here
+              </p>
+              <Link href="/track">
+                <Button variant="outline" className="high-contrast:border-black dark:high-contrast:border-white">
+                  Create Your First Entry
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        ) : (
           <div className="mb-10">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-2xl font-bold">Latest Entry</h2>
@@ -304,7 +320,7 @@ export default function Home() {
                 <div className="relative overflow-hidden p-6">
                   <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-lavender-200/50 dark:bg-lavender-800/20 high-contrast:hidden"></div>
                   <div className="absolute -left-16 -bottom-16 h-32 w-32 rounded-full bg-sand-200/50 dark:bg-sand-800/20 high-contrast:hidden"></div>
-
+ 
                   {/* Supportive message */}
                   {latestEntry && (
                     <div className="mb-6 rounded-lg border border-lavender-200 bg-lavender-50/50 p-4 dark:border-lavender-800 dark:bg-lavender-900/30 high-contrast:border-primary high-contrast:bg-primary/5">
@@ -521,21 +537,6 @@ export default function Home() {
               </CardFooter>
             </Card>
           </div>
-        ) : (
-          <Card className="mb-10 border-dashed bg-sand-50/80 shadow-sm backdrop-blur-sm dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white bg-white dark:bg-lavender-900">
-            <CardContent className="flex flex-col items-center justify-center p-8 text-center">
-              <AlertCircle className="mb-2 h-10 w-10 text-muted-foreground" />
-              <h2 className="mb-1 text-xl font-medium">No entries yet</h2>
-              <p className="mb-4 text-muted-foreground">
-                Start tracking your energy and stimulation levels to see your data here
-              </p>
-              <Link href="/track">
-                <Button variant="outline" className="high-contrast:border-black dark:high-contrast:border-white">
-                  Create Your First Entry
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
         )}
 
         {/* Analytics Section */}

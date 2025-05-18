@@ -4,14 +4,14 @@ import { useTrackForm } from "@/hooks/useTrackForm"
 import { SiteHeader } from "@/components/SiteHeader"
 import { CustomDateTimePicker } from "@/components/track/CustomDateTimePicker"
 import { LevelSlider } from "@/components/track/LevelSlider"
-import { TriggerTagInput } from "@/components/track/TriggerTagInput"
+import { TagMultiSelectInput } from "@/components/tags/TagMultiSelectInput"
 import { UnsavedChangesDialog } from "@/components/track/UnsavedChangesDialog"
 import { ExperienceRating } from "@/components/track/ExperienceRating"
 import { Battery, Zap, Save } from "lucide-react"
 import { ActivityInput } from "@/components/track/ActivityInput"
 import { NotesInput } from "@/components/track/NotesInput"
 import { TrackFormCard } from "@/components/track/TrackFormCard"
-import { cardTitle } from "@/copy/track"
+import { trackingPageCopy } from "@/copy/track"
 import { SaveEntryButton } from "@/components/track/SaveEntryButton"
 import { useState } from "react"
 
@@ -44,7 +44,7 @@ export default function TrackPage() {
   
       <div className="container mx-auto max-w-3xl">
         <TrackFormCard
-          title={cardTitle}
+          title={trackingPageCopy.cardTitle}
           footer={
             <SaveEntryButton onClick={handleSave} disabled={!formModified} />
           }
@@ -56,7 +56,7 @@ export default function TrackPage() {
             min={0}
             max={10}
             icon={<Battery className="mr-2 h-5 w-5 text-lavender-500" />}
-            label="Energy Level"
+            label={trackingPageCopy.energy.label}
             type="energy"
           />
           <LevelSlider
@@ -65,11 +65,11 @@ export default function TrackPage() {
             min={0}
             max={10}
             icon={<Zap className="mr-2 h-5 w-5 text-sand-500" />}
-            label="Stimulation Level"
+            label={trackingPageCopy.stimulation.label}
             type="stimulation"
           />
           <ExperienceRating value={stimulationType} onChange={setStimulationType} />
-          <TriggerTagInput value={triggerTags} onChange={setTriggerTags} />
+          <TagMultiSelectInput value={triggerTags} onChange={setTriggerTags} />
           <ActivityInput value={activities} onChange={e => setActivities(e.target.value)} />
           <NotesInput value={notes} onChange={e => setNotes(e.target.value)} />
         </TrackFormCard>

@@ -14,27 +14,33 @@ import { Button } from "@/components/ui/Button"
 import { Label } from "@/components/ui/Label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Moon, Sun, Contrast, Monitor, Settings } from "lucide-react"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 export function FirstVisitModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTheme, setSelectedTheme] = useState<string>("system")
-  const [highContrast, setHighContrast] = useState<boolean>(false)
+  const [highContrast, setHighContrast] = useLocalStorage<boolean>("highContrast", false)
   const [fontSize, setFontSize] = useState<number>(16)
+  const [hasVisitedBefore, setHasVisitedBefore] = useLocalStorage<boolean>("hasVisitedBefore", false)
+  const [settings, setSettings] = useLocalStorage<any>("appSettings", {
+    theme: "system",
+    highContrastMode: false,
+    fontSize: 16,
+    reminders: false,
+    reminderFrequency: "hourly",
+    dataRetentionPeriod: "forever",
+    exportFormat: "json",
+  })
   const { setTheme } = useTheme()
 
   useEffect(() => {
-    // Check if this is the first visit
-    const hasVisited = localStorage.getItem("hasVisitedBefore")
-
-    if (!hasVisited) {
-      // Show the modal after a short delay to ensure theme provider is ready
+    if (!hasVisitedBefore) {
       const timer = setTimeout(() => {
         setIsOpen(true)
       }, 500)
-
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [hasVisitedBefore])
 
   // Apply theme changes immediately when selection changes
   const handleThemeChange = (value: string) => {
@@ -59,21 +65,14 @@ export function FirstVisitModal() {
   }
 
   const savePreferences = () => {
-    // Apply theme settings
     setTheme(selectedTheme)
-
-    // Apply high contrast setting
     if (highContrast) {
       document.documentElement.classList.add("high-contrast")
     } else {
       document.documentElement.classList.remove("high-contrast")
     }
-
-    // Apply font size
     document.documentElement.style.fontSize = `${fontSize / 16}rem`
-
-    // Save settings to localStorage
-    const settings = {
+    setSettings({
       theme: selectedTheme,
       highContrastMode: highContrast,
       fontSize: fontSize,
@@ -81,15 +80,8 @@ export function FirstVisitModal() {
       reminderFrequency: "hourly",
       dataRetentionPeriod: "forever",
       exportFormat: "json",
-    }
-
-    localStorage.setItem("appSettings", JSON.stringify(settings))
-    localStorage.setItem("highContrast", String(highContrast))
-
-    // Mark that the user has visited before
-    localStorage.setItem("hasVisitedBefore", "true")
-
-    // Close the modal
+    })
+    setHasVisitedBefore(true)
     setIsOpen(false)
   }
 
@@ -98,11 +90,8 @@ export function FirstVisitModal() {
       open={isOpen}
       onOpenChange={(open) => {
         if (!open) {
-          // Apply default settings and mark as visited when clicking outside
-          localStorage.setItem("hasVisitedBefore", "true")
-
-          // Save default settings
-          const settings = {
+          setHasVisitedBefore(true)
+          setSettings({
             theme: "system",
             highContrastMode: false,
             fontSize: 16,
@@ -110,9 +99,7 @@ export function FirstVisitModal() {
             reminderFrequency: "hourly",
             dataRetentionPeriod: "forever",
             exportFormat: "json",
-          }
-
-          localStorage.setItem("appSettings", JSON.stringify(settings))
+          })
           setIsOpen(false)
         }
       }}

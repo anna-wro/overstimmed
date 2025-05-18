@@ -2,7 +2,7 @@ import React from "react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Label } from "@/components/ui/Label"
 import { cn } from "@/lib/utils"
-import { experienceRatingCopy } from "@/copy/track"
+import { trackingPageCopy } from "@/copy/track"
 
 interface ExperienceRatingProps {
   value: string
@@ -13,7 +13,7 @@ export const ExperienceRating: React.FC<ExperienceRatingProps> = ({ value, onCha
   return (
     <div className="rounded-lg bg-sand-100/50 p-4 dark:bg-sand-900/50 high-contrast:bg-accent high-contrast:border high-contrast:border-black dark:high-contrast:border-white">
       <Label className="mb-3 block text-sm font-medium">
-        {experienceRatingCopy.label}
+        {trackingPageCopy.experienceRating.label}
       </Label>
       <RadioGroup
         value={value}
@@ -29,7 +29,7 @@ export const ExperienceRating: React.FC<ExperienceRatingProps> = ({ value, onCha
           )}
         >
           <RadioGroupItem value="positive" id="positive" className="sr-only" />
-          <span>{experienceRatingCopy.positive}</span>
+          <span>{trackingPageCopy.experienceRating.positive}</span>
         </Label>
         <Label
           htmlFor="neutral"
@@ -40,7 +40,7 @@ export const ExperienceRating: React.FC<ExperienceRatingProps> = ({ value, onCha
           )}
         >
           <RadioGroupItem value="neutral" id="neutral" className="sr-only" />
-          <span>{experienceRatingCopy.neutral}</span>
+          <span>{trackingPageCopy.experienceRating.neutral}</span>
         </Label>
         <Label
           htmlFor="negative"
@@ -51,7 +51,7 @@ export const ExperienceRating: React.FC<ExperienceRatingProps> = ({ value, onCha
           )}
         >
           <RadioGroupItem value="negative" id="negative" className="sr-only" />
-          <span>{experienceRatingCopy.negative}</span>
+          <span>{trackingPageCopy.experienceRating.negative}</span>
         </Label>
       </RadioGroup>
     </div>

@@ -1,21 +1,21 @@
 import React from "react"
 import { Label } from "@/components/ui/Label"
 import { Textarea } from "@/components/ui/Textarea"
-import { notesCopy } from "@/copy/track"
+import { trackingPageCopy } from "@/copy/track"
 
 interface NotesInputProps {
   value: string
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
-
+ 
 export const NotesInput: React.FC<NotesInputProps> = ({ value, onChange }) => (
   <div className="space-y-2">
     <Label htmlFor="notes" className="text-sm font-medium">
-      {notesCopy.label}
+      {trackingPageCopy.notes.label}
     </Label>
     <Textarea
       id="notes"
-      placeholder={notesCopy.placeholder}
+      placeholder={trackingPageCopy.notes.placeholder}
       value={value}
       onChange={onChange}
       rows={3}
