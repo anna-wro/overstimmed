@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
-import { Calendar } from "@/components/ui/calendar"
+import { Calendar } from "@/components/ui/Calendar"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Battery, Zap, AlertCircle } from "lucide-react"
