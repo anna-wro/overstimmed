@@ -5,7 +5,7 @@ import type React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ChevronLeft, LayoutDashboard, Activity, LineChart, CalendarDays, Sliders } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import { usePathname } from "next/navigation"
 
 interface SiteHeaderProps {

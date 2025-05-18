@@ -1,7 +1,7 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
+import { Badge } from "@/components/ui/Badge"
 import {
   BarChart,
   Bar,
@@ -14,7 +14,7 @@ import {
   PieChart,
   Pie,
   Cell,
-} from "@/components/ui/chart"
+} from "@/components/ui/Chart"
 import { Heart, Leaf, Sparkles, Home } from "lucide-react"
 
 type TimeOfDayData = {

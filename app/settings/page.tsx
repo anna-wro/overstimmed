@@ -5,15 +5,15 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
+import { Switch } from "@/components/ui/Switch"
+import { Label } from "@/components/ui/Label"
+import { Slider } from "@/components/ui/Slider"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import { Palette, Bell, AlertCircle, ArrowLeft, X, Save } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { SiteHeader } from "@/components/site-header"
+import { useToast } from "@/hooks/useToast"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
+import { SiteHeader } from "@/components/SiteHeader"
 import {
   Dialog,
   DialogContent,
@@ -21,9 +21,9 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { entriesToCSV, csvToEntries, validateCSV } from "@/utils/csv-utils"
+} from "@/components/ui/Dialog"
+import { Button } from "@/components/ui/Button"
+import { entriesToCSV, csvToEntries, validateCSV } from "@/utils/CsvUtils"
 
 type Settings = {
   theme: string

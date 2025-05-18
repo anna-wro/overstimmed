@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/Button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card"
 import {
   BarChart3,
   ArrowRight,
@@ -25,7 +25,7 @@ import {
   Sliders,
 } from "lucide-react"
 import { format, subDays } from "date-fns"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -34,7 +34,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from "@/components/ui/chart"
+} from "@/components/ui/Chart"
 
 type TrackingEntry = {
   timestamp: string

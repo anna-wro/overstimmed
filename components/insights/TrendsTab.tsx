@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import {
   LineChart,
   Line,
@@ -10,7 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from "@/components/ui/chart"
+} from "@/components/ui/Chart"
 
 type ChartDataPoint = {
   date: string

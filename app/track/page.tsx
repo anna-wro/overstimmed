@@ -5,14 +5,14 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Slider } from "@/components/ui/slider"
-import { Textarea } from "@/components/ui/textarea"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/Button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card"
+import { Slider } from "@/components/ui/Slider"
+import { Textarea } from "@/components/ui/Textarea"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
+import { Label } from "@/components/ui/Label"
+import { Input } from "@/components/ui/Input"
+import { Badge } from "@/components/ui/Badge"
 import {
   Save,
   Plus,
@@ -36,7 +36,7 @@ import {
   AlertCircle,
   ArrowLeft,
 } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/useToast"
 import { cn } from "@/lib/utils"
 import {
   Dialog,
@@ -45,13 +45,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { SiteHeader } from "@/components/site-header"
+} from "@/components/ui/Dialog"
+import { SiteHeader } from "@/components/SiteHeader"
 import { CalendarIcon, ClockIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/Popover"
 import { format, set } from "date-fns"
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/Switch"
 
 // Trigger categories with emojis
 const TRIGGER_CATEGORIES = [

@@ -9,10 +9,10 @@ import {
   DialogTitle,
   DialogFooter,
   DialogDescription,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+} from "@/components/ui/Dialog"
+import { Button } from "@/components/ui/Button"
+import { Label } from "@/components/ui/Label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Moon, Sun, Contrast, Monitor, Settings } from "lucide-react"
 
 export function FirstVisitModal() {

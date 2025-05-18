@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { SiteHeader } from "@/components/site-header"
+import { Skeleton } from "@/components/ui/Skeleton"
+import { SiteHeader } from "@/components/SiteHeader"
 
 export default function InsightsLoading() {
   return (

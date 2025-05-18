@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useMemo } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from "@/components/ui/Button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import {
   Calendar,
   BarChart3,
@@ -23,15 +23,15 @@ import {
   LayoutDashboard,
 } from "lucide-react"
 import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fns"
-import { SiteHeader } from "@/components/site-header"
+import { SiteHeader } from "@/components/SiteHeader"
 import { cn } from "@/lib/utils"
-import TrendsTab from "@/components/insights/trends-tab"
-import PatternsTab from "@/components/insights/patterns-tab"
-import TriggersTab from "@/components/insights/triggers-tab"
-import CorrelationTab from "@/components/insights/correlation-tab"
-import SummaryTab from "@/components/insights/summary-tab"
-import CalendarTab from "@/components/insights/calendar-tab"
-import RecommendationsTab from "@/components/insights/recommendations-tab"
+import TrendsTab from "@/components/insights/TrendsTab"
+import PatternsTab from "@/components/insights/PatternsTab"
+import TriggersTab from "@/components/insights/TriggersTab"
+import CorrelationTab from "@/components/insights/CorrelationTab"
+import SummaryTab from "@/components/insights/SummaryTab"
+import CalendarTab from "@/components/insights/CalendarTab"
+import RecommendationsTab from "@/components/insights/RecommendationsTab"
 
 type TrackingEntry = {
   timestamp: string

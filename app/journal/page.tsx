@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/Button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card"
+import { Textarea } from "@/components/ui/Textarea"
+import { Input } from "@/components/ui/Input"
 import { ChevronLeft, Save, Clock, Trash2 } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/useToast"
 import { format } from "date-fns"
 import Link from "next/link"
 
@@ -186,9 +186,8 @@ export default function JournalPage() {
         </div>
       </div>
     </div>
-  \
-    <div className="fixed top-6 right-6 z-50">
-      <ThemeToggle />
-    </div>
+    // <div className="fixed top-6 right-6 z-50">
+    //   <ThemeToggle />
+    // </div>
   )
 }

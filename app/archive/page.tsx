@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/Button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
+import { Badge } from "@/components/ui/Badge"
 import { ChevronLeft, Calendar, Filter, ArrowUpDown, Trash2, Clock, Search } from "lucide-react"
 import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fns"
-import { useToast } from "@/hooks/use-toast"
-import { Input } from "@/components/ui/input"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { useToast } from "@/hooks/useToast"
+import { Input } from "@/components/ui/Input"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 type TrackingEntry = {
   timestamp: string

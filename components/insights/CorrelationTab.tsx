@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/Card"
 import {
   ScatterChart,
   Scatter,
@@ -11,7 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
-} from "@/components/ui/chart"
+} from "@/components/ui/Chart"
 
 type CorrelationDataPoint = {
   energy: number
