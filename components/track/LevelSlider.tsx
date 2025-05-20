@@ -74,6 +74,7 @@ export const LevelSlider: React.FC<LevelSliderProps> = ({
           step={1}
           onValueChange={(val) => setValue(val[0])}
           className="flex-1"
+          data-type={type}
         />
         <Button
           variant="ghost"

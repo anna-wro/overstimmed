@@ -80,4 +80,18 @@ export const trackingPageCopy = {
       description: (tag: string) => `"${tag}" has been added to your custom tags.`,
     },
   },
+  mood: {
+    label: "What moods are you experiencing?",
+    placeholder: "Search or add moods...",
+    placeholderMore: "Search or add more moods...",
+    showSuggestions: "Show mood suggestions",
+    hideSuggestions: "Hide mood suggestions",
+    removeTag: "Remove {tag}",
+    tabHint: "(Tab)",
+    enterHint: "(Enter)",
+    noMatch: "No matching moods found",
+    addCustom: 'Add "{tag}" as custom mood',
+    typeToSearch: "Type to search or filter by mood category",
+    helpText: "Press Enter to add a mood. Use ↑ and ↓ arrow keys to navigate suggestions.",
+  },
 }; 

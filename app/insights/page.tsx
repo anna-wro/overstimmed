@@ -23,7 +23,6 @@ import {
   LayoutDashboard,
 } from "lucide-react"
 import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fns"
-import { SiteHeader } from "@/components/layout/SiteHeader"
 import { cn } from "@/lib/utils"
 import TrendsTab from "@/components/insights/TrendsTab"
 import PatternsTab from "@/components/insights/PatternsTab"

@@ -13,7 +13,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Palette, Bell, AlertCircle, ArrowLeft, X, Save } from "lucide-react"
 import { useToast } from "@/hooks/useToast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
-import { SiteHeader } from "@/components/layout/SiteHeader"
 import {
   Dialog,
   DialogContent,
