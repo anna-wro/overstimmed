@@ -23,7 +23,7 @@ import {
   LayoutDashboard,
 } from "lucide-react"
 import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fns"
-import { SiteHeader } from "@/components/SiteHeader"
+import { SiteHeader } from "@/components/layout/SiteHeader"
 import { cn } from "@/lib/utils"
 import TrendsTab from "@/components/insights/TrendsTab"
 import PatternsTab from "@/components/insights/PatternsTab"
@@ -752,7 +752,6 @@ export default function InsightsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8">
-      <SiteHeader />
 
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">

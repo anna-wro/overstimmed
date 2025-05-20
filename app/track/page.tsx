@@ -1,7 +1,7 @@
 "use client"
 
 import { useTrackForm } from "@/hooks/useTrackForm"
-import { SiteHeader } from "@/components/SiteHeader"
+import { SiteHeader } from "@/components/layout/SiteHeader"
 import { CustomDateTimePicker } from "@/components/track/CustomDateTimePicker"
 import { LevelSlider } from "@/components/track/LevelSlider"
 import { TagMultiSelectInput } from "@/components/tags/TagMultiSelectInput"
@@ -33,14 +33,12 @@ export default function TrackPage() {
     formModified,
     showUnsavedDialog,
     setShowUnsavedDialog,
-    handleBackClick,
     handleUnsavedDialogAction,
     handleSave,
   } = useTrackForm(dateTimeValue)
  
   return (
     <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8 high-contrast:bg-white dark:high-contrast:bg-black">
-      <SiteHeader onBackButtonClick={handleBackClick} />
   
       <div className="container mx-auto max-w-3xl">
         <TrackFormCard

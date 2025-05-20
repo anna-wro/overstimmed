@@ -4,6 +4,7 @@ import "@/styles/globals.css"
 import { Inter } from "next/font/google"
 import { FirstVisitModal } from "@/components/FirstVisitModal"
 import ClientLayout from "./client-layout"
+import { ConditionalHeader } from "@/components/layout/ConditionalHeader"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -21,8 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 high-contrast:bg-white dark:high-contrast:bg-black`}>
         <ClientLayout>
+          <ConditionalHeader />
           {children}
           <FirstVisitModal />
         </ClientLayout>

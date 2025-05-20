@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { ThemeProvider } from "@/components/ThemeProvider"
+import { ThemeProvider } from "@/components/layout/ThemeProvider"
 import { useEffect } from "react"
 
 function FontSizeInitializer() {

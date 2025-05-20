@@ -26,7 +26,7 @@ import {
   Loader2,
 } from "lucide-react"
 import { format, subDays } from "date-fns"
-import { ThemeToggle } from "@/components/ThemeToggle"
+import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -259,7 +259,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-12 high-contrast:bg-white dark:high-contrast:bg-black">
+    <main className="min-h-screen px-4 py-12">
       <div className="container mx-auto max-w-5xl">
         <div className="mb-12 text-center">
           <Link href="/">

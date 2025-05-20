@@ -11,7 +11,7 @@ import { ChevronLeft, Calendar, Filter, ArrowUpDown, Trash2, Clock, Search } fro
 import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fns"
 import { useToast } from "@/hooks/useToast"
 import { Input } from "@/components/ui/Input"
-import { ThemeToggle } from "@/components/ThemeToggle"
+import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 type TrackingEntry = {

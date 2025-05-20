@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Palette, Bell, AlertCircle, ArrowLeft, X, Save } from "lucide-react"
 import { useToast } from "@/hooks/useToast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
-import { SiteHeader } from "@/components/SiteHeader"
+import { SiteHeader } from "@/components/layout/SiteHeader"
 import {
   Dialog,
   DialogContent,
@@ -252,7 +252,6 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8 high-contrast:bg-white dark:high-contrast:bg-black">
-      <SiteHeader onBackButtonClick={handleBackClick} />
 
       <div className="container mx-auto max-w-3xl">
         <div className="mb-8 text-center">

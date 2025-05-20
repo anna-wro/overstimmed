@@ -80,14 +80,6 @@ export function useTrackForm(dateTimeValue: string) {
     suggestionItemsRef.current = suggestionItemsRef.current.slice(0, suggestions.length)
   }, [suggestions])
 
-  const handleBackClick = (e: React.MouseEvent) => {
-    if (formModified) {
-      e.preventDefault()
-      setPendingNavigation("/")
-      setShowUnsavedDialog(true)
-    }
-  }
-
   const handleUnsavedDialogAction = (action: "save" | "discard" | "cancel") => {
     setShowUnsavedDialog(false)
     if (action === "save") {
@@ -300,7 +292,6 @@ export function useTrackForm(dateTimeValue: string) {
     inputRef,
     suggestionsRef,
     suggestionItemsRef,
-    handleBackClick,
     handleUnsavedDialogAction,
     handleSave,
     handleSearchInputChange,
