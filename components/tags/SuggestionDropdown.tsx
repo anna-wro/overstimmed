@@ -13,6 +13,7 @@ interface SuggestionDropdownProps {
   inputId?: string
   copy?: any
   categories: CategoryType[]
+  searchQuery: string
 }
 
 export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
@@ -24,10 +25,10 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   inputId = "tags",
   copy,
   categories,
+  searchQuery,
 }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [suggestions, setSuggestions] = useState<Tag[]>([])
-  const [searchQuery, setSearchQuery] = useState("")
   const [focusedSuggestionIndex, setFocusedSuggestionIndex] = useState(-1)
   const suggestionItemsRef = useRef<(HTMLLIElement | null)[]>([])
 
@@ -51,7 +52,6 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
 
   const handleSuggestionClick = (tag: string) => {
     onAddTag(tag)
-    setSearchQuery("")
   }
 
   const handleSuggestionHover = (index: number) => {
@@ -61,7 +61,6 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   const addCustomTag = () => {
     if (searchQuery.trim()) {
       onAddTag(searchQuery.trim())
-      setSearchQuery("")
     }
   }
 

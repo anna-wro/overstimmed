@@ -124,6 +124,7 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({
           inputId={inputId}
           copy={copy}
           categories={categories}
+          searchQuery={searchQuery}
         />
       </div>
       <p className="text-xs text-muted-foreground">

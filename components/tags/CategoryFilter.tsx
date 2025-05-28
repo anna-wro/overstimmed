@@ -9,6 +9,30 @@ interface CategoryFilterProps {
   categories: CategoryType[]
 }
 
+// Helper function to get the selected state classes for each color
+const getSelectedClasses = (color: string) => {
+  if (color.includes("mint")) {
+    return "bg-mint-100 border-mint-300 text-mint-700 dark:bg-mint-900/30 dark:border-mint-700 dark:text-mint-300"
+  }
+  if (color.includes("sky")) {
+    return "bg-sky-100 border-sky-300 text-sky-700 dark:bg-sky-900/30 dark:border-sky-700 dark:text-sky-300"
+  }
+  if (color.includes("sand")) {
+    return "bg-sand-100 border-sand-300 text-sand-700 dark:bg-sand-900/30 dark:border-sand-700 dark:text-sand-300"
+  }
+  if (color.includes("blush")) {
+    return "bg-blush-100 border-blush-300 text-blush-700 dark:bg-blush-900/30 dark:border-blush-700 dark:text-blush-300"
+  }
+  if (color.includes("sage")) {
+    return "bg-sage-100 border-sage-300 text-sage-700 dark:bg-sage-900/30 dark:border-sage-700 dark:text-sage-300"
+  }
+  if (color.includes("lavender")) {
+    return "bg-lavender-100 border-lavender-300 text-lavender-700 dark:bg-lavender-900/30 dark:border-lavender-700 dark:text-lavender-300"
+  }
+  // Fallback
+  return "bg-accent border-primary text-accent-foreground"
+}
+
 export const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategories, onToggle, categories }) => (
   <div className="flex flex-wrap gap-1">
     {categories.map((category) => (
@@ -17,9 +41,9 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategori
         variant="outline"
         size="sm"
         className={cn(
-          "h-7 gap-1 px-2 py-0",
+          "h-7 gap-1 px-2 py-0 transition-colors hover:bg-muted",
           selectedCategories.includes(category.id)
-            ? `bg-${category.color.split("-")[1]}-100 border-${category.color.split("-")[1]}-300 text-${category.color.split("-")[1]}-700 high-contrast:bg-accent high-contrast:border-primary`
+            ? getSelectedClasses(category.color)
             : "",
         )}
         onClick={() => onToggle(category.id)}
