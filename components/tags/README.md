@@ -10,18 +10,15 @@ A reusable multi-select tag input component that supports autocomplete, suggesti
 - **Keyboard navigation** (arrow keys, enter, escape, backspace)
 - **Persistent storage** of user's custom tags
 - **Configurable copy/text** for different use cases
+- **Configurable categories** for different tag types (triggers, moods, etc.)
 - **Accessible** with proper ARIA attributes
-
-## Limitations
-
-- **Category filtering**: The category filter currently uses trigger-specific categories (`TRIGGER_CATEGORIES`). For non-trigger use cases, you may want to create similar category constants or the filter will show trigger categories.
 
 ## Basic Usage
 
 ```tsx
 import { TagMultiSelectInput, createTagMultiSelectCopy } from "@/components/tags/TagMultiSelectInput"
 import { trackingPageCopy } from "@/copy/track"
-import { DEFAULT_TRIGGERS } from "@/consts/triggerConstants"
+import { DEFAULT_TRIGGERS, TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
 
 function MyComponent() {
   const [tags, setTags] = useState<string[]>([])
@@ -34,6 +31,7 @@ function MyComponent() {
       inputId="my-tags"
       storageKey="myTags"
       defaultTags={DEFAULT_TRIGGERS}
+      categories={TRIGGER_CATEGORIES}
     />
   )
 }
@@ -49,6 +47,7 @@ function MyComponent() {
 | `inputId` | `string` | `"tags"` | HTML ID for the input element |
 | `storageKey` | `string` | `"tags"` | LocalStorage key for persisting custom tags |
 | `defaultTags` | `Tag[]` | `DEFAULT_TRIGGERS` | Default available tags |
+| `categories` | `CategoryType[]` | `TRIGGER_CATEGORIES` | Categories for filtering and icons |
 
 ## Copy Configuration
 
@@ -63,6 +62,19 @@ interface TagMultiSelectCopy {
   hideSuggestions: string          // Aria label for hide suggestions button
   removeTag: string                // Remove button label (use {tag} placeholder)
   helpText: string                 // Help text below the input
+}
+```
+
+## Category Configuration
+
+Categories should follow this structure:
+
+```tsx
+type CategoryType = {
+  id: string           // Unique identifier
+  name: string         // Display name
+  icon: React.ElementType  // Lucide icon component
+  color: string        // Tailwind color class
 }
 ```
 
@@ -81,7 +93,7 @@ const copy = createTagMultiSelectCopy(trackingPageCopy.mood)
 ### Mood Tracking
 
 ```tsx
-import { DEFAULT_MOODS } from "@/consts/moodConstants"
+import { DEFAULT_MOODS, MOOD_CATEGORIES } from "@/consts/moodConstants"
 
 <TagMultiSelectInput
   value={moods}
@@ -90,6 +102,7 @@ import { DEFAULT_MOODS } from "@/consts/moodConstants"
   inputId="moods"
   storageKey="moodTags"
   defaultTags={DEFAULT_MOODS}
+  categories={MOOD_CATEGORIES}
 />
 ```
 
@@ -112,6 +125,11 @@ const skillTags = [
   { text: "Design", category: "creative" }
 ]
 
+const skillCategories = [
+  { id: "programming", name: "Programming", icon: Code, color: "text-blue-500" },
+  { id: "creative", name: "Creative", icon: Palette, color: "text-purple-500" }
+]
+
 <TagMultiSelectInput
   value={skills}
   onChange={setSkills}
@@ -119,6 +137,7 @@ const skillTags = [
   inputId="skills"
   storageKey="skillTags"
   defaultTags={skillTags}
+  categories={skillCategories}
 />
 ```
 

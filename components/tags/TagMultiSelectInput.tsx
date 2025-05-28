@@ -6,6 +6,8 @@ import { TagInputContainer } from "./TagInputContainer"
 import { SuggestionDropdown } from "./SuggestionDropdown"
 import { TagInputHeader } from "./TagInputHeader"
 import { DEFAULT_TRIGGERS } from "@/consts/triggerConstants"
+import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
+import { CategoryType } from "../track/utils"
 
 export interface TagMultiSelectCopy {
   label: string
@@ -36,6 +38,7 @@ interface TagMultiSelectInputProps {
   inputId?: string
   storageKey?: string
   defaultTags?: Tag[]
+  categories?: CategoryType[]
 }
 
 export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ 
@@ -44,7 +47,8 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({
   copy,
   inputId = "tags",
   storageKey = "tags",
-  defaultTags = DEFAULT_TRIGGERS
+  defaultTags = DEFAULT_TRIGGERS,
+  categories = TRIGGER_CATEGORIES
 }) => {
   const {
     previousTags,
@@ -119,6 +123,7 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({
           onAddTag={addTag}
           inputId={inputId}
           copy={copy}
+          categories={categories}
         />
       </div>
       <p className="text-xs text-muted-foreground">

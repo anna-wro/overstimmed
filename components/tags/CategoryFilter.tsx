@@ -1,17 +1,17 @@
 import React from "react"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"
-import { TRIGGER_CATEGORIES, TriggerCategory } from "@/consts/triggerConstants"
-import { getCategoryIcon } from "../track/utils"
+import { getCategoryIcon, CategoryType } from "../track/utils"
 
 interface CategoryFilterProps {
   selectedCategories: string[]
   onToggle: (categoryId: string) => void
+  categories: CategoryType[]
 }
 
-export const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategories, onToggle }) => (
+export const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategories, onToggle, categories }) => (
   <div className="flex flex-wrap gap-1">
-    {TRIGGER_CATEGORIES.map((category) => (
+    {categories.map((category) => (
       <Button
         key={category.id}
         variant="outline"
@@ -24,7 +24,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategori
         )}
         onClick={() => onToggle(category.id)}
       >
-        {getCategoryIcon(category.id, TRIGGER_CATEGORIES)}
+        {getCategoryIcon(category.id, categories)}
         <span className="text-xs">{category.name}</span>
       </Button>
     ))}

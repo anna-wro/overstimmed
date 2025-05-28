@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { CategoryFilter } from "./CategoryFilter"
 import { SuggestionList } from "./SuggestionList"
 import { Tag } from "@/hooks/useTagMultiSelect"
+import { CategoryType } from "../track/utils"
 
 interface SuggestionDropdownProps {
   show: boolean
@@ -11,6 +12,7 @@ interface SuggestionDropdownProps {
   onAddTag: (tag: string) => void
   inputId?: string
   copy?: any
+  categories: CategoryType[]
 }
 
 export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
@@ -21,6 +23,7 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   onAddTag,
   inputId = "tags",
   copy,
+  categories,
 }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [suggestions, setSuggestions] = useState<Tag[]>([])
@@ -80,7 +83,7 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
       role="listbox"
     >
       <div className="sticky top-0 z-20 border-b bg-background p-2">
-        <CategoryFilter selectedCategories={selectedCategories} onToggle={toggleCategory} />
+        <CategoryFilter selectedCategories={selectedCategories} onToggle={toggleCategory} categories={categories} />
       </div>
       <SuggestionList
         suggestions={suggestions}
@@ -92,6 +95,7 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
         isExactMatch={isExactMatch}
         addCustomTag={addCustomTag}
         copy={copy}
+        categories={categories}
       />
     </div>
   )

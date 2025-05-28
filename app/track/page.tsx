@@ -13,6 +13,8 @@ import { NotesInput } from "@/components/track/NotesInput"
 import { TrackFormCard } from "@/components/track/TrackFormCard"
 import { trackingPageCopy } from "@/copy/track"
 import { SaveEntryButton } from "@/components/track/SaveEntryButton"
+import { DEFAULT_MOODS, MOOD_CATEGORIES } from "@/consts/moodConstants"
+import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
 import { useState } from "react"
 
 export default function TrackPage() {
@@ -26,6 +28,8 @@ export default function TrackPage() {
     setStimulationType,
     triggerTags,
     setTriggerTags,
+    moodTags,
+    setMoodTags,
     activities,
     setActivities,
     notes,
@@ -73,6 +77,16 @@ export default function TrackPage() {
             copy={createTagMultiSelectCopy(trackingPageCopy.trigger)}
             inputId="triggers"
             storageKey="triggerTags"
+            categories={TRIGGER_CATEGORIES}
+          />
+          <TagMultiSelectInput 
+            value={moodTags} 
+            onChange={setMoodTags} 
+            copy={createTagMultiSelectCopy(trackingPageCopy.mood)}
+            inputId="moods"
+            storageKey="moodTags"
+            defaultTags={DEFAULT_MOODS}
+            categories={MOOD_CATEGORIES}
           />
           <ActivityInput value={activities} onChange={e => setActivities(e.target.value)} />
           <NotesInput value={notes} onChange={e => setNotes(e.target.value)} />

@@ -1,7 +1,13 @@
 import React from "react"
-import { TriggerCategory } from "@/consts/triggerConstants"
 
-export function getCategoryIcon(categoryId: string, categories: TriggerCategory[]) {
+export type CategoryType = {
+  id: string
+  name: string
+  icon: React.ElementType
+  color: string
+}
+
+export function getCategoryIcon(categoryId: string, categories: CategoryType[]) {
   const category = categories.find((c) => c.id === categoryId)
   if (!category) return null
   const Icon = category.icon

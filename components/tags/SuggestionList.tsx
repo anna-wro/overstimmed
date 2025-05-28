@@ -1,9 +1,6 @@
 import React from "react"
-import { Button } from "@/components/ui/Button"
-import { PlusCircle } from "lucide-react"
 import { Tag } from "@/hooks/useTagMultiSelect"
-import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
-import { getCategoryIcon } from "../track/utils"
+import { getCategoryIcon, CategoryType } from "../track/utils"
 import { EmptyState } from "./EmptyState"
 
 interface SuggestionListProps {
@@ -16,6 +13,7 @@ interface SuggestionListProps {
   isExactMatch: boolean
   addCustomTag: () => void
   copy: any
+  categories: CategoryType[]
 }
 
 export const SuggestionList: React.FC<SuggestionListProps> = ({
@@ -28,6 +26,7 @@ export const SuggestionList: React.FC<SuggestionListProps> = ({
   isExactMatch,
   addCustomTag,
   copy,
+  categories,
 }) => (
   <div className="max-h-60 overflow-y-auto py-1">
     {suggestions.length > 0 ? (
@@ -48,7 +47,7 @@ export const SuggestionList: React.FC<SuggestionListProps> = ({
             role="option"
             aria-selected={focusedIndex === index}
           >
-            <span className="mr-2">{getCategoryIcon(suggestion.category, TRIGGER_CATEGORIES)}</span>
+            <span className="mr-2">{getCategoryIcon(suggestion.category, categories)}</span>
             <span className="flex-1">{suggestion.text}</span>
             {index === 0 && copy?.tabHint && <span className="ml-2 text-xs text-muted-foreground">{copy.tabHint}</span>}
             {index === focusedIndex && copy?.enterHint && (
