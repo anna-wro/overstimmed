@@ -15,7 +15,7 @@ export function useTrackForm(dateTimeValue: string) {
   const [stimulationType, setStimulationType] = useState("neutral")
   const [searchQuery, setSearchQuery] = useState("")
   const [triggerTags, setTriggerTags] = useState<string[]>([])
-  const [moodTags, setMoodTags] = useState<string[]>([])
+  const [feelingTags, setFeelingTags] = useState<string[]>([])
   const [suggestions, setSuggestions] = useState<TriggerTag[]>([])
   const [previousTags, setPreviousTags] = useLocalStorage<TriggerTag[]>("triggerTags", DEFAULT_TRIGGERS)
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -37,7 +37,7 @@ export function useTrackForm(dateTimeValue: string) {
       stimulationLevel !== 5 ||
       stimulationType !== "neutral" ||
       triggerTags.length > 0 ||
-      moodTags.length > 0 ||
+      feelingTags.length > 0 ||
       activities !== "" ||
       notes !== ""
     ) {
@@ -45,7 +45,7 @@ export function useTrackForm(dateTimeValue: string) {
     } else {
       setFormModified(false)
     }
-  }, [energyLevel, stimulationLevel, stimulationType, triggerTags, moodTags, activities, notes])
+  }, [energyLevel, stimulationLevel, stimulationType, triggerTags, feelingTags, activities, notes])
 
   useEffect(() => {
     const allAvailableTags = [...previousTags].filter((tag) => !triggerTags.includes(tag.text))
@@ -104,7 +104,7 @@ export function useTrackForm(dateTimeValue: string) {
       stimulationLevel,
       stimulationType,
       triggers: triggerTags.join(", "),
-      moods: moodTags.join(", "),
+      feelings: feelingTags.join(", "),
       activities,
       notes,
     }
@@ -272,8 +272,8 @@ export function useTrackForm(dateTimeValue: string) {
     setSearchQuery,
     triggerTags,
     setTriggerTags,
-    moodTags,
-    setMoodTags,
+    feelingTags,
+    setFeelingTags,
     suggestions,
     setSuggestions,
     previousTags,

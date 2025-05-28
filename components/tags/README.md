@@ -10,7 +10,7 @@ A reusable multi-select tag input component that supports autocomplete, suggesti
 - **Keyboard navigation** (arrow keys, enter, escape, backspace)
 - **Persistent storage** of user's custom tags
 - **Configurable copy/text** for different use cases
-- **Configurable categories** for different tag types (triggers, moods, etc.)
+- **Configurable categories** for different tag types (triggers, feelings, etc.)
 - **Accessible** with proper ARIA attributes
 
 ## Basic Usage
@@ -19,6 +19,7 @@ A reusable multi-select tag input component that supports autocomplete, suggesti
 import { TagMultiSelectInput, createTagMultiSelectCopy } from "@/components/tags/TagMultiSelectInput"
 import { trackingPageCopy } from "@/copy/track"
 import { DEFAULT_TRIGGERS, TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
+import { DEFAULT_FEELINGS, FEELING_CATEGORIES } from "@/consts/feelingConstants"
 
 function MyComponent() {
   const [tags, setTags] = useState<string[]>([])
@@ -27,11 +28,11 @@ function MyComponent() {
     <TagMultiSelectInput
       value={tags}
       onChange={setTags}
-      copy={createTagMultiSelectCopy(trackingPageCopy.trigger)}
+      copy={createTagMultiSelectCopy(trackingPageCopy.feeling)}
       inputId="my-tags"
-      storageKey="myTags"
-      defaultTags={DEFAULT_TRIGGERS}
-      categories={TRIGGER_CATEGORIES}
+      storageKey="feelingTags"
+      defaultTags={DEFAULT_FEELINGS}
+      categories={FEELING_CATEGORIES}
     />
   )
 }
@@ -82,29 +83,13 @@ type CategoryType = {
 
 ### `createTagMultiSelectCopy(source)`
 
-Creates a `TagMultiSelectCopy` object from existing copy structures (like `trackingPageCopy.trigger`):
+Creates a `TagMultiSelectCopy` object from existing copy structures (like `trackingPageCopy.feeling`):
 
 ```tsx
-const copy = createTagMultiSelectCopy(trackingPageCopy.mood)
+const copy = createTagMultiSelectCopy(trackingPageCopy.feeling)
 ```
 
 ## Examples
-
-### Mood Tracking
-
-```tsx
-import { DEFAULT_MOODS, MOOD_CATEGORIES } from "@/consts/moodConstants"
-
-<TagMultiSelectInput
-  value={moods}
-  onChange={setMoods}
-  copy={createTagMultiSelectCopy(trackingPageCopy.mood)}
-  inputId="moods"
-  storageKey="moodTags"
-  defaultTags={DEFAULT_MOODS}
-  categories={MOOD_CATEGORIES}
-/>
-```
 
 ### Custom Tags
 

@@ -8,19 +8,19 @@ import {
   Circle,
 } from "lucide-react"
 
-export type MoodCategory = {
+export type FeelingCategory = {
   id: string
   name: string
   icon: React.ElementType 
   color: string
 }
 
-export type MoodTag = {
+export type FeelingTag = {
   text: string
   category: string
 }
 
-export const MOOD_CATEGORIES: MoodCategory[] = [
+export const FEELING_CATEGORIES: FeelingCategory[] = [
   {
     id: "happy",
     name: "Happy",
@@ -65,7 +65,7 @@ export const MOOD_CATEGORIES: MoodCategory[] = [
   },
 ]
 
-export const DEFAULT_MOODS: MoodTag[] = [
+export const DEFAULT_FEELINGS: FeelingTag[] = [
   // Happy
   { text: "Optimistic", category: "happy" },
   { text: "Trusting", category: "happy" },
@@ -114,4 +114,4 @@ export const DEFAULT_MOODS: MoodTag[] = [
   { text: "Confused", category: "surprised" },
   { text: "Amazed", category: "surprised" },
   { text: "Excited", category: "surprised" },
-]
+] 
