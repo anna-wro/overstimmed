@@ -4,7 +4,7 @@ import { useTrackForm } from "@/hooks/useTrackForm"
 import { SiteHeader } from "@/components/layout/SiteHeader"
 import { CustomDateTimePicker } from "@/components/track/CustomDateTimePicker"
 import { LevelSlider } from "@/components/track/LevelSlider"
-import { TagMultiSelectInput } from "@/components/tags/TagMultiSelectInput"
+import { TagMultiSelectInput, createTagMultiSelectCopy } from "@/components/tags/TagMultiSelectInput"
 import { UnsavedChangesDialog } from "@/components/track/UnsavedChangesDialog"
 import { ExperienceRating } from "@/components/track/ExperienceRating"
 import { Battery, Zap, Save } from "lucide-react"
@@ -13,6 +13,8 @@ import { NotesInput } from "@/components/track/NotesInput"
 import { TrackFormCard } from "@/components/track/TrackFormCard"
 import { trackingPageCopy } from "@/copy/track"
 import { SaveEntryButton } from "@/components/track/SaveEntryButton"
+import { DEFAULT_FEELINGS, FEELING_CATEGORIES } from "@/consts/feelingConstants"
+import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
 import { useState } from "react"
 
 export default function TrackPage() {
@@ -26,6 +28,8 @@ export default function TrackPage() {
     setStimulationType,
     triggerTags,
     setTriggerTags,
+    feelingTags,
+    setFeelingTags,
     activities,
     setActivities,
     notes,
@@ -67,7 +71,23 @@ export default function TrackPage() {
             type="stimulation"
           />
           <ExperienceRating value={stimulationType} onChange={setStimulationType} />
-          <TagMultiSelectInput value={triggerTags} onChange={setTriggerTags} />
+          <TagMultiSelectInput 
+            value={triggerTags} 
+            onChange={setTriggerTags} 
+            copy={createTagMultiSelectCopy(trackingPageCopy.trigger)}
+            inputId="triggers"
+            storageKey="triggerTags"
+            categories={TRIGGER_CATEGORIES}
+          />
+          <TagMultiSelectInput 
+            value={feelingTags} 
+            onChange={setFeelingTags} 
+            copy={createTagMultiSelectCopy(trackingPageCopy.feeling)}
+            inputId="feelings"
+            storageKey="feelingTags"
+            defaultTags={DEFAULT_FEELINGS}
+            categories={FEELING_CATEGORIES}
+          />
           <ActivityInput value={activities} onChange={e => setActivities(e.target.value)} />
           <NotesInput value={notes} onChange={e => setNotes(e.target.value)} />
         </TrackFormCard>

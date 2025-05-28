@@ -1,15 +1,19 @@
 import React, { useState, useRef, useEffect } from "react"
 import { CategoryFilter } from "./CategoryFilter"
 import { SuggestionList } from "./SuggestionList"
-import { TriggerTag } from "@/consts/triggerConstants"
-import { trackingPageCopy } from "@/copy/track"
+import { Tag } from "@/hooks/useTagMultiSelect"
+import { CategoryType } from "../track/utils"
 
 interface SuggestionDropdownProps {
   show: boolean
   suggestionsRef: React.RefObject<HTMLDivElement | null>
   value: string[]
-  previousTags: TriggerTag[]
+  previousTags: Tag[]
   onAddTag: (tag: string) => void
+  inputId?: string
+  copy?: any
+  categories: CategoryType[]
+  searchQuery: string
 }
 
 export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
@@ -18,10 +22,13 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   value,
   previousTags,
   onAddTag,
+  inputId = "tags",
+  copy,
+  categories,
+  searchQuery,
 }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [suggestions, setSuggestions] = useState<TriggerTag[]>([])
-  const [searchQuery, setSearchQuery] = useState("")
+  const [suggestions, setSuggestions] = useState<Tag[]>([])
   const [focusedSuggestionIndex, setFocusedSuggestionIndex] = useState(-1)
   const suggestionItemsRef = useRef<(HTMLLIElement | null)[]>([])
 
@@ -45,7 +52,6 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
 
   const handleSuggestionClick = (tag: string) => {
     onAddTag(tag)
-    setSearchQuery("")
   }
 
   const handleSuggestionHover = (index: number) => {
@@ -55,7 +61,6 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   const addCustomTag = () => {
     if (searchQuery.trim()) {
       onAddTag(searchQuery.trim())
-      setSearchQuery("")
     }
   }
 
@@ -73,11 +78,11 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
     <div
       ref={suggestionsRef}
       className="absolute z-10 w-full rounded-b-md border border-t-0 bg-background shadow-lg"
-      id="trigger-suggestions"
+      id={`${inputId}-suggestions`}
       role="listbox"
     >
       <div className="sticky top-0 z-20 border-b bg-background p-2">
-        <CategoryFilter selectedCategories={selectedCategories} onToggle={toggleCategory} />
+        <CategoryFilter selectedCategories={selectedCategories} onToggle={toggleCategory} categories={categories} />
       </div>
       <SuggestionList
         suggestions={suggestions}
@@ -88,7 +93,8 @@ export const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
         searchQuery={searchQuery}
         isExactMatch={isExactMatch}
         addCustomTag={addCustomTag}
-        triggerCopy={trackingPageCopy.trigger}
+        copy={copy}
+        categories={categories}
       />
     </div>
   )

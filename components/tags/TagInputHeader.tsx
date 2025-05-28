@@ -21,18 +21,5 @@ export const TagInputHeader: React.FC<TagInputHeaderProps> = ({
     <label htmlFor={inputId} className="text-sm font-medium text-foreground">
       {label}
     </label>
-    <Button
-      variant="ghost"
-      size="sm"
-      className="h-8 w-8 p-0"
-      onClick={toggleSuggestions}
-      aria-label={ariaLabel}
-    >
-      {showSuggestions ? (
-        <ChevronUp className="h-4 w-4 text-foreground" />
-      ) : (
-        <ChevronDown className="h-4 w-4 text-foreground" />
-      )}
-    </Button>
   </div>
 ) 

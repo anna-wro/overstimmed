@@ -1,18 +1,55 @@
 import React, { useEffect } from "react"
-import { trackingPageCopy } from "@/copy/track"
 import { TagBadge } from "./TagBadge"
 import { TagInputField } from "./TagInputField"
-import { useTagMultiSelect } from "@/hooks/useTagMultiSelect"
+import { useTagMultiSelect, Tag } from "@/hooks/useTagMultiSelect"
 import { TagInputContainer } from "./TagInputContainer"
 import { SuggestionDropdown } from "./SuggestionDropdown"
 import { TagInputHeader } from "./TagInputHeader"
+import { DEFAULT_TRIGGERS } from "@/consts/triggerConstants"
+import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
+import { CategoryType } from "../track/utils"
+
+export interface TagMultiSelectCopy {
+  label: string
+  placeholder: string
+  placeholderMore: string
+  showSuggestions: string
+  hideSuggestions: string
+  removeTag: string // Should contain {tag} placeholder
+  helpText: string
+}
+
+export type { Tag }
+
+export const createTagMultiSelectCopy = (source: any): TagMultiSelectCopy => ({
+  label: source.label,
+  placeholder: source.placeholder,
+  placeholderMore: source.placeholderMore,
+  showSuggestions: source.showSuggestions,
+  hideSuggestions: source.hideSuggestions,
+  removeTag: source.removeTag,
+  helpText: source.helpText,
+})
 
 interface TagMultiSelectInputProps {
   value: string[]
   onChange: (tags: string[]) => void
+  copy: TagMultiSelectCopy
+  inputId?: string
+  storageKey?: string
+  defaultTags?: Tag[]
+  categories?: CategoryType[]
 }
 
-export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ value, onChange }) => {
+export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ 
+  value, 
+  onChange, 
+  copy,
+  inputId = "tags",
+  storageKey = "tags",
+  defaultTags = DEFAULT_TRIGGERS,
+  categories = TRIGGER_CATEGORIES
+}) => {
   const {
     previousTags,
     showSuggestions,
@@ -26,7 +63,7 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ value,
     removeTag,
     handleInputFocus,
     toggleSuggestions,
-  } = useTagMultiSelect(value, onChange)
+  } = useTagMultiSelect(value, onChange, storageKey, defaultTags)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -45,15 +82,14 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ value,
     }
   }, [])
 
-
   return (
     <div className="space-y-2">
       <TagInputHeader
-        label={trackingPageCopy.trigger.label}
+        label={copy.label}
         showSuggestions={showSuggestions}
         toggleSuggestions={toggleSuggestions}
-        ariaLabel={showSuggestions ? trackingPageCopy.trigger.hideSuggestions : trackingPageCopy.trigger.showSuggestions}
-        inputId="triggers"
+        ariaLabel={showSuggestions ? copy.hideSuggestions : copy.showSuggestions}
+        inputId={inputId}
       />
       <div className="relative">
         <TagInputContainer showSuggestions={showSuggestions}>
@@ -62,7 +98,7 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ value,
               key={index}
               tag={tag}
               onRemove={() => removeTag(index)}
-              removeLabel={trackingPageCopy.trigger.removeTag.replace("{tag}", tag)}
+              removeLabel={copy.removeTag.replace("{tag}", tag)}
             />
           ))}
           <TagInputField
@@ -74,7 +110,8 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ value,
             handleSearchInputKeyDown={handleSearchInputKeyDown}
             handleInputFocus={handleInputFocus}
             valueLength={value.length}
-            triggerCopy={trackingPageCopy.trigger}
+            copy={copy}
+            inputId={inputId}
           />
         </TagInputContainer>
 
@@ -84,10 +121,14 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({ value,
           value={value}
           previousTags={previousTags}
           onAddTag={addTag}
+          inputId={inputId}
+          copy={copy}
+          categories={categories}
+          searchQuery={searchQuery}
         />
       </div>
       <p className="text-xs text-muted-foreground">
-        {trackingPageCopy.trigger.helpText}
+        {copy.helpText}
       </p>
     </div>
   )
