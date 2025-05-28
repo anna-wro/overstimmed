@@ -6,20 +6,13 @@ import { Button } from "@/components/ui/Button"
 import { Moon, Sun, Contrast } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/DropdownMenu"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { useAppSettings } from "@/hooks/useAppSettings"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [highContrast, setHighContrast] = useLocalStorage<boolean>("highContrast", false)
-  const [settings, setSettings] = useLocalStorage<any>("appSettings", {
-    theme: "system",
-    highContrastMode: false,
-    fontSize: 16,
-    reminders: false,
-    reminderFrequency: "hourly",
-    dataRetentionPeriod: "forever",
-    exportFormat: "json",
-  })
+  const [settings, setSettings] = useAppSettings()
 
   useEffect(() => {
     setMounted(true)

@@ -67,6 +67,7 @@ export const FEELING_CATEGORIES: FeelingCategory[] = [
 
 export const DEFAULT_FEELINGS: FeelingTag[] = [
   // Happy
+  { text: "Happy", category: "happy" },
   { text: "Content", category: "happy" },
   { text: "Hopeful", category: "happy" },
   { text: "Optimistic", category: "happy" },
@@ -87,6 +88,7 @@ export const DEFAULT_FEELINGS: FeelingTag[] = [
   { text: "Ecstatic", category: "happy" },
 
   // Sad
+  { text: "Sad", category: "sad" },
   { text: "Bored", category: "sad" },
   { text: "Disappointed", category: "sad" },
   { text: "Lonely", category: "sad" },
@@ -104,6 +106,7 @@ export const DEFAULT_FEELINGS: FeelingTag[] = [
   { text: "Disconnected", category: "sad" },
 
   // Angry
+  { text: "Angry", category: "angry" },
   { text: "Annoyed", category: "angry" },
   { text: "Irritated", category: "angry" },
   { text: "Frustrated", category: "angry" },
@@ -122,6 +125,7 @@ export const DEFAULT_FEELINGS: FeelingTag[] = [
   { text: "Defensive", category: "angry"},
 
   // Fearful
+  { text: "Fearful", category: "fearful" },
   { text: "Shy", category: "fearful" },
   { text: "Insecure", category: "fearful" },
   { text: "Uncertain", category: "fearful" },
@@ -141,6 +145,7 @@ export const DEFAULT_FEELINGS: FeelingTag[] = [
   { text: "Overwhelmed", category: "fearful" },
 
   // Peaceful
+  { text: "Peaceful", category: "peaceful" },
   { text: "Calm", category: "peaceful" },
   { text: "Relaxed", category: "peaceful" },
   { text: "Balanced", category: "peaceful" },
@@ -160,6 +165,7 @@ export const DEFAULT_FEELINGS: FeelingTag[] = [
   { text: "Tranquil", category: "peaceful" },
  
   // Surprised
+  { text: "Surprised", category: "surprised" },
   { text: "Curious", category: "surprised" },
   { text: "Confused", category: "surprised" },
   { text: "Bewildered", category: "surprised" },
@@ -174,6 +180,7 @@ export const DEFAULT_FEELINGS: FeelingTag[] = [
   { text: "Stunned", category: "surprised" },
 
   // Physical/Sensory - for neurodivergent users who experience emotions as physical sensations
+  { text: "Physical/Sensory", category: "physical" },
   { text: "Tired", category: "physical" },
   { text: "Drained", category: "physical" },
   { text: "Heavy", category: "physical" },

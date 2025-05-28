@@ -5,24 +5,38 @@ import { Switch } from "@/components/ui/Switch"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/Popover"
 import { Calendar } from "@/components/ui/Calendar"
 import { Input } from "@/components/ui/Input"
-import { CalendarIcon, ClockIcon } from "lucide-react"
-import { format, set } from "date-fns"
+import { CalendarIcon, ClockIcon, ChevronDown } from "lucide-react"
+import { format, set, subMinutes, subHours, subDays, startOfDay } from "date-fns"
 
 interface CustomDateTimePickerProps {
   value?: string // ISO string
   onChange?: (isoString: string) => void
+  lowSpoonMode?: boolean
 }
 
-export const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({ value, onChange }) => {
-  const [useCustomDateTime, setUseCustomDateTime] = useState(false)
+const QUICK_OPTIONS = [
+  { label: "Now", getValue: () => new Date() },
+  { label: "15 min ago", getValue: () => subMinutes(new Date(), 15) },
+  { label: "30 min ago", getValue: () => subMinutes(new Date(), 30) },
+  { label: "1h ago", getValue: () => subHours(new Date(), 1) },
+  { label: "2h ago", getValue: () => subHours(new Date(), 2) },
+  { label: "A few hours ago", getValue: () => subHours(new Date(), 4) },
+  { label: "This morning", getValue: () => set(startOfDay(new Date()), { hours: 9 }) },
+  { label: "Yesterday", getValue: () => set(subDays(startOfDay(new Date()), 1), { hours: 14 }) },
+]
+
+export const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({ value, onChange, lowSpoonMode }) => {
+  const [mode, setMode] = useState<"quick" | "precise">("quick")
+  const [selectedQuickOption, setSelectedQuickOption] = useState(0) 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [selectedTime, setSelectedTime] = useState<string>(format(new Date(), "HH:mm"))
+  const [showQuickOptions, setShowQuickOptions] = useState(false)
 
   // Update parent whenever the value changes
   useEffect(() => {
     let isoString: string
-    if (!useCustomDateTime) {
-      isoString = new Date().toISOString()
+    if (mode === "quick") {
+      isoString = QUICK_OPTIONS[selectedQuickOption].getValue().toISOString()
     } else {
       const [hours, minutes] = selectedTime.split(":").map(Number)
       const dateTime = set(selectedDate, {
@@ -35,27 +49,69 @@ export const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({ valu
     }
     onChange?.(isoString)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [useCustomDateTime, selectedDate, selectedTime])
+  }, [mode, selectedQuickOption, selectedDate, selectedTime])
 
   return (
     <div className="rounded-lg bg-sand-100/50 p-4 dark:bg-sand-900/50 high-contrast:bg-accent high-contrast:border high-contrast:border-black dark:high-contrast:border-white">
       <div className="flex items-center justify-between mb-4">
-        <Label htmlFor="custom-datetime" className="text-sm font-medium">
+        <Label className="text-sm font-medium">
           When did this happen?
         </Label>
-        <div className="flex items-center">
-          <Label htmlFor="custom-datetime-toggle" className="mr-2 text-sm">
-            {useCustomDateTime ? "Custom date/time" : "Now"}
-          </Label>
-          <Switch
-            id="custom-datetime-toggle"
-            checked={useCustomDateTime}
-            onCheckedChange={setUseCustomDateTime}
-            className="data-[state=checked]:bg-lavender-500 high-contrast:data-[state=checked]:bg-primary"
-          />
-        </div>
+        {!lowSpoonMode && (
+          <div className="flex items-center">
+            <Label htmlFor="precise-toggle" className="mr-2 text-sm">
+              {mode === "precise" ? "Precise" : "Quick"}
+            </Label>
+            <Switch
+              id="precise-toggle"
+              checked={mode === "precise"}
+              onCheckedChange={(checked) => setMode(checked ? "precise" : "quick")}
+              className="data-[state=checked]:bg-lavender-500 high-contrast:data-[state=checked]:bg-primary"
+            />
+          </div>
+        )}
       </div>
-      {useCustomDateTime ? (
+
+      {(mode === "quick" || lowSpoonMode) ? (
+        <div className="space-y-3">
+          <Popover open={showQuickOptions} onOpenChange={setShowQuickOptions}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full justify-between text-left font-normal high-contrast:border-black dark:high-contrast:border-white"
+              >
+                <div className="flex items-center">
+                  <ClockIcon className="mr-2 h-4 w-4" />
+                  {QUICK_OPTIONS[selectedQuickOption].label}
+                </div>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-2" align="start">
+              <div className="grid gap-1">
+                {QUICK_OPTIONS.map((option, index) => (
+                  <Button
+                    key={option.label}
+                    variant={index === selectedQuickOption ? "default" : "ghost"}
+                    className="justify-start text-left"
+                    onClick={() => {
+                      setSelectedQuickOption(index)
+                      setShowQuickOptions(false)
+                    }}
+                  >
+                    {option.label}
+                  </Button>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+          
+          <div className="text-xs text-muted-foreground flex items-center px-1">
+            <ClockIcon className="mr-1 h-3 w-3" />
+            {format(QUICK_OPTIONS[selectedQuickOption].getValue(), "PPp")}
+          </div>
+        </div>
+      ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="date-picker" className="mb-2 block text-sm">
@@ -100,11 +156,6 @@ export const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({ valu
               />
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex items-center text-muted-foreground">
-          <ClockIcon className="mr-2 h-4 w-4" />
-          <span>Current date and time will be used</span>
         </div>
       )}
     </div>

@@ -26,6 +26,7 @@ export const TRIGGER_CATEGORIES: TriggerCategory[] = [
 
 export const DEFAULT_TRIGGERS: TriggerTag[] = [
   // Auditory
+  { text: "Auditory", category: "auditory" },
   { text: "Loud noises", category: "auditory" },
   { text: "Background chatter", category: "auditory" },
   { text: "Sudden sounds", category: "auditory" },
@@ -36,6 +37,7 @@ export const DEFAULT_TRIGGERS: TriggerTag[] = [
   { text: "Appliance sounds", category: "auditory" },
   { text: "Traffic noise", category: "auditory" },
   // Visual
+  { text: "Visual", category: "visual" },
   { text: "Bright lights", category: "visual" },
   { text: "Fluorescent lighting", category: "visual" },
   { text: "Flashing lights", category: "visual" },
@@ -45,6 +47,7 @@ export const DEFAULT_TRIGGERS: TriggerTag[] = [
   { text: "Moving objects", category: "visual" },
   { text: "Bright colors", category: "visual" },
   // Tactile
+  { text: "Tactile", category: "tactile" },
   { text: "Clothing tags", category: "tactile" },
   { text: "Tight clothing", category: "tactile" },
   { text: "Certain fabrics", category: "tactile" },
@@ -54,23 +57,27 @@ export const DEFAULT_TRIGGERS: TriggerTag[] = [
   { text: "Rough textures", category: "tactile" },
   { text: "Sticky surfaces", category: "tactile" },
   // Olfactory
+  { text: "Smell/Taste", category: "olfactory" },
   { text: "Strong smells", category: "olfactory" },
   { text: "Perfumes", category: "olfactory" },
   { text: "Food odors", category: "olfactory" },
   { text: "Cleaning products", category: "olfactory" },
   { text: "Scented candles", category: "olfactory" },
   // Temperature
+  { text: "Temperature", category: "temperature" },
   { text: "Temperature changes", category: "temperature" },
   { text: "Too hot", category: "temperature" },
   { text: "Too cold", category: "temperature" },
   { text: "Humidity", category: "temperature" },
   // Environmental
+  { text: "Environmental", category: "environmental" },
   { text: "Crowded spaces", category: "environmental" },
   { text: "New environments", category: "environmental" },
   { text: "Weather changes", category: "environmental" },
   { text: "Confined spaces", category: "environmental" },
   { text: "Open spaces", category: "environmental" },
   // Social
+  { text: "Social", category: "social" },
   { text: "Social interaction", category: "social" },
   { text: "Eye contact", category: "social" },
   { text: "Group conversations", category: "social" },
@@ -78,6 +85,7 @@ export const DEFAULT_TRIGGERS: TriggerTag[] = [
   { text: "Time pressure", category: "social" },
   { text: "Being interrupted", category: "social" },
   // Internal
+  { text: "Internal", category: "internal" },
   { text: "Hunger", category: "internal" },
   { text: "Thirst", category: "internal" },
   { text: "Fatigue", category: "internal" },

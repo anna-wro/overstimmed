@@ -1,13 +1,13 @@
 "use client"
 
 import { useTrackForm } from "@/hooks/useTrackForm"
-import { SiteHeader } from "@/components/layout/SiteHeader"
 import { CustomDateTimePicker } from "@/components/track/CustomDateTimePicker"
 import { LevelSlider } from "@/components/track/LevelSlider"
 import { TagMultiSelectInput, createTagMultiSelectCopy } from "@/components/tags/TagMultiSelectInput"
 import { UnsavedChangesDialog } from "@/components/track/UnsavedChangesDialog"
 import { ExperienceRating } from "@/components/track/ExperienceRating"
-import { Battery, Zap, Save } from "lucide-react"
+import { LowSpoonModeToggle } from "@/components/track/LowSpoonModeToggle"
+import { Battery, Zap, } from "lucide-react"
 import { ActivityInput } from "@/components/track/ActivityInput"
 import { NotesInput } from "@/components/track/NotesInput"
 import { TrackFormCard } from "@/components/track/TrackFormCard"
@@ -16,9 +16,16 @@ import { SaveEntryButton } from "@/components/track/SaveEntryButton"
 import { DEFAULT_FEELINGS, FEELING_CATEGORIES } from "@/consts/feelingConstants"
 import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
 import { useState } from "react"
+import { useAppSettings } from "@/hooks/useAppSettings"
 
 export default function TrackPage() {
   const [dateTimeValue, setDateTimeValue] = useState<string>("")
+  const [settings, setSettings] = useAppSettings()
+ 
+  const handleLowSpoonModeToggle = (checked: boolean) => {
+    setSettings({ ...settings, lowSpoonMode: checked })
+  }
+  
   const {
     energyLevel,
     setEnergyLevel,
@@ -46,12 +53,18 @@ export default function TrackPage() {
   
       <div className="container mx-auto max-w-3xl">
         <TrackFormCard
-          title={trackingPageCopy.cardTitle}
+          title={settings.lowSpoonMode ? "Quick Check-in" : trackingPageCopy.cardTitle}
           footer={
             <SaveEntryButton onClick={handleSave} disabled={!formModified} />
           }
         >
-          <CustomDateTimePicker onChange={setDateTimeValue} />
+          <LowSpoonModeToggle 
+            lowSpoonMode={settings.lowSpoonMode}
+            onToggle={handleLowSpoonModeToggle}
+          />
+
+          <CustomDateTimePicker onChange={setDateTimeValue} lowSpoonMode={settings.lowSpoonMode} />
+          
           <LevelSlider
             value={energyLevel}
             setValue={setEnergyLevel}
@@ -71,25 +84,30 @@ export default function TrackPage() {
             type="stimulation"
           />
           <ExperienceRating value={stimulationType} onChange={setStimulationType} />
-          <TagMultiSelectInput 
-            value={triggerTags} 
-            onChange={setTriggerTags} 
-            copy={createTagMultiSelectCopy(trackingPageCopy.trigger)}
-            inputId="triggers"
-            storageKey="triggerTags"
-            categories={TRIGGER_CATEGORIES}
-          />
-          <TagMultiSelectInput 
-            value={feelingTags} 
-            onChange={setFeelingTags} 
-            copy={createTagMultiSelectCopy(trackingPageCopy.feeling)}
-            inputId="feelings"
-            storageKey="feelingTags"
-            defaultTags={DEFAULT_FEELINGS}
-            categories={FEELING_CATEGORIES}
-          />
-          <ActivityInput value={activities} onChange={e => setActivities(e.target.value)} />
-          <NotesInput value={notes} onChange={e => setNotes(e.target.value)} />
+            
+          {!settings.lowSpoonMode && (
+            <>
+              <TagMultiSelectInput 
+                value={triggerTags} 
+                onChange={setTriggerTags} 
+                copy={createTagMultiSelectCopy(trackingPageCopy.trigger)}
+                inputId="triggers"
+                storageKey="triggerTags"
+                categories={TRIGGER_CATEGORIES}
+              />
+              <TagMultiSelectInput 
+                value={feelingTags} 
+                onChange={setFeelingTags} 
+                copy={createTagMultiSelectCopy(trackingPageCopy.feeling)}
+                inputId="feelings"
+                storageKey="feelingTags"
+                defaultTags={DEFAULT_FEELINGS}
+                categories={FEELING_CATEGORIES}
+              />
+              <ActivityInput value={activities} onChange={e => setActivities(e.target.value)} />
+              <NotesInput value={notes} onChange={e => setNotes(e.target.value)} />
+            </>
+          )}
         </TrackFormCard>
       </div>
 
