@@ -1,11 +1,20 @@
 import { useState, useRef, useEffect } from "react"
-import { TRIGGER_CATEGORIES, DEFAULT_TRIGGERS, TriggerTag } from "@/consts/triggerConstants"
 import { useLocalStorage } from "./useLocalStorage"
 
-export function useTagMultiSelect(value: string[], onChange: (tags: string[]) => void) {
-  const [previousTags, setPreviousTags] = useLocalStorage<TriggerTag[]>("triggerTags", DEFAULT_TRIGGERS)
+export type Tag = {
+  text: string
+  category: string
+}
+
+export function useTagMultiSelect(
+  value: string[], 
+  onChange: (tags: string[]) => void, 
+  storageKey: string = "tags",
+  defaultTags: Tag[] = []
+) {
+  const [previousTags, setPreviousTags] = useLocalStorage<Tag[]>(storageKey, defaultTags)
   const [showSuggestions, setShowSuggestions] = useState(false)
-  const [suggestions, setSuggestions] = useState<TriggerTag[]>([])
+  const [suggestions, setSuggestions] = useState<Tag[]>([])
   const [searchQuery, setSearchQuery] = useState("")
   const [focusedSuggestionIndex, setFocusedSuggestionIndex] = useState(-1)
   const inputRef = useRef<HTMLInputElement>(null)

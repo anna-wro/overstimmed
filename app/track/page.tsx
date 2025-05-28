@@ -4,7 +4,7 @@ import { useTrackForm } from "@/hooks/useTrackForm"
 import { SiteHeader } from "@/components/layout/SiteHeader"
 import { CustomDateTimePicker } from "@/components/track/CustomDateTimePicker"
 import { LevelSlider } from "@/components/track/LevelSlider"
-import { TagMultiSelectInput } from "@/components/tags/TagMultiSelectInput"
+import { TagMultiSelectInput, createTagMultiSelectCopy } from "@/components/tags/TagMultiSelectInput"
 import { UnsavedChangesDialog } from "@/components/track/UnsavedChangesDialog"
 import { ExperienceRating } from "@/components/track/ExperienceRating"
 import { Battery, Zap, Save } from "lucide-react"
@@ -67,7 +67,13 @@ export default function TrackPage() {
             type="stimulation"
           />
           <ExperienceRating value={stimulationType} onChange={setStimulationType} />
-          <TagMultiSelectInput value={triggerTags} onChange={setTriggerTags} />
+          <TagMultiSelectInput 
+            value={triggerTags} 
+            onChange={setTriggerTags} 
+            copy={createTagMultiSelectCopy(trackingPageCopy.trigger)}
+            inputId="triggers"
+            storageKey="triggerTags"
+          />
           <ActivityInput value={activities} onChange={e => setActivities(e.target.value)} />
           <NotesInput value={notes} onChange={e => setNotes(e.target.value)} />
         </TrackFormCard>

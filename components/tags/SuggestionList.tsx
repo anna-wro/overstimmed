@@ -1,12 +1,13 @@
 import React from "react"
 import { Button } from "@/components/ui/Button"
 import { PlusCircle } from "lucide-react"
-import { TriggerTag, TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
+import { Tag } from "@/hooks/useTagMultiSelect"
+import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
 import { getCategoryIcon } from "../track/utils"
 import { EmptyState } from "./EmptyState"
 
 interface SuggestionListProps {
-  suggestions: TriggerTag[]
+  suggestions: Tag[]
   focusedIndex: number
   suggestionItemsRef: React.MutableRefObject<(HTMLLIElement | null)[]>
   onSuggestionClick: (tag: string) => void
@@ -14,7 +15,7 @@ interface SuggestionListProps {
   searchQuery: string
   isExactMatch: boolean
   addCustomTag: () => void
-  triggerCopy: any
+  copy: any
 }
 
 export const SuggestionList: React.FC<SuggestionListProps> = ({
@@ -26,7 +27,7 @@ export const SuggestionList: React.FC<SuggestionListProps> = ({
   searchQuery,
   isExactMatch,
   addCustomTag,
-  triggerCopy,
+  copy,
 }) => (
   <div className="max-h-60 overflow-y-auto py-1">
     {suggestions.length > 0 ? (
@@ -49,9 +50,9 @@ export const SuggestionList: React.FC<SuggestionListProps> = ({
           >
             <span className="mr-2">{getCategoryIcon(suggestion.category, TRIGGER_CATEGORIES)}</span>
             <span className="flex-1">{suggestion.text}</span>
-            {index === 0 && <span className="ml-2 text-xs text-muted-foreground">{triggerCopy.tabHint}</span>}
-            {index === focusedIndex && (
-              <span className="ml-2 text-xs text-muted-foreground">{triggerCopy.enterHint}</span>
+            {index === 0 && copy?.tabHint && <span className="ml-2 text-xs text-muted-foreground">{copy.tabHint}</span>}
+            {index === focusedIndex && copy?.enterHint && (
+              <span className="ml-2 text-xs text-muted-foreground">{copy.enterHint}</span>
             )}
           </li>
         ))}
@@ -61,7 +62,7 @@ export const SuggestionList: React.FC<SuggestionListProps> = ({
         searchQuery={searchQuery}
         isExactMatch={isExactMatch}
         addCustomTag={addCustomTag}
-        triggerCopy={triggerCopy}
+        copy={copy}
       />
     )}
   </div>

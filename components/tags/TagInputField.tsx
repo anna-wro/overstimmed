@@ -11,7 +11,8 @@ interface TagInputFieldProps extends React.InputHTMLAttributes<HTMLInputElement>
   handleSearchInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
   handleInputFocus: () => void
   valueLength: number
-  triggerCopy: any
+  copy: any
+  inputId?: string
 }
 
 const TagInputField = React.forwardRef<HTMLInputElement, TagInputFieldProps>(({
@@ -23,22 +24,23 @@ const TagInputField = React.forwardRef<HTMLInputElement, TagInputFieldProps>(({
   handleSearchInputKeyDown,
   handleInputFocus,
   valueLength,
-  triggerCopy,
+  copy,
+  inputId = "tags",
   ...props
 }, ref) => (
   <div className="relative flex-1 min-w-[200px]">
     <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
     <Input
       ref={ref || inputRef}
-      id="triggers"
+      id={inputId}
       value={searchQuery}
       onChange={handleSearchInputChange}
       onKeyDown={handleSearchInputKeyDown}
       onFocus={handleInputFocus}
-      placeholder={valueLength ? triggerCopy.placeholderMore : triggerCopy.placeholder}
+      placeholder={valueLength ? copy.placeholderMore : copy.placeholder}
       aria-expanded={showSuggestions}
       aria-autocomplete="list"
-      aria-controls="trigger-suggestions"
+      aria-controls={`${inputId}-suggestions`}
       aria-activedescendant={
         focusedSuggestionIndex >= 0 ? `suggestion-${focusedSuggestionIndex}` : undefined
       }
