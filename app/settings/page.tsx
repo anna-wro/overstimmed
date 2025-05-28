@@ -24,21 +24,12 @@ import {
 import { Button } from "@/components/ui/Button"
 import { entriesToCSV, csvToEntries, validateCSV } from "@/utils/CsvUtils"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
-
-type Settings = {
-  theme: string
-  highContrastMode: boolean
-  fontSize: number
-  reminders: boolean
-  reminderFrequency: string
-  dataRetentionPeriod: string
-  exportFormat: string
-}
+import { useAppSettings, type AppSettings } from "@/hooks/useAppSettings"
 
 type ImportData = {
   trackingEntries?: any[]
   exportDate?: string
-  settings?: Settings
+  settings?: AppSettings
 }
 
 export default function SettingsPage() {
@@ -46,16 +37,8 @@ export default function SettingsPage() {
   const { toast } = useToast()
   const { setTheme } = useTheme()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [settings, setSettings] = useLocalStorage<Settings>("appSettings", {
-    theme: "system",
-    highContrastMode: false,
-    fontSize: 16,
-    reminders: false,
-    reminderFrequency: "hourly",
-    dataRetentionPeriod: "forever",
-    exportFormat: "json",
-  })
-  const [originalSettings, setOriginalSettings] = useState<Settings | null>(null)
+  const [settings, setSettings] = useAppSettings()
+  const [originalSettings, setOriginalSettings] = useState<AppSettings | null>(null)
   const [importError, setImportError] = useState<string | null>(null)
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavigation, setPendingNavigation] = useState<string | null>(null)
@@ -88,7 +71,8 @@ export default function SettingsPage() {
       originalSettings.reminders !== settings.reminders ||
       originalSettings.reminderFrequency !== settings.reminderFrequency ||
       originalSettings.dataRetentionPeriod !== settings.dataRetentionPeriod ||
-      originalSettings.exportFormat !== settings.exportFormat
+      originalSettings.exportFormat !== settings.exportFormat ||
+      originalSettings.lowSpoonMode !== settings.lowSpoonMode
     )
   }
 
@@ -392,6 +376,38 @@ export default function SettingsPage() {
                   </Select>
                 </div>
               )}
+            </CardContent>
+          </Card>
+
+          <Card className="overflow-hidden border-none shadow-lg high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-lavender-400 to-sand-300 high-contrast:bg-primary"></div>
+            <CardHeader className="flex flex-row items-center gap-4 bg-sand-100/50 dark:bg-sand-900/20 high-contrast:bg-accent">
+              <div className="rounded-full bg-mint-100 p-2 dark:bg-mint-900/30 high-contrast:bg-primary/20">
+                <AlertCircle className="h-5 w-5 text-mint-600 dark:text-mint-400" />
+              </div>
+              <div>
+                <CardTitle>Accessibility</CardTitle>
+                <CardDescription>Simplify your tracking experience</CardDescription>
+              </div>
+            </CardHeader>
+
+            <CardContent className="space-y-6 p-6">
+              <div className="flex items-center justify-between rounded-lg border bg-white/50 p-4 dark:bg-lavender-950/30 high-contrast:border-black dark:high-contrast:border-white">
+                <div className="space-y-0.5">
+                  <Label htmlFor="low-spoon-mode" className="text-base">
+                    Low-Spoon Mode
+                  </Label>
+                  <p className="text-sm text-muted-foreground">
+                    Simplify tracking to just energy, stimulation, and overall experience
+                  </p>
+                </div>
+                <Switch
+                  id="low-spoon-mode"
+                  checked={settings.lowSpoonMode}
+                  onCheckedChange={(checked) => setSettings({ ...settings, lowSpoonMode: checked })}
+                  className="data-[state=checked]:bg-mint-500 high-contrast:data-[state=checked]:bg-primary"
+                />
+              </div>
             </CardContent>
           </Card>
 

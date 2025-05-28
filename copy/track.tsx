@@ -1,4 +1,16 @@
 export const trackingPageCopy = {
+  lowSpoonMode: {
+    label: {
+      enabled: "Low-Spoon Mode",
+      disabled: "Feeling overwhelmed?"
+    },
+    description: {
+      enabled: "Tracking just the essentials",
+      disabled: "You can just track the essentials instead"
+    },
+    infoMessage: "You're in low-spoon mode - tracking just the basics today. That's perfectly okay! Toggle above anytime to access more options when you're ready.",
+    helpText: "Choose the tracking experience that feels right for you today"
+  },
   experienceRating: {
     label: "How would you describe your overall experience right now?",
     positive: "Positive/Energizing",
