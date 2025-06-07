@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Clock, Trash2 } from "lucide-react"
 import { format } from "date-fns"
 import { journalPageCopy } from "@/copy/journal"
-import type { JournalEntry } from "@/hooks/useJournalEntries"
+import type { JournalEntry } from "@/hooks/features/journal/useJournalEntries"
 
 interface JournalEntryCardProps {
   entry: JournalEntry

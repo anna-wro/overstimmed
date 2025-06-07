@@ -1,9 +1,9 @@
 "use client"
 
-import { useInsightsData } from "@/hooks/useInsightsData"
-import { useInsightsCalculations } from "@/hooks/useInsightsCalculations"
-import { usePatternDetection } from "@/hooks/usePatternDetection"
-import { useInsightsExport } from "@/hooks/useInsightsExport"
+import { useInsightsData } from "@/hooks/features/insights/useInsightsData"
+import { useInsightsCalculations } from "@/hooks/features/insights/useInsightsCalculations"
+import { usePatternDetection } from "@/hooks/features/insights/usePatternDetection"
+import { useInsightsExport } from "@/hooks/features/insights/useInsightsExport"
 import {
   InsightsHeader,
   SummaryCards,

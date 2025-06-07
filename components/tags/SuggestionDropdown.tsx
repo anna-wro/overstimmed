@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import { CategoryFilter } from "./CategoryFilter"
 import { SuggestionList } from "./SuggestionList"
-import { Tag } from "@/hooks/useTagMultiSelect"
+import { Tag } from "@/hooks/shared/useTagMultiSelect"
 import { CategoryType } from "../track/utils"
 
 interface SuggestionDropdownProps {

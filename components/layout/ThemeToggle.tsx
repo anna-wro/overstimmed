@@ -5,8 +5,8 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/Button"
 import { Moon, Sun, Contrast } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/DropdownMenu"
-import { useLocalStorage } from "@/hooks/useLocalStorage"
-import { useAppSettings } from "@/hooks/useAppSettings"
+import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
+import { useAppSettings } from "@/hooks/features/settings/useAppSettings"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()

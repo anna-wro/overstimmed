@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { useToast } from "@/hooks/useToast"
+import { useToast } from "@/hooks/shared/useToast"
 import { TRIGGER_CATEGORIES, DEFAULT_TRIGGERS, TriggerTag } from "@/consts/triggerConstants"
-import { useLocalStorage } from "./useLocalStorage"
+import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
 import { trackingPageCopy } from "@/copy/track"
 
 export function useTrackForm(dateTimeValue: string) {

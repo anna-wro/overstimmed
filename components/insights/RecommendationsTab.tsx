@@ -1,7 +1,7 @@
 "use client"
 
 import { Battery, Zap, Clock } from "lucide-react"
-import { useRecommendations } from "@/hooks/features/insights"
+import { generateRecommendations } from "@/utils/recommendations"
 import { RecommendationCard } from "./recommendations"
 
 type RecommendationsTabProps = {
@@ -17,7 +17,7 @@ export default function RecommendationsTab({
   recoveryPatternsData,
   environmentalFactorsData,
 }: RecommendationsTabProps) {
-  const { energyRecommendations, stimulationRecommendations, routineRecommendations } = useRecommendations({
+  const { energyRecommendations, stimulationRecommendations, routineRecommendations } = generateRecommendations({
     filteredEntries,
     balancedStatesData,
     recoveryPatternsData,

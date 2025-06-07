@@ -1,4 +1,4 @@
-import { useDashboardHelpers } from '@/hooks/features/useDashboardHelpers'
+import { getSupportiveMessage } from '@/utils/dashboardHelpers'
 
 type SupportiveMessageProps = {
   energyLevel: number
@@ -7,7 +7,6 @@ type SupportiveMessageProps = {
 }
 
 export const SupportiveMessage = ({ energyLevel, stimulationLevel, stimulationType }: SupportiveMessageProps) => {
-  const { getSupportiveMessage } = useDashboardHelpers()
   const supportiveMessage = getSupportiveMessage(energyLevel, stimulationLevel, stimulationType)
 
   return (

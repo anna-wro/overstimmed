@@ -9,10 +9,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 import { Badge } from "@/components/ui/Badge"
 import { ChevronLeft, Calendar, Filter, ArrowUpDown, Trash2, Clock, Search } from "lucide-react"
 import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fns"
-import { useToast } from "@/hooks/useToast"
+import { useToast } from "@/hooks/shared/useToast"
 import { Input } from "@/components/ui/Input"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
-import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
 import { archivePageCopy } from "@/copy/archive"
 
 type TrackingEntry = {

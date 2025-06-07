@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import "@/styles/globals.css"
 import { Inter } from "next/font/google"
-import { FirstVisitModal } from "@/components/FirstVisitModal"
+import { FirstVisitModal } from "@/components/shared/FirstVisitModal"
 import ClientLayout from "./client-layout"
 import { ConditionalHeader } from "@/components/layout/ConditionalHeader"
 

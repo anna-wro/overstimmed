@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Bell } from "lucide-react"
 import { SettingsCard } from "./SettingsCard"
 import { settingsPageCopy } from "@/copy/settings"
-import type { AppSettings } from "@/hooks/useAppSettings"
+import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
 
 interface RemindersSettingsProps {
   settings: AppSettings

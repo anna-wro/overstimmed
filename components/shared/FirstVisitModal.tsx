@@ -14,8 +14,8 @@ import { Button } from "@/components/ui/Button"
 import { Label } from "@/components/ui/Label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Moon, Sun, Contrast, Monitor, Settings, Zap } from "lucide-react"
-import { useLocalStorage } from "@/hooks/useLocalStorage"
-import { useAppSettings } from "@/hooks/useAppSettings"
+import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
+import { useAppSettings } from "@/hooks/features/settings/useAppSettings"
 
 export function FirstVisitModal() {
   const [isOpen, setIsOpen] = useState(false)

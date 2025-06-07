@@ -1,5 +1,5 @@
 import React from "react"
-import { Tag } from "@/hooks/useTagMultiSelect"
+import { Tag } from "@/hooks/shared/useTagMultiSelect"
 import { getCategoryIcon, CategoryType } from "../track/utils"
 import { EmptyState } from "./EmptyState"
 

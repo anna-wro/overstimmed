@@ -1,7 +1,7 @@
 import { useEffect } from "react"
-import { useToast } from "@/hooks/useToast"
+import { useToast } from "@/hooks/shared/useToast"
 import { settingsPageCopy } from "@/copy/settings"
-import type { AppSettings } from "@/hooks/useAppSettings"
+import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
 
 interface UseSettingsEffectsProps {
   settings: AppSettings

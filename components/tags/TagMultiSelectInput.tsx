@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { TagBadge } from "./TagBadge"
 import { TagInputField } from "./TagInputField"
-import { useTagMultiSelect, Tag } from "@/hooks/useTagMultiSelect"
+import { useTagMultiSelect, Tag } from "@/hooks/shared/useTagMultiSelect"
 import { TagInputContainer } from "./TagInputContainer"
 import { SuggestionDropdown } from "./SuggestionDropdown"
 import { TagInputHeader } from "./TagInputHeader"

@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/Label"
 import { AlertCircle } from "lucide-react"
 import { SettingsCard } from "./SettingsCard"
 import { settingsPageCopy } from "@/copy/settings"
-import type { AppSettings } from "@/hooks/useAppSettings"
+import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
 
 interface AccessibilitySettingsProps {
   settings: AppSettings

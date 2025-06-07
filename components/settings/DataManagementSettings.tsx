@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button"
 import { Save } from "lucide-react"
 import { SettingsCard } from "./SettingsCard"
 import { settingsPageCopy } from "@/copy/settings"
-import type { AppSettings } from "@/hooks/useAppSettings"
+import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
 
 interface DataManagementSettingsProps {
   settings: AppSettings

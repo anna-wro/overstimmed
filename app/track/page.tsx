@@ -1,6 +1,6 @@
 "use client"
 
-import { useTrackForm } from "@/hooks/useTrackForm"
+import { useTrackForm } from "@/hooks/features/track/useTrackForm"
 import { CustomDateTimePicker } from "@/components/track/CustomDateTimePicker"
 import { LevelSlider } from "@/components/track/LevelSlider"
 import { TagMultiSelectInput, createTagMultiSelectCopy } from "@/components/tags/TagMultiSelectInput"
@@ -16,7 +16,7 @@ import { SaveEntryButton } from "@/components/track/SaveEntryButton"
 import { DEFAULT_FEELINGS, FEELING_CATEGORIES } from "@/consts/feelingConstants"
 import { TRIGGER_CATEGORIES } from "@/consts/triggerConstants"
 import { useState } from "react"
-import { useAppSettings } from "@/hooks/useAppSettings"
+import { useAppSettings } from "@/hooks/features/settings/useAppSettings"
 
 export default function TrackPage() {
   const [dateTimeValue, setDateTimeValue] = useState<string>("")

@@ -1,6 +1,6 @@
 "use client"
 
-import { useJournalEntries } from "@/hooks/useJournalEntries"
+import { useJournalEntries } from "@/hooks/features/journal/useJournalEntries"
 import {
   JournalHeader,
   JournalEntryForm,

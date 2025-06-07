@@ -1,4 +1,4 @@
-import { useLocalStorage } from "./useLocalStorage"
+import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
 
 export type AppSettings = {
   theme: string

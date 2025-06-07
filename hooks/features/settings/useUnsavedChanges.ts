@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import type { AppSettings } from "@/hooks/useAppSettings"
+import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
 
 interface UseUnsavedChangesProps {
   settings: AppSettings

@@ -1,6 +1,6 @@
 import { JournalEntryCard } from "./JournalEntryCard"
 import { journalPageCopy } from "@/copy/journal"
-import type { JournalEntry } from "@/hooks/useJournalEntries"
+import type { JournalEntry } from "@/hooks/features/journal/useJournalEntries"
 
 interface JournalEntriesListProps {
   entries: JournalEntry[]

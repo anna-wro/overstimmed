@@ -1,6 +1,21 @@
-export { DashboardHeader } from './DashboardHeader'
-export { EmptyState } from './EmptyState'
-export { SupportiveMessage } from './SupportiveMessage'
-export { LatestEntryCard } from './LatestEntryCard'
-export { InsightsSection } from './InsightsSection'
-export { NavigationCards } from './NavigationCards' 
+// Shared components
+export { DashboardHeader, EmptyState, SupportiveMessage, NavigationCards } from './shared'
+
+// Latest Entry components
+export { 
+  LatestEntryCard, 
+  LatestEntryHeader, 
+  ExperienceTypeBadge, 
+  LevelCard, 
+  EntryDetailSection 
+} from './latest-entry'
+
+// Insights components
+export { 
+  InsightsSection, 
+  InsightsHeader, 
+  InsightsStatsGrid, 
+  InsightsChart, 
+  QuickInsightsPanel, 
+  InsightsFooter 
+} from './insights' 

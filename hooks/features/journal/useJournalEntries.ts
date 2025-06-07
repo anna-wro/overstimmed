@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { useToast } from "@/hooks/useToast"
-import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { useToast } from "@/hooks/shared/useToast"
+import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
 import { journalPageCopy } from "@/copy/journal"
 
 export type JournalEntry = {
