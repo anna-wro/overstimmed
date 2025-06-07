@@ -72,10 +72,10 @@ export default function TrendsTab({ chartData, colors }: TrendsTabProps) {
                 name="Stimulation Level"
                 strokeWidth={2}
                 dot={(props) => {
-                  const { cx, cy, payload } = props
+                  const { cx, cy, payload, index } = props
                   // Color the dot based on the experience type
                   const fill = colors[payload.type as keyof typeof colors]
-                  return <circle cx={cx} cy={cy} r={4} fill={fill} stroke={colors.stimulation} strokeWidth={1} />
+                  return <circle key={index} cx={cx} cy={cy} r={4} fill={fill} stroke={colors.stimulation} strokeWidth={1} />
                 }}
                 activeDot={{ r: 6 }}
               />
