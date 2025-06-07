@@ -9,10 +9,10 @@ export const getEnergyIcon = (level: number): ReactNode => {
 }
 
 export const getEnergyColor = (level: number): string => {
-  if (level === 0) return "bg-gray-300 dark:bg-gray-600"
-  if (level <= 3) return "bg-gradient-to-r from-blush-300 to-blush-400"
-  if (level <= 7) return "bg-gradient-to-r from-sand-300 to-sand-400"
-  return "bg-gradient-to-r from-mint-300 to-mint-400"
+  if (level === 0) return "bg-gray-300 dark:bg-gray-500"
+  if (level <= 3) return "bg-blush-300 dark:bg-blush-400"
+  if (level <= 7) return "bg-sand-300 dark:bg-sand-400"
+  return "bg-mint-300 dark:bg-mint-400"
 }
 
 export const getEnergyTextColor = (level: number): string => {
@@ -30,7 +30,10 @@ export const getEnergyText = (level: number): string => {
 }
 
 export const getStimulationColor = (level: number): string => {
-  return "bg-gradient-to-r from-lavender-300 to-sand-300"
+  if (level === 0) return "bg-gray-400 dark:bg-gray-500"
+  if (level <= 3) return "bg-sand-300 dark:bg-sand-400"
+  if (level <= 7) return "bg-lavender-300 dark:bg-lavender-400"
+  return "bg-blush-300 dark:bg-blush-400"
 }
 
 export const getStimulationText = (level: number): string => {

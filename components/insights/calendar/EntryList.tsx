@@ -1,22 +1,9 @@
 import { Card, CardContent } from "@/components/ui/Card"
 import { format } from "date-fns"
+import { getExperienceTypeText, getExperienceTypeColor } from "@/utils/experienceTypeHelpers"
 
 interface EntryListProps {
   entries: any[]
-}
-
-// Helper function to get experience type text
-const getExperienceTypeText = (type: string) => {
-  if (type === "positive") return "Positive/Energizing"
-  if (type === "neutral") return "Neutral/Balanced"
-  return "Negative/Draining"
-}
-
-// Helper function to get experience type color
-const getExperienceTypeColor = (type: string) => {
-  if (type === "positive") return "text-mint-600 dark:text-mint-400"
-  if (type === "neutral") return "text-sand-600 dark:text-sand-400"
-  return "text-blush-600 dark:text-blush-400"
 }
 
 export default function EntryList({ entries }: EntryListProps) {

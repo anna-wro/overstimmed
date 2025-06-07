@@ -4,6 +4,7 @@ import { Slider } from "@/components/ui/Slider"
 import { Minus, Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { trackingPageCopy } from "@/copy/track"
+import { getEnergyTextColor } from "@/utils/levelFormatting"
 
 interface LevelSliderProps {
   value: number
@@ -15,14 +16,7 @@ interface LevelSliderProps {
   type: "energy" | "stimulation"
 }
 
-const getEnergyColor = (level: number) => {
-  if (level <= 3)
-    return "text-blush-600 dark:text-blush-300 high-contrast:text-blush-800 dark:high-contrast:text-blush-200"
-  if (level <= 7)
-    return "text-sand-600 dark:text-sand-300 high-contrast:text-sand-800 dark:high-contrast:text-sand-200"
-  return "text-mint-600 dark:text-mint-300 high-contrast:text-mint-800 dark:high-contrast:text-mint-200"
-}
-const getStimulationColor = (level: number) => {
+const getStimulationTextColor = (level: number) => {
   if (level <= 3)
     return "text-sand-700 dark:text-sand-300 high-contrast:text-sand-900 dark:high-contrast:text-sand-200"
   if (level <= 7)
@@ -39,7 +33,7 @@ export const LevelSlider: React.FC<LevelSliderProps> = ({
   label,
   type,
 }) => {
-  const colorClass = type === "energy" ? getEnergyColor(value) : getStimulationColor(value)
+  const colorClass = type === "energy" ? getEnergyTextColor(value) : getStimulationTextColor(value)
   const description = type === "energy"
     ? trackingPageCopy.energy.descriptions[value] || trackingPageCopy.energy.descriptions[5]
     : trackingPageCopy.stimulation.descriptions[value] || trackingPageCopy.stimulation.descriptions[5]

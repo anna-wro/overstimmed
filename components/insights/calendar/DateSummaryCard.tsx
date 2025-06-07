@@ -7,18 +7,7 @@ interface DateSummaryCardProps {
   entries: any[]
 }
 
-// Helper functions
-const getExperienceTypeText = (type: string) => {
-  if (type === "positive") return "Positive/Energizing"
-  if (type === "neutral") return "Neutral/Balanced"
-  return "Negative/Draining"
-}
-
-const getExperienceTypeColor = (type: string) => {
-  if (type === "positive") return "text-mint-600 dark:text-mint-400"
-  if (type === "neutral") return "text-sand-600 dark:text-sand-400"
-  return "text-blush-600 dark:text-blush-400"
-}
+import { getExperienceTypeText, getExperienceTypeColor } from "@/utils/experienceTypeHelpers"
 
 export default function DateSummaryCard({ selectedDate, entries }: DateSummaryCardProps) {
   // Calculate averages

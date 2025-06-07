@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Calendar } from "@/components/ui/Calendar"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
+import { getExperienceTypeBgColor } from "@/utils/experienceTypeHelpers"
 
 interface CalendarViewProps {
   selectedDate: Date | undefined
@@ -28,11 +29,7 @@ const getDayColor = (date: Date, entriesByDate: Record<string, any[]>) => {
     .sort((a, b) => (b[1] as number) - (a[1] as number))
     .map(([type]) => type)[0]
 
-  if (dominantExperience === "positive") return "bg-mint-100 text-mint-900 dark:bg-mint-900/30 dark:text-mint-300"
-  if (dominantExperience === "neutral") return "bg-sand-100 text-sand-900 dark:bg-sand-900/30 dark:text-sand-300"
-  if (dominantExperience === "negative") return "bg-blush-100 text-blush-900 dark:bg-blush-900/30 dark:text-blush-300"
-
-  return ""
+  return getExperienceTypeBgColor(dominantExperience)
 }
 
 export default function CalendarView({ selectedDate, onSelectDate, entriesByDate }: CalendarViewProps) {

@@ -1,40 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Battery, Zap, Calendar, Clock, Activity, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { getPatternBadgeColor, getPatternIcon } from "@/utils/patternHelpers"
 
 interface KeyInsightsCardProps {
   patterns: any[]
   balancedStatesData: any
 }
 
-// Helper function to get pattern badge color
-const getPatternBadgeColor = (severity: string) => {
-  switch (severity) {
-    case "warning":
-      return "bg-blush-100 text-blush-800 dark:bg-blush-900/50 dark:text-blush-300"
-    case "success":
-      return "bg-mint-100 text-mint-800 dark:bg-mint-900/50 dark:text-mint-300"
-    case "info":
-    default:
-      return "bg-lavender-100 text-lavender-800 dark:bg-lavender-900/50 dark:text-lavender-300"
-  }
-}
 
-// Helper function to get pattern icon
-const getPatternIcon = (type: string) => {
-  switch (type) {
-    case "high-stimulation-negative":
-      return <AlertCircle className="h-4 w-4" />
-    case "high-stimulation-positive":
-      return <Zap className="h-4 w-4" />
-    case "low-energy":
-      return <Battery className="h-4 w-4" />
-    case "positive-experience":
-      return <Activity className="h-4 w-4" />
-    default:
-      return <AlertCircle className="h-4 w-4" />
-  }
-}
 
 export default function KeyInsightsCard({ patterns, balancedStatesData }: KeyInsightsCardProps) {
   return (
