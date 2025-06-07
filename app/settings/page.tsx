@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/Button"
 import { entriesToCSV, csvToEntries, validateCSV } from "@/utils/CsvUtils"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { useAppSettings, type AppSettings } from "@/hooks/useAppSettings"
+import { settingsPageCopy } from "@/copy/settings"
 
 type ImportData = {
   trackingEntries?: any[]
@@ -112,8 +113,8 @@ export default function SettingsPage() {
     setSettings(settings)
     setOriginalSettings({ ...settings })
     toast({
-      title: "Settings saved",
-      description: "Your preferences have been updated.",
+      title: settingsPageCopy.toasts.settingsSaved.title,
+      description: settingsPageCopy.toasts.settingsSaved.description,
     })
   }
 
@@ -141,8 +142,8 @@ export default function SettingsPage() {
       linkElement.click()
     }
     toast({
-      title: "Data exported",
-      description: `Your data has been exported successfully as ${settings.exportFormat.toUpperCase()}.`,
+      title: settingsPageCopy.toasts.dataExported.title,
+      description: settingsPageCopy.toasts.dataExported.description(settings.exportFormat),
     })
   }
 
@@ -163,11 +164,11 @@ export default function SettingsPage() {
         if (isCSV) {
           const csvContent = e.target?.result as string
           const validation = validateCSV(csvContent)
-          if (!validation.valid) throw new Error(validation.message || "Invalid CSV format")
+          if (!validation.valid) throw new Error(validation.message || settingsPageCopy.errors.invalidCSV)
           const importedEntries = csvToEntries(csvContent)
-          if (importedEntries.length === 0) throw new Error("No valid entries found in the CSV file")
+          if (importedEntries.length === 0) throw new Error(settingsPageCopy.errors.noValidEntries)
           if (trackingEntries.length > 0) {
-            if (confirm("Do you want to replace your existing data? Click 'OK' to replace or 'Cancel' to merge with existing data.")) {
+            if (confirm(settingsPageCopy.confirmations.replaceData)) {
               setTrackingEntries(importedEntries)
             } else {
               const entriesMap = new Map()
@@ -179,10 +180,10 @@ export default function SettingsPage() {
           } else {
             setTrackingEntries(importedEntries)
           }
-          toast({ title: "Data imported", description: `Successfully imported ${importedEntries.length} entries from CSV.` })
+          toast({ title: settingsPageCopy.toasts.dataImportedCSV.title, description: settingsPageCopy.toasts.dataImportedCSV.description(importedEntries.length) })
         }
         const jsonData = JSON.parse(e.target?.result as string) as ImportData
-        if (!jsonData.trackingEntries || !Array.isArray(jsonData.trackingEntries)) throw new Error("Invalid data format: Missing or invalid tracking entries")
+        if (!jsonData.trackingEntries || !Array.isArray(jsonData.trackingEntries)) throw new Error(settingsPageCopy.errors.invalidDataFormat)
         for (const entry of jsonData.trackingEntries) {
           if (typeof entry.timestamp !== "string" || typeof entry.energyLevel !== "number" || typeof entry.stimulationLevel !== "number" || typeof entry.stimulationType !== "string") {
             throw new Error("Invalid entry format: Missing required fields")
@@ -238,13 +239,13 @@ export default function SettingsPage() {
 
       <div className="container mx-auto max-w-3xl">
         <div className="mb-8 text-center">
-          <h1 className="mb-2 text-3xl font-bold">Settings</h1>
-          <p className="text-muted-foreground">Customize your experience and manage your data</p>
+          <h1 className="mb-2 text-3xl font-bold">{settingsPageCopy.pageTitle}</h1>
+          <p className="text-muted-foreground">{settingsPageCopy.pageDescription}</p>
         </div>
 
         {importError && (
           <Alert variant="destructive" className="mb-6">
-            <AlertTitle>Import Error</AlertTitle>
+            <AlertTitle>{settingsPageCopy.importError.title}</AlertTitle>
             <AlertDescription>{importError}</AlertDescription>
           </Alert>
         )}
@@ -257,25 +258,25 @@ export default function SettingsPage() {
                 <Palette className="h-5 w-5 text-lavender-600 dark:text-lavender-400" />
               </div>
               <div>
-                <CardTitle>Appearance</CardTitle>
-                <CardDescription>Customize how the application looks</CardDescription>
+                <CardTitle>{settingsPageCopy.appearance.title}</CardTitle>
+                <CardDescription>{settingsPageCopy.appearance.description}</CardDescription>
               </div>
             </CardHeader>
 
             <CardContent className="space-y-6 p-6">
               <div className="space-y-2">
-                <Label htmlFor="theme">Theme</Label>
+                <Label htmlFor="theme">{settingsPageCopy.appearance.theme.label}</Label>
                 <Select value={settings.theme} onValueChange={(value) => setSettings({ ...settings, theme: value })}>
                   <SelectTrigger
                     id="theme"
                     className="transition-all focus-visible:ring-lavender-400 high-contrast:border-black dark:high-contrast:border-white"
                   >
-                    <SelectValue placeholder="Select theme" />
+                    <SelectValue placeholder={settingsPageCopy.appearance.theme.placeholder} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    <SelectItem value="light">{settingsPageCopy.appearance.theme.options.light}</SelectItem>
+                    <SelectItem value="dark">{settingsPageCopy.appearance.theme.options.dark}</SelectItem>
+                    <SelectItem value="system">{settingsPageCopy.appearance.theme.options.system}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -283,9 +284,9 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between rounded-lg border bg-white/50 p-4 dark:bg-lavender-950/30 high-contrast:border-black dark:high-contrast:border-white">
                 <div className="space-y-0.5">
                   <Label htmlFor="high-contrast" className="text-base">
-                    High Contrast Mode
+                    {settingsPageCopy.appearance.highContrast.label}
                   </Label>
-                  <p className="text-sm text-muted-foreground">Increase contrast for better visibility</p>
+                  <p className="text-sm text-muted-foreground">{settingsPageCopy.appearance.highContrast.description}</p>
                 </div>
                 <Switch
                   id="high-contrast"
@@ -299,7 +300,7 @@ export default function SettingsPage() {
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="font-size">Font Size</Label>
+                  <Label htmlFor="font-size">{settingsPageCopy.appearance.fontSize.label}</Label>
                   <span className="font-mono text-sm tabular-nums">{settings.fontSize}px</span>
                 </div>
                 <Slider
@@ -317,9 +318,9 @@ export default function SettingsPage() {
                   className="py-2"
                 />
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Small</span>
-                  <span>Medium</span>
-                  <span>Large</span>
+                  <span>{settingsPageCopy.appearance.fontSize.small}</span>
+                  <span>{settingsPageCopy.appearance.fontSize.medium}</span>
+                  <span>{settingsPageCopy.appearance.fontSize.large}</span>
                 </div>
               </div>
             </CardContent>
@@ -332,8 +333,8 @@ export default function SettingsPage() {
                 <Bell className="h-5 w-5 text-sand-600 dark:text-sand-400" />
               </div>
               <div>
-                <CardTitle>Reminders</CardTitle>
-                <CardDescription>Configure when and how you receive reminders</CardDescription>
+                <CardTitle>{settingsPageCopy.reminders.title}</CardTitle>
+                <CardDescription>{settingsPageCopy.reminders.description}</CardDescription>
               </div>
             </CardHeader>
 
@@ -341,10 +342,10 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between rounded-lg border bg-white/50 p-4 dark:bg-lavender-950/30 high-contrast:border-black dark:high-contrast:border-white">
                 <div className="space-y-0.5">
                   <Label htmlFor="reminders" className="text-base">
-                    Enable Reminders
+                    {settingsPageCopy.reminders.enable.label}
                   </Label>
                   <p className="text-sm text-muted-foreground">
-                    Get notifications to track your energy and stimulation levels
+                    {settingsPageCopy.reminders.enable.description}
                   </p>
                 </div>
                 <Switch
@@ -357,7 +358,7 @@ export default function SettingsPage() {
 
               {settings.reminders && (
                 <div className="space-y-2">
-                  <Label htmlFor="reminder-frequency">Reminder Frequency</Label>
+                  <Label htmlFor="reminder-frequency">{settingsPageCopy.reminders.frequency.label}</Label>
                   <Select
                     value={settings.reminderFrequency}
                     onValueChange={(value) => setSettings({ ...settings, reminderFrequency: value })}
@@ -366,12 +367,12 @@ export default function SettingsPage() {
                       id="reminder-frequency"
                       className="transition-all focus-visible:ring-lavender-400 high-contrast:border-black dark:high-contrast:border-white"
                     >
-                      <SelectValue placeholder="Select frequency" />
+                      <SelectValue placeholder={settingsPageCopy.reminders.frequency.placeholder} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="hourly">Hourly</SelectItem>
-                      <SelectItem value="daily">Daily</SelectItem>
-                      <SelectItem value="weekly">Weekly</SelectItem>
+                      <SelectItem value="hourly">{settingsPageCopy.reminders.frequency.options.hourly}</SelectItem>
+                      <SelectItem value="daily">{settingsPageCopy.reminders.frequency.options.daily}</SelectItem>
+                      <SelectItem value="weekly">{settingsPageCopy.reminders.frequency.options.weekly}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -386,8 +387,8 @@ export default function SettingsPage() {
                 <AlertCircle className="h-5 w-5 text-mint-600 dark:text-mint-400" />
               </div>
               <div>
-                <CardTitle>Accessibility</CardTitle>
-                <CardDescription>Simplify your tracking experience</CardDescription>
+                <CardTitle>{settingsPageCopy.accessibility.title}</CardTitle>
+                <CardDescription>{settingsPageCopy.accessibility.description}</CardDescription>
               </div>
             </CardHeader>
 
@@ -395,10 +396,10 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between rounded-lg border bg-white/50 p-4 dark:bg-lavender-950/30 high-contrast:border-black dark:high-contrast:border-white">
                 <div className="space-y-0.5">
                   <Label htmlFor="low-spoon-mode" className="text-base">
-                    Low-Spoon Mode
+                    {settingsPageCopy.accessibility.lowSpoonMode.label}
                   </Label>
                   <p className="text-sm text-muted-foreground">
-                    Simplify tracking to just energy, stimulation, and overall experience
+                    {settingsPageCopy.accessibility.lowSpoonMode.description}
                   </p>
                 </div>
                 <Switch
@@ -418,14 +419,14 @@ export default function SettingsPage() {
                 <Save className="h-5 w-5 text-green-600 dark:text-green-400" />
               </div>
               <div>
-                <CardTitle>Data Management</CardTitle>
-                <CardDescription>Export, import, and clear your data</CardDescription>
+                <CardTitle>{settingsPageCopy.dataManagement.title}</CardTitle>
+                <CardDescription>{settingsPageCopy.dataManagement.description}</CardDescription>
               </div>
             </CardHeader>
 
             <CardContent className="space-y-6 p-6">
               <div className="space-y-2 mb-4">
-                <Label htmlFor="export-format">Export Format</Label>
+                <Label htmlFor="export-format">{settingsPageCopy.dataManagement.exportFormat.label}</Label>
                 <Select
                   value={settings.exportFormat}
                   onValueChange={(value) => setSettings({ ...settings, exportFormat: value })}
@@ -434,20 +435,20 @@ export default function SettingsPage() {
                     id="export-format"
                     className="transition-all focus-visible:ring-lavender-400 high-contrast:border-black dark:high-contrast:border-white"
                   >
-                    <SelectValue placeholder="Select export format" />
+                    <SelectValue placeholder={settingsPageCopy.dataManagement.exportFormat.placeholder} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="json">JSON (with settings)</SelectItem>
-                    <SelectItem value="csv">CSV (data only)</SelectItem>
+                    <SelectItem value="json">{settingsPageCopy.dataManagement.exportFormat.options.json}</SelectItem>
+                    <SelectItem value="csv">{settingsPageCopy.dataManagement.exportFormat.options.csv}</SelectItem>
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground">
-                  JSON includes settings and all data. CSV includes only tracking entries.
+                  {settingsPageCopy.dataManagement.exportFormat.helpText}
                 </p>
               </div>
 
               <Button onClick={exportData} className="w-full">
-                Export Data
+                {settingsPageCopy.dataManagement.buttons.export}
               </Button>
 
               <input
@@ -458,11 +459,11 @@ export default function SettingsPage() {
                 ref={fileInputRef}
               />
               <Button onClick={triggerFileInput} variant="outline" className="w-full">
-                Import Data
+                {settingsPageCopy.dataManagement.buttons.import}
               </Button>
 
               <Button onClick={clearAllData} variant="destructive" className="w-full">
-                Clear All Data
+                {settingsPageCopy.dataManagement.buttons.clear}
               </Button>
             </CardContent>
           </Card>
@@ -472,9 +473,9 @@ export default function SettingsPage() {
       <Dialog open={showUnsavedDialog} onOpenChange={setShowUnsavedDialog}>
         <DialogContent className="w-full max-w-[500px]">
           <DialogHeader>
-            <DialogTitle className="text-xl text-lavender-700 dark:text-lavender-300">Save your changes?</DialogTitle>
+            <DialogTitle className="text-xl text-lavender-700 dark:text-lavender-300">{settingsPageCopy.unsavedChangesDialog.title}</DialogTitle>
             <DialogDescription className="text-base pt-2">
-              You've made changes to your settings that haven't been applied yet.
+              {settingsPageCopy.unsavedChangesDialog.description}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -482,8 +483,8 @@ export default function SettingsPage() {
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 mt-0.5 text-blush-500 dark:text-blush-400" />
                 <div>
-                  <p className="font-medium">Your preferences will be lost</p>
-                  <p className="text-sm mt-1">If you leave without saving, your preference changes won't be applied.</p>
+                  <p className="font-medium">{settingsPageCopy.unsavedChangesDialog.warning.title}</p>
+                  <p className="text-sm mt-1">{settingsPageCopy.unsavedChangesDialog.warning.description}</p>
                 </div>
               </div>
             </div>
@@ -496,7 +497,7 @@ export default function SettingsPage() {
                 className="justify-center border-lavender-300 text-lavender-700 hover:bg-lavender-50 dark:border-lavender-700 dark:text-lavender-300 dark:hover:bg-lavender-900/20"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Keep Editing
+                {settingsPageCopy.unsavedChangesDialog.buttons.keepEditing}
               </Button>
               <Button
                 variant="outline"
@@ -504,14 +505,14 @@ export default function SettingsPage() {
                 className="justify-center border-blush-300 text-blush-700 hover:bg-blush-50 hover:text-blush-800 dark:border-blush-700 dark:text-blush-300 dark:hover:bg-blush-900/20"
               >
                 <X className="mr-2 h-4 w-4" />
-                Discard Changes
+                {settingsPageCopy.unsavedChangesDialog.buttons.discardChanges}
               </Button>
               <Button
                 onClick={() => handleUnsavedDialogAction("save")}
                 className="justify-center bg-mint-500 hover:bg-mint-600 text-white dark:bg-mint-600 dark:hover:bg-mint-700"
               >
                 <Save className="mr-2 h-4 w-4" />
-                Save Changes
+                {settingsPageCopy.unsavedChangesDialog.buttons.saveChanges}
               </Button>
             </div>
           </DialogFooter>

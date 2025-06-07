@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/useToast"
 import { Input } from "@/components/ui/Input"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { archivePageCopy } from "@/copy/archive"
 
 type TrackingEntry = {
   timestamp: string
@@ -75,12 +76,12 @@ export default function ArchivePage() {
   }, [entries, timeRange, sortBy, searchQuery])
 
   const deleteEntry = (timestamp: string) => {
-    if (confirm("Are you sure you want to delete this entry?")) {
+    if (confirm(archivePageCopy.entryCard.deleteConfirm)) {
       const updatedEntries = entries.filter((entry) => entry.timestamp !== timestamp)
       setEntries(updatedEntries)
       toast({
-        title: "Entry deleted",
-        description: "The tracking entry has been removed.",
+        title: archivePageCopy.toasts.entryDeleted.title,
+        description: archivePageCopy.toasts.entryDeleted.description,
       })
     }
   }
@@ -118,9 +119,9 @@ export default function ArchivePage() {
   }
 
   const getExperienceTypeText = (type: string) => {
-    if (type === "positive") return "Positive"
-    if (type === "neutral") return "Neutral/Balanced"
-    return "Negative"
+    if (type === "positive") return archivePageCopy.experienceTypes.positive
+    if (type === "neutral") return archivePageCopy.experienceTypes.neutral
+    return archivePageCopy.experienceTypes.negative
   }
 
   return (
@@ -129,7 +130,7 @@ export default function ArchivePage() {
         <div className="mb-8 text-center">
           <Link href="/">
             <h1 className="mb-3 bg-gradient-to-r from-lavender-600 to-sand-500 bg-clip-text text-4xl font-bold tracking-tight text-transparent dark:from-lavender-400 dark:to-sand-300 high-contrast:text-foreground high-contrast:bg-clip-border cursor-pointer">
-              Overstimmed
+              {archivePageCopy.pageTitle}
             </h1>
           </Link>
         </div>
@@ -138,12 +139,12 @@ export default function ArchivePage() {
           className="group mb-8 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ChevronLeft className="mr-1 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          Back to Dashboard
+          {archivePageCopy.navigation.backToDashboard}
         </Link>
 
         <div className="mb-8">
-          <h1 className="mb-2 text-3xl font-bold">Entry Archive</h1>
-          <p className="text-muted-foreground">View and analyze your past tracking entries</p>
+          <h1 className="mb-2 text-3xl font-bold">{archivePageCopy.header.title}</h1>
+          <p className="text-muted-foreground">{archivePageCopy.header.description}</p>
         </div>
 
         <div className="mb-6 space-y-4">
@@ -152,13 +153,13 @@ export default function ArchivePage() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
               <Select value={timeRange} onValueChange={setTimeRange}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select time range" />
+                  <SelectValue placeholder={archivePageCopy.filters.timeRange.label} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All time</SelectItem>
-                  <SelectItem value="7">Last 7 days</SelectItem>
-                  <SelectItem value="30">Last 30 days</SelectItem>
-                  <SelectItem value="90">Last 3 months</SelectItem>
+                  <SelectItem value="all">{archivePageCopy.filters.timeRange.options.all}</SelectItem>
+                  <SelectItem value="7">{archivePageCopy.filters.timeRange.options.week}</SelectItem>
+                  <SelectItem value="30">{archivePageCopy.filters.timeRange.options.month}</SelectItem>
+                  <SelectItem value="90">{archivePageCopy.filters.timeRange.options.quarter}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -167,11 +168,11 @@ export default function ArchivePage() {
               <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Sort by" />
+                  <SelectValue placeholder={archivePageCopy.filters.sort.label} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="newest">Newest first</SelectItem>
-                  <SelectItem value="oldest">Oldest first</SelectItem>
+                  <SelectItem value="newest">{archivePageCopy.filters.sort.options.newest}</SelectItem>
+                  <SelectItem value="oldest">{archivePageCopy.filters.sort.options.oldest}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -180,7 +181,7 @@ export default function ArchivePage() {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search entries by triggers, activities, or notes..."
+              placeholder={archivePageCopy.filters.search.placeholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -189,8 +190,8 @@ export default function ArchivePage() {
 
           <Tabs value={viewMode} onValueChange={setViewMode} className="w-full">
             <TabsList className="grid w-full max-w-[400px] grid-cols-2">
-              <TabsTrigger value="compact">Compact View</TabsTrigger>
-              <TabsTrigger value="detailed">Detailed View</TabsTrigger>
+              <TabsTrigger value="compact">{archivePageCopy.viewModes.compact}</TabsTrigger>
+              <TabsTrigger value="detailed">{archivePageCopy.viewModes.detailed}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="compact" className="mt-0">
@@ -214,13 +215,13 @@ export default function ArchivePage() {
                       <div className="flex flex-1 flex-col p-3">
                         <div className="mb-2 flex flex-wrap items-center gap-2">
                           <div className="flex items-center gap-1">
-                            <span className="text-xs font-medium text-muted-foreground">Energy:</span>
+                            <span className="text-xs font-medium text-muted-foreground">{archivePageCopy.entryCard.energy}</span>
                             <Badge variant="outline" className={getEnergyBadgeColor(entry.energyLevel)}>
                               {entry.energyLevel}/10
                             </Badge>
                           </div>
                           <div className="flex items-center gap-1">
-                            <span className="text-xs font-medium text-muted-foreground">Stimulation:</span>
+                            <span className="text-xs font-medium text-muted-foreground">{archivePageCopy.entryCard.stimulation}</span>
                             <Badge variant="outline" className="font-mono">
                               {entry.stimulationLevel}/10
                             </Badge>
@@ -244,7 +245,7 @@ export default function ArchivePage() {
                             onClick={() => deleteEntry(entry.timestamp)}
                           >
                             <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Delete entry</span>
+                            <span className="sr-only">{archivePageCopy.entryCard.deleteButton}</span>
                           </Button>
                         </div>
                       </div>
@@ -273,7 +274,7 @@ export default function ArchivePage() {
                           onClick={() => deleteEntry(entry.timestamp)}
                         >
                           <Trash2 className="h-4 w-4" />
-                          <span className="sr-only">Delete entry</span>
+                          <span className="sr-only">{archivePageCopy.entryCard.deleteButton}</span>
                         </Button>
                       </div>
                     </CardHeader>
@@ -282,7 +283,7 @@ export default function ArchivePage() {
                         <div className="space-y-4">
                           <div>
                             <div className="mb-2 flex items-center justify-between">
-                              <span className="text-sm font-medium text-muted-foreground">Energy Level</span>
+                              <span className="text-sm font-medium text-muted-foreground">{archivePageCopy.detailedView.energyLevel}</span>
                               <span className="font-bold">{entry.energyLevel}/10</span>
                             </div>
                             <div className="h-3 overflow-hidden rounded-full bg-gray-100 p-0.5 dark:bg-gray-800">
@@ -295,7 +296,7 @@ export default function ArchivePage() {
 
                           <div>
                             <div className="mb-2 flex items-center justify-between">
-                              <span className="text-sm font-medium text-muted-foreground">Stimulation Level</span>
+                              <span className="text-sm font-medium text-muted-foreground">{archivePageCopy.detailedView.stimulationLevel}</span>
                               <span className="font-bold">{entry.stimulationLevel}/10</span>
                             </div>
                             <div className="h-3 overflow-hidden rounded-full bg-lavender-100 p-0.5 dark:bg-lavender-900/50">
@@ -307,7 +308,7 @@ export default function ArchivePage() {
                           </div>
 
                           <div className="flex items-center">
-                            <span className="mr-2 text-sm font-medium text-muted-foreground">Overall Experience:</span>
+                            <span className="mr-2 text-sm font-medium text-muted-foreground">{archivePageCopy.detailedView.overallExperience}</span>
                             <Badge className={getExperienceTypeColor(entry.stimulationType)}>
                               {getExperienceTypeText(entry.stimulationType)}
                             </Badge>
@@ -317,28 +318,28 @@ export default function ArchivePage() {
                         <div className="space-y-4">
                           {entry.triggers && (
                             <div className="rounded-lg border bg-white/50 p-3 dark:bg-lavender-950/30">
-                              <div className="mb-1 text-sm font-medium text-muted-foreground">Triggers</div>
+                              <div className="mb-1 text-sm font-medium text-muted-foreground">{archivePageCopy.detailedView.triggers}</div>
                               <div>{entry.triggers}</div>
                             </div>
                           )}
 
                           {entry.activities && (
                             <div className="rounded-lg border bg-white/50 p-3 dark:bg-lavender-950/30">
-                              <div className="mb-1 text-sm font-medium text-muted-foreground">Activities</div>
+                              <div className="mb-1 text-sm font-medium text-muted-foreground">{archivePageCopy.detailedView.activities}</div>
                               <div>{entry.activities}</div>
                             </div>
                           )}
 
                           {entry.notes && (
                             <div className="rounded-lg border bg-white/50 p-3 dark:bg-lavender-950/30">
-                              <div className="mb-1 text-sm font-medium text-muted-foreground">Notes</div>
+                              <div className="mb-1 text-sm font-medium text-muted-foreground">{archivePageCopy.detailedView.notes}</div>
                               <div className="text-sm">{entry.notes}</div>
                             </div>
                           )}
 
                           {!entry.triggers && !entry.activities && !entry.notes && (
                             <div className="flex h-full items-center justify-center rounded-lg border border-dashed p-4 text-center">
-                              <p className="text-sm text-muted-foreground">No additional details provided</p>
+                              <p className="text-sm text-muted-foreground">{archivePageCopy.detailedView.noDetails}</p>
                             </div>
                           )}
                         </div>
@@ -355,22 +356,22 @@ export default function ArchivePage() {
           <Card className="border-dashed bg-sand-50/80 shadow-sm backdrop-blur-sm dark:bg-lavender-950/30">
             <CardContent className="flex flex-col items-center justify-center p-8 text-center">
               <Filter className="mb-2 h-10 w-10 text-muted-foreground" />
-              <h2 className="mb-1 text-xl font-medium">No entries found</h2>
+              <h2 className="mb-1 text-xl font-medium">{archivePageCopy.emptyState.title}</h2>
               <p className="mb-4 text-muted-foreground">
                 {entries.length === 0
-                  ? "Start tracking your energy and stimulation levels to see your data here"
-                  : "Try changing your filters to see more entries"}
+                  ? archivePageCopy.emptyState.description.noEntries
+                  : archivePageCopy.emptyState.description.noResults}
               </p>
               {entries.length === 0 && (
                 <Link href="/track">
-                  <Button variant="outline">Create Your First Entry</Button>
+                  <Button variant="outline">{archivePageCopy.emptyState.createButton}</Button>
                 </Link>
               )}
             </CardContent>
           </Card>
         ) : (
           <p className="mt-4 text-sm text-muted-foreground">
-            Showing {filteredEntries.length} {filteredEntries.length === 1 ? "entry" : "entries"}
+            {archivePageCopy.summary.showing} {filteredEntries.length} {filteredEntries.length === 1 ? archivePageCopy.summary.entry : archivePageCopy.summary.entries}
           </p>
         )}
       </div>

@@ -31,6 +31,7 @@ import CorrelationTab from "@/components/insights/CorrelationTab"
 import SummaryTab from "@/components/insights/SummaryTab"
 import CalendarTab from "@/components/insights/CalendarTab"
 import RecommendationsTab from "@/components/insights/RecommendationsTab"
+import { insightsPageCopy } from "@/copy/insights"
 
 type TrackingEntry = {
   timestamp: string
@@ -337,7 +338,7 @@ export default function InsightsPage() {
 
     filteredEntries.forEach((entry) => {
       const date = new Date(entry.timestamp)
-      const timeOfDay = getTimeOfDay(date)
+      const timeOfDay = getTimeOfDay(date) as keyof typeof data
 
       data[timeOfDay].energy += entry.energyLevel
       data[timeOfDay].stimulation += entry.stimulationLevel
@@ -583,7 +584,7 @@ export default function InsightsPage() {
       if (commonTriggers.length > 0) {
         detectedPatterns.push({
           type: "high-stimulation-negative",
-          description: `You tend to experience overwhelming stimulation with: ${commonTriggers.join(", ")}`,
+          description: `${insightsPageCopy.patternTypes.highStimulationNegative} ${commonTriggers.join(", ")}`,
           severity: "warning",
         })
       }
@@ -614,7 +615,7 @@ export default function InsightsPage() {
       if (commonTriggers.length > 0) {
         detectedPatterns.push({
           type: "high-stimulation-positive",
-          description: `You enjoy high stimulation with: ${commonTriggers.join(", ")}`,
+          description: `${insightsPageCopy.patternTypes.highStimulationPositive} ${commonTriggers.join(", ")}`,
           severity: "success",
         })
       }
@@ -641,7 +642,7 @@ export default function InsightsPage() {
       if (commonTime) {
         detectedPatterns.push({
           type: "low-energy",
-          description: `You often experience low energy during the ${commonTime}`,
+          description: `${insightsPageCopy.patternTypes.lowEnergy} ${commonTime}`,
           severity: "info",
         })
       }
@@ -669,7 +670,7 @@ export default function InsightsPage() {
       if (commonActivities.length > 0) {
         detectedPatterns.push({
           type: "positive-experience",
-          description: `These activities often give you positive experiences: ${commonActivities.join(", ")}`,
+          description: `${insightsPageCopy.patternTypes.positiveExperience} ${commonActivities.join(", ")}`,
           severity: "success",
         })
       }
@@ -711,16 +712,7 @@ export default function InsightsPage() {
   const exportCSV = () => {
     if (filteredEntries.length === 0) return
 
-    const headers = [
-      "Date",
-      "Time",
-      "Energy Level",
-      "Stimulation Level",
-      "Experience Type",
-      "Triggers",
-      "Activities",
-      "Notes",
-    ]
+    const headers = insightsPageCopy.csvExport.headers
 
     const rows = filteredEntries.map((entry) => {
       const date = new Date(entry.timestamp)
@@ -742,7 +734,7 @@ export default function InsightsPage() {
     const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
     link.setAttribute("href", url)
-    link.setAttribute("download", `energy-tracker-data-${format(new Date(), "yyyy-MM-dd")}.csv`)
+    link.setAttribute("download", `${insightsPageCopy.csvExport.filename}-${format(new Date(), "yyyy-MM-dd")}.csv`)
     link.style.visibility = "hidden"
     document.body.appendChild(link)
     link.click()
@@ -755,8 +747,8 @@ export default function InsightsPage() {
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
-            <h1 className="text-3xl font-bold">Insights & Patterns</h1>
-            <p className="text-muted-foreground">Analyze your energy and stimulation data to identify patterns</p>
+            <h1 className="text-3xl font-bold">{insightsPageCopy.pageTitle}</h1>
+            <p className="text-muted-foreground">{insightsPageCopy.pageDescription}</p>
           </div>
 
           <div className="flex items-center gap-4">
@@ -764,14 +756,14 @@ export default function InsightsPage() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
               <Select value={timeRange} onValueChange={setTimeRange}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select time range" />
+                  <SelectValue placeholder={insightsPageCopy.timeRange.label} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="7">Last 7 days</SelectItem>
-                  <SelectItem value="14">Last 14 days</SelectItem>
-                  <SelectItem value="30">Last 30 days</SelectItem>
-                  <SelectItem value="90">Last 3 months</SelectItem>
-                  <SelectItem value="365">Last year</SelectItem>
+                  <SelectItem value="7">{insightsPageCopy.timeRange.options.week}</SelectItem>
+                  <SelectItem value="14">{insightsPageCopy.timeRange.options.twoWeeks}</SelectItem>
+                  <SelectItem value="30">{insightsPageCopy.timeRange.options.month}</SelectItem>
+                  <SelectItem value="90">{insightsPageCopy.timeRange.options.quarter}</SelectItem>
+                  <SelectItem value="365">{insightsPageCopy.timeRange.options.year}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -784,7 +776,7 @@ export default function InsightsPage() {
               className="flex items-center gap-1"
             >
               <Download className="h-4 w-4" />
-              <span className="hidden sm:inline">Export</span>
+              <span className="hidden sm:inline">{insightsPageCopy.export.buttonText}</span>
             </Button>
           </div>
         </div>
@@ -792,12 +784,12 @@ export default function InsightsPage() {
         {filteredEntries.length === 0 ? (
           <Card>
             <CardContent className="py-10 text-center">
-              <h2 className="text-xl font-medium mb-2">No data available</h2>
+              <h2 className="text-xl font-medium mb-2">{insightsPageCopy.emptyState.title}</h2>
               <p className="text-muted-foreground mb-6">
-                Start tracking your energy and stimulation levels to see insights here.
+                {insightsPageCopy.emptyState.description}
               </p>
               <Link href="/track">
-                <Button>Start Tracking Now</Button>
+                <Button>{insightsPageCopy.emptyState.buttonText}</Button>
               </Link>
             </CardContent>
           </Card>
@@ -809,26 +801,26 @@ export default function InsightsPage() {
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Activity className="h-5 w-5 text-mint-500" />
-                    Entry Count
+                    {insightsPageCopy.summaryCards.entryCount.title}
                   </CardTitle>
-                  <CardDescription>Your tracking data</CardDescription>
+                  <CardDescription>{insightsPageCopy.summaryCards.entryCount.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center gap-4">
                     <div>
                       <div className="text-3xl font-bold">{filteredEntries.length}</div>
-                      <div className="text-xs text-muted-foreground">Total entries</div>
+                      <div className="text-xs text-muted-foreground">{insightsPageCopy.summaryCards.entryCount.totalEntries}</div>
                     </div>
                     <div className="h-10 border-r border-muted"></div>
                     <div>
                       <div className="text-3xl font-bold">
                         {Math.round(filteredEntries.length / (Number.parseInt(timeRange) / 7))}
                       </div>
-                      <div className="text-xs text-muted-foreground">Entries this week</div>
+                      <div className="text-xs text-muted-foreground">{insightsPageCopy.summaryCards.entryCount.entriesThisWeek}</div>
                     </div>
                   </div>
                   <p className="text-sm mt-2 text-muted-foreground">
-                    Each entry helps you understand your patterns better
+                    {insightsPageCopy.summaryCards.entryCount.helpText}
                   </p>
                 </CardContent>
               </Card>
@@ -837,9 +829,9 @@ export default function InsightsPage() {
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Battery className="h-5 w-5 text-sand-500" />
-                    Energy Level
+                    {insightsPageCopy.summaryCards.energyLevel.title}
                   </CardTitle>
-                  <CardDescription>Average: {avgEnergyLevel}/10</CardDescription>
+                  <CardDescription>{insightsPageCopy.summaryCards.energyLevel.average} {avgEnergyLevel}/10</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="h-3 overflow-hidden rounded-full bg-gray-100 p-0.5 dark:bg-gray-800">
@@ -849,9 +841,9 @@ export default function InsightsPage() {
                     ></div>
                   </div>
                   <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-                    <span>Low</span>
-                    <span>Medium</span>
-                    <span>High</span>
+                    <span>{insightsPageCopy.summaryCards.energyLevel.low}</span>
+                    <span>{insightsPageCopy.summaryCards.energyLevel.medium}</span>
+                    <span>{insightsPageCopy.summaryCards.energyLevel.high}</span>
                   </div>
                 </CardContent>
               </Card>
@@ -860,9 +852,9 @@ export default function InsightsPage() {
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Zap className="h-5 w-5 text-lavender-500" />
-                    Stimulation Level
+                    {insightsPageCopy.summaryCards.stimulationLevel.title}
                   </CardTitle>
-                  <CardDescription>Average: {avgStimulationLevel}/10</CardDescription>
+                  <CardDescription>{insightsPageCopy.summaryCards.stimulationLevel.average} {avgStimulationLevel}/10</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="h-3 overflow-hidden rounded-full bg-gray-100 p-0.5 dark:bg-gray-800">
@@ -872,14 +864,14 @@ export default function InsightsPage() {
                     ></div>
                   </div>
                   <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-                    <span>Under</span>
-                    <span>Balanced</span>
-                    <span>Over</span>
+                    <span>{insightsPageCopy.summaryCards.stimulationLevel.under}</span>
+                    <span>{insightsPageCopy.summaryCards.stimulationLevel.balanced}</span>
+                    <span>{insightsPageCopy.summaryCards.stimulationLevel.over}</span>
                   </div>
 
                   {/* New: Comfortable vs Uncomfortable */}
                   <div className="mt-3 pt-3 border-t border-muted">
-                    <div className="text-xs text-muted-foreground mb-1">Stimulation Experience:</div>
+                    <div className="text-xs text-muted-foreground mb-1">{insightsPageCopy.summaryCards.stimulationLevel.experienceLabel}</div>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1">
                         <div className="h-2 w-2 rounded-full bg-mint-500"></div>
@@ -887,7 +879,7 @@ export default function InsightsPage() {
                           {Math.round(
                             (correlationData.filter((d) => d.comfortable).length / correlationData.length) * 100,
                           )}
-                          % Comfortable
+                          % {insightsPageCopy.summaryCards.stimulationLevel.comfortable}
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
@@ -896,7 +888,7 @@ export default function InsightsPage() {
                           {Math.round(
                             (correlationData.filter((d) => !d.comfortable).length / correlationData.length) * 100,
                           )}
-                          % Uncomfortable
+                          % {insightsPageCopy.summaryCards.stimulationLevel.uncomfortable}
                         </span>
                       </div>
                     </div>
@@ -911,9 +903,9 @@ export default function InsightsPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <AlertCircle className="h-5 w-5 text-lavender-500" />
-                    Detected Patterns
+                    {insightsPageCopy.detectedPatterns.title}
                   </CardTitle>
-                  <CardDescription>Insights based on your tracking data</CardDescription>
+                  <CardDescription>{insightsPageCopy.detectedPatterns.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -936,31 +928,31 @@ export default function InsightsPage() {
               <TabsList className="mb-6 flex flex-wrap">
                 <TabsTrigger value="summary">
                   <LayoutDashboard className="mr-2 h-4 w-4" />
-                  Summary
+                  {insightsPageCopy.tabs.summary}
                 </TabsTrigger>
                 <TabsTrigger value="trends">
                   <TrendingUp className="mr-2 h-4 w-4" />
-                  Trends
+                  {insightsPageCopy.tabs.trends}
                 </TabsTrigger>
                 <TabsTrigger value="patterns">
                   <Clock className="mr-2 h-4 w-4" />
-                  Patterns
+                  {insightsPageCopy.tabs.patterns}
                 </TabsTrigger>
                 <TabsTrigger value="triggers">
                   <BarChart3 className="mr-2 h-4 w-4" />
-                  Triggers
+                  {insightsPageCopy.tabs.triggers}
                 </TabsTrigger>
                 <TabsTrigger value="correlation">
                   <PieChart className="mr-2 h-4 w-4" />
-                  Correlation
+                  {insightsPageCopy.tabs.correlation}
                 </TabsTrigger>
                 <TabsTrigger value="calendar">
                   <Calendar className="mr-2 h-4 w-4" />
-                  Calendar
+                  {insightsPageCopy.tabs.calendar}
                 </TabsTrigger>
                 <TabsTrigger value="recommendations">
                   <Lightbulb className="mr-2 h-4 w-4" />
-                  Recommendations
+                  {insightsPageCopy.tabs.recommendations}
                 </TabsTrigger>
               </TabsList>
 

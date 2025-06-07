@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/useToast"
 import { format } from "date-fns"
 import Link from "next/link"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { journalPageCopy } from "@/copy/journal"
 
 type JournalEntry = {
   id: string
@@ -29,8 +30,8 @@ export default function JournalPage() {
   const saveEntry = () => {
     if (!title.trim()) {
       toast({
-        title: "Title required",
-        description: "Please add a title for your journal entry",
+        title: journalPageCopy.toasts.titleRequired.title,
+        description: journalPageCopy.toasts.titleRequired.description,
         variant: "destructive",
       })
       return
@@ -53,8 +54,8 @@ export default function JournalPage() {
     setCopingStrategies("")
 
     toast({
-      title: "Journal entry saved",
-      description: "Your journal entry has been saved successfully.",
+      title: journalPageCopy.toasts.entrySaved.title,
+      description: journalPageCopy.toasts.entrySaved.description,
     })
   }
 
@@ -63,8 +64,8 @@ export default function JournalPage() {
     setEntries(updatedEntries)
 
     toast({
-      title: "Entry deleted",
-      description: "Your journal entry has been deleted.",
+      title: journalPageCopy.toasts.entryDeleted.title,
+      description: journalPageCopy.toasts.entryDeleted.description,
     })
   }
 
@@ -73,26 +74,26 @@ export default function JournalPage() {
       <div className="mb-8 text-center">
         <Link href="/">
           <h1 className="mb-3 bg-gradient-to-r from-lavender-600 to-sand-500 bg-clip-text text-4xl font-bold tracking-tight text-transparent dark:from-lavender-400 dark:to-sand-300 high-contrast:text-foreground high-contrast:bg-clip-border cursor-pointer">
-            Overstimmed
+            {journalPageCopy.pageTitle}
           </h1>
         </Link>
       </div>
       <Link href="/" className="inline-flex items-center mb-6">
         <ChevronLeft className="mr-2 h-4 w-4" />
-        Back to Dashboard
+        {journalPageCopy.navigation.backToDashboard}
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Journal Entry</CardTitle>
-            <CardDescription>Record your thoughts, feelings, and experiences</CardDescription>
+            <CardTitle>{journalPageCopy.entryForm.title}</CardTitle>
+            <CardDescription>{journalPageCopy.entryForm.description}</CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-4">
             <div>
               <Input
-                placeholder="Entry Title"
+                placeholder={journalPageCopy.entryForm.titlePlaceholder}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="text-lg font-medium"
@@ -101,7 +102,7 @@ export default function JournalPage() {
 
             <div>
               <Textarea
-                placeholder="What's on your mind today? How are you feeling?"
+                placeholder={journalPageCopy.entryForm.contentPlaceholder}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 rows={8}
@@ -110,9 +111,9 @@ export default function JournalPage() {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium mb-2">Coping Strategies Used</h3>
+              <h3 className="text-sm font-medium mb-2">{journalPageCopy.entryForm.copingStrategiesHeading}</h3>
               <Textarea
-                placeholder="What strategies helped you today? (deep breathing, stimming, quiet time, etc.)"
+                placeholder={journalPageCopy.entryForm.copingStrategiesPlaceholder}
                 value={copingStrategies}
                 onChange={(e) => setCopingStrategies(e.target.value)}
                 rows={4}
@@ -124,15 +125,15 @@ export default function JournalPage() {
           <CardFooter>
             <Button onClick={saveEntry} className="w-full">
               <Save className="mr-2 h-4 w-4" />
-              Save Journal Entry
+              {journalPageCopy.entryForm.saveButton}
             </Button>
           </CardFooter>
         </Card>
 
         <div className="space-y-4">
-          <h2 className="text-xl font-bold">Previous Entries</h2>
+          <h2 className="text-xl font-bold">{journalPageCopy.previousEntries.heading}</h2>
           {entries.length === 0 ? (
-            <p className="text-muted-foreground">No journal entries yet. Start writing to see your entries here.</p>
+            <p className="text-muted-foreground">{journalPageCopy.previousEntries.emptyState}</p>
           ) : (
             entries.map((entry) => (
               <Card key={entry.id} className="hover:shadow-md transition-shadow">
@@ -155,12 +156,12 @@ export default function JournalPage() {
                       setContent(entry.content)
                       setCopingStrategies(entry.copingStrategies)
                       toast({
-                        title: "Entry loaded",
-                        description: "You can now edit this entry.",
+                        title: journalPageCopy.toasts.entryLoaded.title,
+                        description: journalPageCopy.toasts.entryLoaded.description,
                       })
                     }}
                   >
-                    Edit
+                    {journalPageCopy.previousEntries.editButton}
                   </Button>
                   <Button
                     variant="ghost"
