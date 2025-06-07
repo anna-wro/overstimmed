@@ -1,7 +1,7 @@
 "use client"
 
 import { Battery, Zap, Clock } from "lucide-react"
-import { useRecommendations } from "@/hooks/useRecommendations"
+import { useRecommendations } from "@/hooks/features/insights"
 import { RecommendationCard } from "./recommendations"
 
 type RecommendationsTabProps = {
