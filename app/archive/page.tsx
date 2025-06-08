@@ -127,25 +127,6 @@ export default function ArchivePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8">
       <div className="container mx-auto max-w-5xl">
-        <div className="mb-8 text-center">
-          <Link href="/">
-            <h1 className="mb-3 bg-gradient-to-r from-lavender-600 to-sand-500 bg-clip-text text-4xl font-bold tracking-tight text-transparent dark:from-lavender-400 dark:to-sand-300 high-contrast:text-foreground high-contrast:bg-clip-border cursor-pointer">
-              {archivePageCopy.pageTitle}
-            </h1>
-          </Link>
-        </div>
-        <Link
-          href="/"
-          className="group mb-8 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ChevronLeft className="mr-1 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          {archivePageCopy.navigation.backToDashboard}
-        </Link>
-
-        <div className="mb-8">
-          <h1 className="mb-2 text-3xl font-bold">{archivePageCopy.header.title}</h1>
-          <p className="text-muted-foreground">{archivePageCopy.header.description}</p>
-        </div>
 
         <div className="mb-6 space-y-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
