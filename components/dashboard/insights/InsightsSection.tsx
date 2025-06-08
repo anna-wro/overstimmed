@@ -42,7 +42,7 @@ export const InsightsSection = ({ entries, recentEntries, stats }: InsightsSecti
     <div className="mb-10">
       <InsightsHeader />
 
-      <Card className="overflow-hidden border-none bg-gradient-to-br from-mint-50/80 to-sky-50/80 shadow-xl dark:from-mint-900/30 dark:to-sky-900/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white bg-white dark:bg-lavender-900">
+      <Card className="relative overflow-hidden border-none bg-gradient-to-br from-mint-50/80 to-sky-50/80 shadow-xl dark:from-mint-900/30 dark:to-sky-900/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white bg-white dark:bg-lavender-900">
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-mint-400 to-sky-300 high-contrast:bg-primary"></div>
 
         <CardHeader className="bg-mint-100/50 pb-4 pt-6 dark:bg-mint-900/20 high-contrast:bg-accent">
