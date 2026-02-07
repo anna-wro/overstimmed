@@ -6,16 +6,17 @@ interface UseUnsavedChangesProps {
   settings: AppSettings
   originalSettings: AppSettings | null
   onSave: () => void
+  displayNameChanged?: boolean
 }
 
-export function useUnsavedChanges({ settings, originalSettings, onSave }: UseUnsavedChangesProps) {
+export function useUnsavedChanges({ settings, originalSettings, onSave, displayNameChanged }: UseUnsavedChangesProps) {
   const router = useRouter()
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavigation, setPendingNavigation] = useState<string | null>(null)
 
   const hasUnsavedChanges = () => {
+    if (displayNameChanged) return true
     if (!originalSettings) return false
-
     return (
       originalSettings.theme !== settings.theme ||
       originalSettings.highContrastMode !== settings.highContrastMode ||

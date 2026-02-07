@@ -2,6 +2,7 @@ import type React from "react"
 import { useTheme } from "next-themes"
 import { Switch } from "@/components/ui/Switch"
 import { Label } from "@/components/ui/Label"
+import { Input } from "@/components/ui/Input"
 import { Slider } from "@/components/ui/Slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import { Palette } from "lucide-react"
@@ -12,9 +13,11 @@ import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
 interface AppearanceSettingsProps {
   settings: AppSettings
   onSettingsChange: (settings: AppSettings) => void
+  displayName?: string
+  onDisplayNameChange?: (value: string) => void
 }
 
-export function AppearanceSettings({ settings, onSettingsChange }: AppearanceSettingsProps) {
+export function AppearanceSettings({ settings, onSettingsChange, displayName = "", onDisplayNameChange }: AppearanceSettingsProps) {
   const { setTheme } = useTheme()
 
   const handleThemeChange = (value: string) => {
@@ -47,6 +50,18 @@ export function AppearanceSettings({ settings, onSettingsChange }: AppearanceSet
       description={settingsPageCopy.appearance.description}
       icon={<Palette className="h-5 w-5 text-lavender-600 dark:text-lavender-400" />}
     >
+      {onDisplayNameChange && (
+        <div className="space-y-2">
+          <Label htmlFor="display-name">{settingsPageCopy.appearance.displayName.label}</Label>
+          <Input
+            id="display-name"
+            type="text"
+            placeholder={settingsPageCopy.appearance.displayName.placeholder}
+            value={displayName}
+            onChange={(e) => onDisplayNameChange(e.target.value)}
+          />
+        </div>
+      )}
       <div className="space-y-2">
         <Label htmlFor="theme">{settingsPageCopy.appearance.theme.label}</Label>
         <Select value={settings.theme} onValueChange={handleThemeChange}>

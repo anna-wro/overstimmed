@@ -1,6 +1,8 @@
 export const settingsPageCopy = {
   pageTitle: "Settings",
   pageDescription: "Customize your experience and manage your data",
+  saveButton: "Save",
+  savingButton: "Saving…",
 
   importError: {
     title: "Import Error",
@@ -9,6 +11,10 @@ export const settingsPageCopy = {
   appearance: {
     title: "Appearance",
     description: "Customize how the application looks",
+    displayName: {
+      label: "Display name",
+      placeholder: "Your name",
+    },
     theme: {
       label: "Theme",
       placeholder: "Select theme",

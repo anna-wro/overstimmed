@@ -1,8 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { LogOut, User } from "lucide-react"
-import { useUser } from "@/hooks/features"
+import { LogOut, Settings, User } from "lucide-react"
+import { useUser, useProfile } from "@/hooks/features"
 import { Button } from "@/components/ui/Button"
 import {
   DropdownMenu,
@@ -19,6 +19,7 @@ import {
 export function AuthMenu() {
   const router = useRouter()
   const { user, loading, signOut } = useUser()
+  const { profile } = useProfile()
 
   if (loading || !user) return null
 
@@ -28,20 +29,24 @@ export function AuthMenu() {
     router.refresh()
   }
 
-  const email = user.email ?? "Account"
+  const displayLabel = (profile?.name?.trim() || undefined) ?? user.email ?? "Account"
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
           <User className="h-4 w-4" />
-          <span className="max-w-[120px] truncate sm:max-w-[180px]">{email}</span>
+          <span className="max-w-[120px] truncate sm:max-w-[180px]">{displayLabel}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
-          <p className="text-xs text-muted-foreground truncate">{email}</p>
+          <p className="text-xs text-muted-foreground truncate">{displayLabel}</p>
         </DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => router.push("/settings")}>
+          <Settings className="mr-2 h-4 w-4" />
+          Settings
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 h-4 w-4" />

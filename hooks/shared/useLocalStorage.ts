@@ -1,23 +1,28 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export function useLocalStorage<T>(key: string, defaultValue: T): [T, (value: T) => void] {
-  // Initialize from localStorage synchronously
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === "undefined") return defaultValue
+  const [storedValue, setStoredValue] = useState<T>(defaultValue)
+  const isFirstWrite = useRef(true)
+
+  // Sync from localStorage after mount to avoid SSR/client hydration mismatch
+  useEffect(() => {
     try {
       const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : defaultValue
-    } catch (error) {
-      return defaultValue
+      if (item) setStoredValue(JSON.parse(item))
+    } catch {
+      // ignore
     }
-  }) 
+  }, [key])
 
-  // Write to localStorage when storedValue changes
+  // Persist when storedValue changes; skip first run to avoid overwriting with default before sync
   useEffect(() => {
-    if (typeof window === "undefined") return
+    if (isFirstWrite.current) {
+      isFirstWrite.current = false
+      return
+    }
     try {
       window.localStorage.setItem(key, JSON.stringify(storedValue))
-    } catch (error) {
+    } catch {
       // ignore
     }
   }, [key, storedValue])
