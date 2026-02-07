@@ -1,15 +1,5 @@
 import { format } from "date-fns"
-
-// Type definitions
-type TrackingEntry = {
-  timestamp: string
-  energyLevel: number
-  stimulationLevel: number
-  stimulationType: string
-  triggers: string
-  activities: string
-  notes: string
-}
+import type { TrackingEntry } from "@/lib/entries"
 
 type Settings = {
   theme: string

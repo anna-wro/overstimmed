@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
+import { useClickOutside } from "./useClickOutside"
 import { useLocalStorage } from "./useLocalStorage"
 
 export type Tag = {
@@ -32,22 +33,8 @@ export function useTagMultiSelect(
     setFocusedSuggestionIndex(-1)
   }, [previousTags, value, searchQuery])
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        suggestionsRef.current &&
-        !suggestionsRef.current.contains(event.target as Node) &&
-        inputRef.current !== event.target &&
-        !inputRef.current?.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false)
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+  const closeSuggestions = useCallback(() => setShowSuggestions(false), [])
+  useClickOutside(closeSuggestions, suggestionsRef, inputRef)
 
   useEffect(() => {
     suggestionItemsRef.current = suggestionItemsRef.current.slice(0, suggestions.length)

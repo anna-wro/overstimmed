@@ -1,4 +1,5 @@
-import React, { useEffect } from "react"
+import React from "react"
+import { useClickOutside } from "@/hooks/shared/useClickOutside"
 import { TagBadge } from "./TagBadge"
 import { TagInputField } from "./TagInputField"
 import { useTagMultiSelect, Tag } from "@/hooks/shared/useTagMultiSelect"
@@ -65,22 +66,10 @@ export const TagMultiSelectInput: React.FC<TagMultiSelectInputProps> = ({
     toggleSuggestions,
   } = useTagMultiSelect(value, onChange, storageKey, defaultTags)
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        suggestionsRef.current &&
-        !suggestionsRef.current.contains(event.target as Node) &&
-        inputRef.current !== event.target &&
-        !inputRef.current?.contains(event.target as Node)
-      ) {
-        toggleSuggestions()
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+  const handleClickOutside = React.useCallback(() => {
+    if (showSuggestions) toggleSuggestions()
+  }, [showSuggestions, toggleSuggestions])
+  useClickOutside(handleClickOutside, suggestionsRef, inputRef)
 
   return (
     <div className="space-y-2">

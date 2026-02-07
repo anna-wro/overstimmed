@@ -1,14 +1,13 @@
 "use client"
 
-import type React from "react"
 import { useState } from "react"
 import { useTheme } from "next-themes"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
-import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
 import { useAppSettings } from "@/hooks/features/settings/useAppSettings"
 import { useDataImportExport } from "@/hooks/features/settings/useDataImportExport"
 import { useUnsavedChanges } from "@/hooks/features/settings/useUnsavedChanges"
 import { useSettingsEffects } from "@/hooks/features/settings/useSettingsEffects"
+import { useEntries } from "@/hooks/features"
 import { settingsPageCopy } from "@/copy/settings"
 import {
   AppearanceSettings,
@@ -22,7 +21,7 @@ export default function SettingsPage() {
   const { setTheme } = useTheme()
   const [settings, setSettings] = useAppSettings()
   const [originalSettings, setOriginalSettings] = useState<any>(null)
-  const [trackingEntries, setTrackingEntries] = useLocalStorage<any[]>("trackingEntries", [])
+  const { entries, refetch, deleteAll, insertEntries } = useEntries()
 
   // Custom hooks
   const { saveSettings } = useSettingsEffects({
@@ -52,8 +51,10 @@ export default function SettingsPage() {
     setSettings,
     setOriginalSettings,
     setTheme,
-    trackingEntries,
-    setTrackingEntries,
+    entries,
+    refetchEntries: refetch,
+    deleteAllEntries: deleteAll,
+    insertEntries,
   })
 
   return (

@@ -5,7 +5,7 @@ import type React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ChevronLeft, LayoutDashboard, Activity, LineChart, CalendarDays, Sliders } from "lucide-react"
-import { ThemeToggle } from "@/components/layout/ThemeToggle"
+import { HeaderCorner } from "@/components/layout/HeaderCorner"
 import { usePathname } from "next/navigation"
 import { NavLink } from "@/components/layout/NavLink"
 
@@ -63,9 +63,7 @@ export function SiteHeader({ showBackButton, backButtonHref = "/",  }: SiteHeade
           />
         </nav>
 
-        <div className="fixed top-6 right-6 z-50">
-          <ThemeToggle />
-        </div>
+        <HeaderCorner />
       </div>
     </header>
   )

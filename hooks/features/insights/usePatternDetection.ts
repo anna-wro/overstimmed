@@ -1,6 +1,5 @@
 import { useMemo } from "react"
-import { format } from "date-fns"
-import type { TrackingEntry } from "./useInsightsData"
+import type { TrackingEntry } from "@/lib/entries"
 import { insightsPageCopy } from "@/copy/insights"
 
 // Helper function to get time of day

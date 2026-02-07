@@ -7,27 +7,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 import { Badge } from "@/components/ui/Badge"
-import { ChevronLeft, Calendar, Filter, ArrowUpDown, Trash2, Clock, Search } from "lucide-react"
+import { ChevronLeft, Calendar, Filter, ArrowUpDown, Trash2, Clock, Search, Loader2 } from "lucide-react"
 import { format, subDays, isWithinInterval, startOfDay, endOfDay } from "date-fns"
 import { useToast } from "@/hooks/shared/useToast"
 import { Input } from "@/components/ui/Input"
-import { ThemeToggle } from "@/components/layout/ThemeToggle"
-import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
+import { HeaderCorner } from "@/components/layout/HeaderCorner"
+import { useEntries } from "@/hooks/features"
+import type { TrackingEntry } from "@/lib/entries"
 import { archivePageCopy } from "@/copy/archive"
-
-type TrackingEntry = {
-  timestamp: string
-  energyLevel: number
-  stimulationLevel: number
-  stimulationType: string
-  triggers: string
-  activities: string
-  notes: string
-}
+import { errorsCopy } from "@/copy/errors"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
 
 export default function ArchivePage() {
   const { toast } = useToast()
-  const [entries, setEntries] = useLocalStorage<TrackingEntry[]>("trackingEntries", [])
+  const { entries, loading, error, deleteEntry: deleteEntryFromSupabase } = useEntries()
   const [timeRange, setTimeRange] = useState("all")
   const [sortBy, setSortBy] = useState("newest")
   const [viewMode, setViewMode] = useState("compact")
@@ -75,13 +68,28 @@ export default function ArchivePage() {
     }
   }, [entries, timeRange, sortBy, searchQuery])
 
-  const deleteEntry = (timestamp: string) => {
-    if (confirm(archivePageCopy.entryCard.deleteConfirm)) {
-      const updatedEntries = entries.filter((entry) => entry.timestamp !== timestamp)
-      setEntries(updatedEntries)
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <HeaderCorner />
+      </div>
+    )
+  }
+
+  const deleteEntry = async (id: string) => {
+    if (!confirm(archivePageCopy.entryCard.deleteConfirm)) return
+    try {
+      await deleteEntryFromSupabase(id)
       toast({
         title: archivePageCopy.toasts.entryDeleted.title,
         description: archivePageCopy.toasts.entryDeleted.description,
+      })
+    } catch {
+      toast({
+        title: errorsCopy.deleteEntry.title,
+        description: errorsCopy.deleteEntry.description,
+        variant: "destructive",
       })
     }
   }
@@ -127,6 +135,12 @@ export default function ArchivePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8">
       <div className="container mx-auto max-w-5xl">
+        {error && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertTitle>{errorsCopy.loadEntries.title}</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
         <div className="mb-6 space-y-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -223,7 +237,7 @@ export default function ArchivePage() {
                             variant="ghost"
                             size="sm"
                             className="h-7 w-7 p-0 text-muted-foreground hover:text-blush-500"
-                            onClick={() => deleteEntry(entry.timestamp)}
+                            onClick={() => entry.id && deleteEntry(entry.id)}
                           >
                             <Trash2 className="h-4 w-4" />
                             <span className="sr-only">{archivePageCopy.entryCard.deleteButton}</span>
@@ -252,7 +266,7 @@ export default function ArchivePage() {
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8 text-muted-foreground hover:text-blush-500"
-                          onClick={() => deleteEntry(entry.timestamp)}
+                          onClick={() => entry.id && deleteEntry(entry.id)}
                         >
                           <Trash2 className="h-4 w-4" />
                           <span className="sr-only">{archivePageCopy.entryCard.deleteButton}</span>
@@ -356,10 +370,7 @@ export default function ArchivePage() {
           </p>
         )}
       </div>
-      {/* Theme toggle */}
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
-      </div>
+      <HeaderCorner />
     </div>
   )
 }

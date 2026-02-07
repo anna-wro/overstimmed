@@ -1,25 +1,29 @@
 "use client"
 
 import type React from "react"
-import { ThemeProvider } from "@/components/layout/ThemeProvider"
+import { ThemeProvider, useTheme } from "next-themes"
 import { useEffect } from "react"
 
-function FontSizeInitializer() {
+function AppSettingsSync() {
+  const { setTheme } = useTheme()
   useEffect(() => {
-    // Load font size from settings
-    const savedSettings = localStorage.getItem("appSettings")
-    if (savedSettings) {
-      try {
-        const settings = JSON.parse(savedSettings)
-        if (settings.fontSize) {
-          document.documentElement.style.fontSize = `${settings.fontSize / 16}rem`
-        }
-      } catch (e) {
-        console.error("Error parsing settings:", e)
+    const saved = localStorage.getItem("appSettings")
+    if (!saved) return
+    try {
+      const settings = JSON.parse(saved)
+      if (settings.theme) setTheme(settings.theme)
+      if (settings.highContrastMode) {
+        document.documentElement.classList.add("high-contrast")
+      } else {
+        document.documentElement.classList.remove("high-contrast")
       }
+      if (settings.fontSize) {
+        document.documentElement.style.fontSize = `${settings.fontSize / 16}rem`
+      }
+    } catch (e) {
+      console.error("Error parsing app settings:", e)
     }
-  }, [])
-
+  }, [setTheme])
   return null
 }
 
@@ -30,7 +34,7 @@ export default function ClientLayout({
 }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <FontSizeInitializer />
+      <AppSettingsSync />
       {children}
     </ThemeProvider>
   )

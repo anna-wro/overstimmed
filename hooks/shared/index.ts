@@ -1,3 +1,4 @@
+export { useClickOutside } from "./useClickOutside"
 export { useLocalStorage } from "./useLocalStorage"
 export { useToast } from "./useToast"
 export { useMobile } from "./useMobile"

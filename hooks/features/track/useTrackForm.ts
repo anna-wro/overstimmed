@@ -1,10 +1,14 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useToast } from "@/hooks/shared/useToast"
 import { TRIGGER_CATEGORIES, DEFAULT_TRIGGERS, TriggerTag } from "@/consts/triggerConstants"
 import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
+import { createClient } from "@/lib/supabase/client"
+import { mapEntryToRow } from "@/lib/entries"
 import { trackingPageCopy } from "@/copy/track"
+import { errorsCopy } from "@/copy/errors"
+import { useClickOutside } from "@/hooks/shared/useClickOutside"
 
 export function useTrackForm(dateTimeValue: string) {
   const router = useRouter()
@@ -29,7 +33,7 @@ export function useTrackForm(dateTimeValue: string) {
   const inputRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>
   const suggestionsRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const suggestionItemsRef = useRef<(HTMLLIElement | null)[]>([])
-  const [trackingEntries, setTrackingEntries] = useLocalStorage<any[]>("trackingEntries", [])
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     if (
@@ -61,22 +65,8 @@ export function useTrackForm(dateTimeValue: string) {
     setFocusedSuggestionIndex(-1)
   }, [previousTags, triggerTags, searchQuery, selectedCategories])
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        suggestionsRef.current &&
-        !suggestionsRef.current.contains(event.target as Node) &&
-        inputRef.current !== event.target &&
-        !inputRef.current?.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false)
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+  const closeSuggestions = useCallback(() => setShowSuggestions(false), [])
+  useClickOutside(closeSuggestions, suggestionsRef, inputRef)
 
   useEffect(() => {
     suggestionItemsRef.current = suggestionItemsRef.current.slice(0, suggestions.length)
@@ -85,19 +75,14 @@ export function useTrackForm(dateTimeValue: string) {
   const handleUnsavedDialogAction = (action: "save" | "discard" | "cancel") => {
     setShowUnsavedDialog(false)
     if (action === "save") {
-      handleSave()
-      if (pendingNavigation) {
-        router.push(pendingNavigation)
-      }
-    } else if (action === "discard") {
-      if (pendingNavigation) {
-        router.push(pendingNavigation)
-      }
+      handleSave(pendingNavigation ?? "/")
+    } else if (action === "discard" && pendingNavigation) {
+      router.push(pendingNavigation)
     }
     setPendingNavigation(null)
   }
 
-  const handleSave = () => {
+  const handleSave = async (redirectTo = "/") => {
     const entry = {
       timestamp: dateTimeValue,
       energyLevel,
@@ -108,23 +93,34 @@ export function useTrackForm(dateTimeValue: string) {
       activities,
       notes,
     }
-    setTrackingEntries([...trackingEntries, entry])
+    setSaving(true)
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      setSaving(false)
+      toast({ title: errorsCopy.sessionExpired.title, description: errorsCopy.sessionExpired.description, variant: "destructive" })
+      router.push("/auth/login?next=/track")
+      return
+    }
+    const { error } = await supabase.from("entries").insert(mapEntryToRow(entry, user.id))
+    setSaving(false)
+    if (error) {
+      toast({
+        title: "Error saving",
+        description: error.message,
+        variant: "destructive",
+      })
+      return
+    }
     const newTagObjects = triggerTags.map((tag) => {
       const existingTag = previousTags.find((pt) => pt.text === tag)
-      if (existingTag) {
-        return existingTag
-      }
+      if (existingTag) return existingTag
       const matchedDefault = DEFAULT_TRIGGERS.find((dt) => dt.text.toLowerCase() === tag.toLowerCase())
-      return {
-        text: tag,
-        category: matchedDefault?.category || "custom",
-      }
+      return { text: tag, category: matchedDefault?.category || "custom" }
     })
     const uniqueTags = [...previousTags]
     newTagObjects.forEach((newTag) => {
-      if (!previousTags.some((pt) => pt.text === newTag.text)) {
-        uniqueTags.push(newTag)
-      }
+      if (!previousTags.some((pt) => pt.text === newTag.text)) uniqueTags.push(newTag)
     })
     setPreviousTags(uniqueTags)
     toast({
@@ -132,7 +128,8 @@ export function useTrackForm(dateTimeValue: string) {
       description: trackingPageCopy.dialogs.entrySaved.description,
     })
     setFormModified(false)
-    router.push("/")
+    const path = typeof redirectTo === "string" ? redirectTo : "/"
+    router.push(path)
   }
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

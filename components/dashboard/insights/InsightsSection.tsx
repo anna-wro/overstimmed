@@ -5,16 +5,7 @@ import { InsightsChart } from './InsightsChart'
 import { QuickInsightsPanel } from './QuickInsightsPanel'
 import { InsightsFooter } from './InsightsFooter'
 import { dashboardCopy } from '@/copy/dashboard'
-
-type TrackingEntry = {
-  timestamp: string
-  energyLevel: number
-  stimulationLevel: number
-  stimulationType: string
-  triggers: string
-  activities: string
-  notes: string
-}
+import type { TrackingEntry } from '@/lib/entries'
 
 type ChartDataPoint = {
   date: string

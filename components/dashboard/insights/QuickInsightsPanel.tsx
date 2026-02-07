@@ -1,16 +1,7 @@
 import { Clock, AlertCircle } from 'lucide-react'
 import { useDashboardInsights } from '@/hooks/features/dashboard/useDashboardInsights'
 import { dashboardCopy } from '@/copy/dashboard'
-
-type TrackingEntry = {
-  timestamp: string
-  energyLevel: number
-  stimulationLevel: number
-  stimulationType: string
-  triggers: string
-  activities: string
-  notes: string
-}
+import type { TrackingEntry } from '@/lib/entries'
 
 type QuickInsightsPanelProps = {
   entries: TrackingEntry[]

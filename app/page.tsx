@@ -1,15 +1,14 @@
 "use client"
 
-import Link from "next/link"
-import { Button } from "@/components/ui/Button"
-import { Activity, Loader2 } from "lucide-react"
-import { ThemeToggle } from "@/components/layout/ThemeToggle"
-import { dashboardCopy } from "@/copy/dashboard"
+import { Loader2 } from "lucide-react"
+import { HeaderCorner } from "@/components/layout/HeaderCorner"
 import { useDashboardData } from "@/hooks/features"
 import { DashboardHeader, EmptyState, LatestEntryCard, InsightsSection, NavigationCards } from "@/components/dashboard"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
+import { errorsCopy } from "@/copy/errors"
 
 export default function Home() {
-  const { latestEntry, entries, recentEntries, stats, loading } = useDashboardData()
+  const { latestEntry, entries, recentEntries, stats, loading, error } = useDashboardData()
 
   if (loading) {
     return (
@@ -19,9 +18,7 @@ export default function Home() {
           <div className="flex justify-center items-center flex-1 min-h-[60vh]">
             <Loader2 className="animate-spin h-8 w-8 text-muted-foreground" />
           </div>
-          <div className="fixed top-6 right-6 z-50">
-            <ThemeToggle />
-          </div>
+          <HeaderCorner />
         </div>
       </main>
     )
@@ -32,6 +29,13 @@ export default function Home() {
       <div className="container mx-auto max-w-5xl">
         <DashboardHeader />
 
+        {error && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertTitle>{errorsCopy.loadEntries.title}</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
         {latestEntry ? <LatestEntryCard latestEntry={latestEntry} /> : <EmptyState />}
         
         {entries.length > 0 && (
@@ -40,9 +44,7 @@ export default function Home() {
 
         <NavigationCards />
 
-        <div className="fixed top-6 right-6 z-50">
-          <ThemeToggle />
-        </div>
+        <HeaderCorner />
       </div>
     </main>
   )

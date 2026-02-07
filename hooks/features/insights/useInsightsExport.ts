@@ -1,5 +1,5 @@
 import { format } from "date-fns"
-import type { TrackingEntry } from "./useInsightsData"
+import type { TrackingEntry } from "@/lib/entries"
 import { insightsPageCopy } from "@/copy/insights"
 
 export function useInsightsExport() {

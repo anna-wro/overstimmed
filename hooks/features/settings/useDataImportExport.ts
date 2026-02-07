@@ -3,9 +3,10 @@ import { useToast } from "@/hooks/shared/useToast"
 import { entriesToCSV, csvToEntries, validateCSV } from "@/utils/CsvUtils"
 import { settingsPageCopy } from "@/copy/settings"
 import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
+import type { TrackingEntry } from "@/lib/entries"
 
 type ImportData = {
-  trackingEntries?: any[]
+  trackingEntries?: TrackingEntry[]
   exportDate?: string
   settings?: AppSettings
 }
@@ -15,8 +16,10 @@ interface UseDataImportExportProps {
   setSettings: (settings: AppSettings) => void
   setOriginalSettings: (settings: AppSettings) => void
   setTheme: (theme: string) => void
-  trackingEntries: any[]
-  setTrackingEntries: (entries: any[]) => void
+  entries: TrackingEntry[]
+  refetchEntries: () => Promise<void>
+  deleteAllEntries: () => Promise<void>
+  insertEntries: (entries: Omit<TrackingEntry, "id">[]) => Promise<void>
 }
 
 export function useDataImportExport({
@@ -24,20 +27,22 @@ export function useDataImportExport({
   setSettings,
   setOriginalSettings,
   setTheme,
-  trackingEntries,
-  setTrackingEntries,
+  entries,
+  refetchEntries,
+  deleteAllEntries,
+  insertEntries,
 }: UseDataImportExportProps) {
   const { toast } = useToast()
   const [importError, setImportError] = useState<string | null>(null)
 
   const exportData = () => {
     if (settings.exportFormat === "json") {
-      const exportData = {
-        trackingEntries,
+      const exportPayload = {
+        trackingEntries: entries,
         exportDate: new Date().toISOString(),
         settings,
       }
-      const dataStr = JSON.stringify(exportData, null, 2)
+      const dataStr = JSON.stringify(exportPayload, null, 2)
       const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`
       const exportFileDefaultName = `energy-tracker-export-${new Date().toISOString().slice(0, 10)}.json`
       const linkElement = document.createElement("a")
@@ -45,7 +50,7 @@ export function useDataImportExport({
       linkElement.setAttribute("download", exportFileDefaultName)
       linkElement.click()
     } else if (settings.exportFormat === "csv") {
-      const csvContent = entriesToCSV(trackingEntries)
+      const csvContent = entriesToCSV(entries)
       const dataUri = `data:text/csv;charset=utf-8,${encodeURIComponent(csvContent)}`
       const exportFileDefaultName = `energy-tracker-export-${new Date().toISOString().slice(0, 10)}.csv`
       const linkElement = document.createElement("a")
@@ -65,14 +70,14 @@ export function useDataImportExport({
     if (!file) return
 
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const isCSV = file.name.toLowerCase().endsWith(".csv")
-        
+        const content = e.target?.result as string
         if (isCSV) {
-          handleCSVImport(e.target?.result as string)
+          await handleCSVImport(content)
         } else {
-          handleJSONImport(e.target?.result as string)
+          await handleJSONImport(content)
         }
       } catch (error) {
         console.error("Import error:", error)
@@ -82,7 +87,7 @@ export function useDataImportExport({
     reader.readAsText(file)
   }
 
-  const handleCSVImport = (csvContent: string) => {
+  const handleCSVImport = async (csvContent: string) => {
     const validation = validateCSV(csvContent)
     if (!validation.valid) {
       throw new Error(validation.message || settingsPageCopy.errors.invalidCSV)
@@ -93,16 +98,14 @@ export function useDataImportExport({
       throw new Error(settingsPageCopy.errors.noValidEntries)
     }
 
-    if (trackingEntries.length > 0) {
-      if (confirm(settingsPageCopy.confirmations.replaceData)) {
-        setTrackingEntries(importedEntries)
-      } else {
-        const mergedEntries = mergeEntries(trackingEntries, importedEntries)
-        setTrackingEntries(mergedEntries)
-      }
-    } else {
-      setTrackingEntries(importedEntries)
-    }
+    const toInsert =
+      entries.length === 0
+        ? importedEntries
+        : confirm(settingsPageCopy.confirmations.replaceData)
+          ? importedEntries
+          : mergeEntries(entries, importedEntries)
+    await insertEntries(normalizeForInsert(toInsert))
+    await refetchEntries()
 
     toast({
       title: settingsPageCopy.toasts.dataImportedCSV.title,
@@ -110,14 +113,13 @@ export function useDataImportExport({
     })
   }
 
-  const handleJSONImport = (jsonContent: string) => {
+  const handleJSONImport = async (jsonContent: string) => {
     const jsonData = JSON.parse(jsonContent) as ImportData
-    
+
     if (!jsonData.trackingEntries || !Array.isArray(jsonData.trackingEntries)) {
       throw new Error(settingsPageCopy.errors.invalidDataFormat)
     }
 
-    // Validate entry format
     for (const entry of jsonData.trackingEntries) {
       if (
         typeof entry.timestamp !== "string" ||
@@ -129,19 +131,15 @@ export function useDataImportExport({
       }
     }
 
-    // Handle entries
-    if (trackingEntries.length > 0) {
-      if (confirm("Do you want to replace your existing data? Click 'OK' to replace or 'Cancel' to merge with existing data.")) {
-        setTrackingEntries(jsonData.trackingEntries)
-      } else {
-        const mergedEntries = mergeEntries(trackingEntries, jsonData.trackingEntries)
-        setTrackingEntries(mergedEntries)
-      }
-    } else {
-      setTrackingEntries(jsonData.trackingEntries)
-    }
+    const toInsert =
+      entries.length === 0
+        ? jsonData.trackingEntries
+        : confirm(settingsPageCopy.confirmations.replaceData)
+          ? jsonData.trackingEntries
+          : mergeEntries(entries, jsonData.trackingEntries)
+    await insertEntries(normalizeForInsert(toInsert))
+    await refetchEntries()
 
-    // Handle settings if present
     if (jsonData.settings) {
       setSettings(jsonData.settings)
       setOriginalSettings(jsonData.settings)
@@ -154,12 +152,15 @@ export function useDataImportExport({
     })
   }
 
-  const mergeEntries = (existing: any[], imported: any[]) => {
-    const entriesMap = new Map()
-    existing.forEach((entry: any) => entriesMap.set(entry.timestamp, entry))
-    imported.forEach((entry: any) => entriesMap.set(entry.timestamp, entry))
+  const mergeEntries = (existing: TrackingEntry[], imported: TrackingEntry[]) => {
+    const entriesMap = new Map<string, TrackingEntry>()
+    existing.forEach((entry) => entriesMap.set(entry.timestamp, entry))
+    imported.forEach((entry) => entriesMap.set(entry.timestamp, entry))
     return Array.from(entriesMap.values())
   }
+
+  const normalizeForInsert = (list: TrackingEntry[]): Omit<TrackingEntry, "id">[] =>
+    list.map(({ id: _id, ...rest }) => rest)
 
   const applyImportedSettings = (importedSettings: AppSettings) => {
     if (importedSettings.theme) setTheme(importedSettings.theme)
@@ -173,12 +174,20 @@ export function useDataImportExport({
     document.documentElement.style.fontSize = `${importedSettings.fontSize / 16}rem`
   }
 
-  const clearAllData = () => {
-    if (confirm("Are you sure you want to delete all your data? This action cannot be undone.")) {
-      setTrackingEntries([])
+  const clearAllData = async () => {
+    if (!confirm(settingsPageCopy.confirmations.clearAllData)) return
+    try {
+      await deleteAllEntries()
+      await refetchEntries()
       toast({
         title: "Data cleared",
         description: "All your data has been deleted.",
+      })
+    } catch {
+      toast({
+        title: "Error",
+        description: "Could not clear data",
+        variant: "destructive",
       })
     }
   }
