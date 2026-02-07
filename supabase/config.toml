@@ -1,0 +1,21 @@
+# Email templates (local Supabase only).
+# See supabase/email-templates/README.md for hosted Dashboard instructions.
+[auth.email.template.confirmation]
+subject = "Confirm your signup"
+content_path = "./supabase/email-templates/confirmation.html"
+
+[auth.email.template.magic_link]
+subject = "Your magic link"
+content_path = "./supabase/email-templates/magic-link.html"
+
+[auth.email.template.email_change]
+subject = "Confirm change of email"
+content_path = "./supabase/email-templates/email-change.html"
+
+[auth.email.template.recovery]
+subject = "Reset password"
+content_path = "./supabase/email-templates/recovery.html"
+
+[auth.email.template.reauthentication]
+subject = "Confirm reauthentication"
+content_path = "./supabase/email-templates/reauthentication.html"
