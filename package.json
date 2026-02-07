@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "email-templates:generate": "tsx supabase/email-templates/generate.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -62,6 +63,7 @@
   },
   "devDependencies": {
     "@types/node": "^22",
+    "tsx": "^4.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8",
