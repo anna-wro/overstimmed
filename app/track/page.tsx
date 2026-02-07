@@ -1,5 +1,8 @@
 "use client"
 
+import { useEffect, useRef } from "react"
+import { useRouter } from "next/navigation"
+import { useTrackUnsaved } from "@/contexts/TrackUnsavedContext"
 import { useTrackForm } from "@/hooks/features/track/useTrackForm"
 import { CustomDateTimePicker } from "@/components/track/CustomDateTimePicker"
 import { LevelSlider } from "@/components/track/LevelSlider"
@@ -19,13 +22,14 @@ import { useState } from "react"
 import { useAppSettings } from "@/hooks/features/settings/useAppSettings"
 
 export default function TrackPage() {
+  const router = useRouter()
   const [dateTimeValue, setDateTimeValue] = useState<string>("")
   const [settings, setSettings] = useAppSettings()
- 
+
   const handleLowSpoonModeToggle = (checked: boolean) => {
     setSettings({ ...settings, lowSpoonMode: checked })
   }
-  
+
   const {
     energyLevel,
     setEnergyLevel,
@@ -42,12 +46,51 @@ export default function TrackPage() {
     notes,
     setNotes,
     formModified,
+    saving,
     showUnsavedDialog,
     setShowUnsavedDialog,
+    setPendingNavigation,
     handleUnsavedDialogAction,
     handleSave,
   } = useTrackForm(dateTimeValue)
- 
+
+  const { setTrackUnsaved } = useTrackUnsaved() ?? {}
+  const openDialogRef = useRef((path: string) => {
+    setPendingNavigation(path)
+    setShowUnsavedDialog(true)
+  })
+  openDialogRef.current = (path: string) => {
+    setPendingNavigation(path)
+    setShowUnsavedDialog(true)
+  }
+  useEffect(() => {
+    if (!setTrackUnsaved) return
+    setTrackUnsaved({
+      hasUnsaved: formModified,
+      openDialog: (path) => openDialogRef.current(path),
+    })
+    return () => setTrackUnsaved(null)
+  }, [formModified, setTrackUnsaved])
+
+  useEffect(() => {
+    if (!formModified) return
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ""
+    }
+    const handlePopState = () => {
+      router.push("/track")
+      setPendingNavigation("__back__")
+      setShowUnsavedDialog(true)
+    }
+    window.addEventListener("beforeunload", handleBeforeUnload)
+    window.addEventListener("popstate", handlePopState)
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+      window.removeEventListener("popstate", handlePopState)
+    }
+  }, [formModified, router, setPendingNavigation, setShowUnsavedDialog])
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8 high-contrast:bg-white dark:high-contrast:bg-black">
   
@@ -115,6 +158,7 @@ export default function TrackPage() {
         open={showUnsavedDialog}
         onOpenChange={setShowUnsavedDialog}
         onAction={handleUnsavedDialogAction}
+        saving={saving}
       />
     </div>
   )

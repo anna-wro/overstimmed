@@ -8,9 +8,10 @@ interface UnsavedChangesDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onAction: (action: "save" | "discard" | "cancel") => void
+  saving?: boolean
 }
 
-export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({ open, onOpenChange, onAction }) => {
+export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({ open, onOpenChange, onAction, saving = false }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-full max-w-[500px]">
@@ -53,10 +54,11 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({ open
             </Button>
             <Button
               onClick={() => onAction("save")}
+              disabled={saving}
               className="justify-center bg-mint-500 hover:bg-mint-600 text-white dark:bg-mint-600 dark:hover:bg-mint-700"
             >
               <Save className="mr-2 h-4 w-4" />
-              {trackingPageCopy.dialogs.unsavedChanges.saveEntry}
+              {saving ? "Saving…" : trackingPageCopy.dialogs.unsavedChanges.saveEntry}
             </Button> 
           </div>
         </DialogFooter>

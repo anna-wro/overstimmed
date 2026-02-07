@@ -3,6 +3,7 @@ import { useTheme } from "next-themes"
 import { Switch } from "@/components/ui/Switch"
 import { Label } from "@/components/ui/Label"
 import { Input } from "@/components/ui/Input"
+import { Button } from "@/components/ui/Button"
 import { Slider } from "@/components/ui/Slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import { Palette } from "lucide-react"
@@ -15,9 +16,11 @@ interface AppearanceSettingsProps {
   onSettingsChange: (settings: AppSettings) => void
   displayName?: string
   onDisplayNameChange?: (value: string) => void
+  onSaveDisplayName?: () => void
+  isSavingDisplayName?: boolean
 }
 
-export function AppearanceSettings({ settings, onSettingsChange, displayName = "", onDisplayNameChange }: AppearanceSettingsProps) {
+export function AppearanceSettings({ settings, onSettingsChange, displayName = "", onDisplayNameChange, onSaveDisplayName, isSavingDisplayName }: AppearanceSettingsProps) {
   const { setTheme } = useTheme()
 
   const handleThemeChange = (value: string) => {
@@ -53,13 +56,21 @@ export function AppearanceSettings({ settings, onSettingsChange, displayName = "
       {onDisplayNameChange && (
         <div className="space-y-2">
           <Label htmlFor="display-name">{settingsPageCopy.appearance.displayName.label}</Label>
-          <Input
-            id="display-name"
-            type="text"
-            placeholder={settingsPageCopy.appearance.displayName.placeholder}
-            value={displayName}
-            onChange={(e) => onDisplayNameChange(e.target.value)}
-          />
+          <div className="flex gap-2">
+            <Input
+              id="display-name"
+              type="text"
+              placeholder={settingsPageCopy.appearance.displayName.placeholder}
+              value={displayName}
+              onChange={(e) => onDisplayNameChange(e.target.value)}
+              className="flex-1"
+            />
+            {onSaveDisplayName && (
+              <Button onClick={onSaveDisplayName} disabled={isSavingDisplayName}>
+                {isSavingDisplayName ? settingsPageCopy.savingButton : settingsPageCopy.saveButton}
+              </Button>
+            )}
+          </div>
         </div>
       )}
       <div className="space-y-2">

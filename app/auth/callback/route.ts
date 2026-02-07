@@ -4,8 +4,8 @@ import { createClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
 
 function safeRedirectPath(next: string | null): string {
-  if (!next || typeof next !== "string") return "/"
-  const path = next.trim()
+  if (next == null || typeof next !== "string") return "/"
+  const path = String(next).trim()
   if (path === "" || !path.startsWith("/") || path.includes("//")) return "/"
   return path
 }

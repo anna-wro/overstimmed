@@ -19,7 +19,7 @@ import {
 export function AuthMenu() {
   const router = useRouter()
   const { user, loading, signOut } = useUser()
-  const { profile } = useProfile()
+  const { profile, loading: profileLoading } = useProfile()
 
   if (loading || !user) return null
 
@@ -29,13 +29,15 @@ export function AuthMenu() {
     router.refresh()
   }
 
-  const displayLabel = (profile?.name?.trim() || undefined) ?? user.email ?? "Account"
+  const displayLabel = profileLoading
+    ? ""
+    : (profile?.name?.trim() || undefined) ?? user.email ?? "Account"
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
-          <User className="h-4 w-4" />
+          {!profileLoading && <User className="h-4 w-4" />}
           <span className="max-w-[120px] truncate sm:max-w-[180px]">{displayLabel}</span>
         </Button>
       </DropdownMenuTrigger>

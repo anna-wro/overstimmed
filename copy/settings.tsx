@@ -92,6 +92,10 @@ export const settingsPageCopy = {
       title: "Settings saved",
       description: "Your preferences have been updated.",
     },
+    settingsSaveFailed: {
+      title: "Could not save",
+      description: "Your changes could not be saved. Try again.",
+    },
     dataExported: {
       title: "Data exported",
       description: (format: string) => `Your data has been exported successfully as ${format.toUpperCase()}.`,
@@ -117,18 +121,4 @@ export const settingsPageCopy = {
     invalidEntryFormat: "Invalid entry format: Missing required fields",
     importFailed: "Failed to import data",
   },
-
-  unsavedChangesDialog: {
-    title: "Save your changes?",
-    description: "You've made changes to your settings that haven't been applied yet.",
-    warning: {
-      title: "Your preferences will be lost",
-      description: "If you leave without saving, your preference changes won't be applied.",
-    },
-    buttons: {
-      keepEditing: "Keep Editing",
-      discardChanges: "Discard Changes",
-      saveChanges: "Save Changes",
-    },
-  },
-}; 
+};

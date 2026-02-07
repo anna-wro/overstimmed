@@ -3,6 +3,8 @@
 import type React from "react"
 import { ThemeProvider, useTheme } from "next-themes"
 import { useEffect } from "react"
+import { ProfileProvider } from "@/contexts/ProfileContext"
+import { TrackUnsavedProvider } from "@/contexts/TrackUnsavedContext"
 
 function AppSettingsSync() {
   const { setTheme } = useTheme()
@@ -34,8 +36,12 @@ export default function ClientLayout({
 }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <AppSettingsSync />
-      {children}
+      <ProfileProvider>
+        <TrackUnsavedProvider>
+          <AppSettingsSync />
+          {children}
+        </TrackUnsavedProvider>
+      </ProfileProvider>
     </ThemeProvider>
   )
 }

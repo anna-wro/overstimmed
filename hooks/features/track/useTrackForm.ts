@@ -72,17 +72,33 @@ export function useTrackForm(dateTimeValue: string) {
     suggestionItemsRef.current = suggestionItemsRef.current.slice(0, suggestions.length)
   }, [suggestions])
 
-  const handleUnsavedDialogAction = (action: "save" | "discard" | "cancel") => {
-    setShowUnsavedDialog(false)
-    if (action === "save") {
-      handleSave(pendingNavigation ?? "/")
-    } else if (action === "discard" && pendingNavigation) {
-      router.push(pendingNavigation)
+  const handleUnsavedDialogAction = async (action: "save" | "discard" | "cancel") => {
+    if (action === "cancel") {
+      setShowUnsavedDialog(false)
+      setPendingNavigation(null)
+      return
     }
-    setPendingNavigation(null)
+    if (action === "discard" && pendingNavigation) {
+      setShowUnsavedDialog(false)
+      if (pendingNavigation === "__back__") {
+        router.back()
+      } else {
+        router.push(pendingNavigation)
+      }
+      setPendingNavigation(null)
+      return
+    }
+    if (action === "save") {
+      const target = pendingNavigation ?? "/"
+      const ok = await handleSave(target)
+      if (ok) {
+        setShowUnsavedDialog(false)
+        setPendingNavigation(null)
+      }
+    }
   }
 
-  const handleSave = async (redirectTo = "/") => {
+  const handleSave = async (redirectTo = "/"): Promise<boolean> => {
     const entry = {
       timestamp: dateTimeValue,
       energyLevel,
@@ -100,7 +116,7 @@ export function useTrackForm(dateTimeValue: string) {
       setSaving(false)
       toast({ title: errorsCopy.sessionExpired.title, description: errorsCopy.sessionExpired.description, variant: "destructive" })
       router.push("/auth/login?next=/track")
-      return
+      return false
     }
     const { error } = await supabase.from("entries").insert(mapEntryToRow(entry, user.id))
     setSaving(false)
@@ -110,7 +126,7 @@ export function useTrackForm(dateTimeValue: string) {
         description: error.message,
         variant: "destructive",
       })
-      return
+      return false
     }
     const newTagObjects = triggerTags.map((tag) => {
       const existingTag = previousTags.find((pt) => pt.text === tag)
@@ -129,7 +145,12 @@ export function useTrackForm(dateTimeValue: string) {
     })
     setFormModified(false)
     const path = typeof redirectTo === "string" ? redirectTo : "/"
-    router.push(path)
+    if (path === "__back__") {
+      router.back()
+    } else {
+      router.push(path)
+    }
+    return true
   }
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -287,6 +308,7 @@ export function useTrackForm(dateTimeValue: string) {
     setFocusedSuggestionIndex,
     formModified,
     setFormModified,
+    saving,
     showUnsavedDialog,
     setShowUnsavedDialog,
     pendingNavigation,
