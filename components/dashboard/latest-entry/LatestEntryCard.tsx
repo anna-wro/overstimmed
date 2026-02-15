@@ -30,8 +30,8 @@ export const LatestEntryCard = ({ latestEntry }: LatestEntryCardProps) => {
     <div className="mb-10">
       <LatestEntryHeader timestamp={latestEntry.timestamp} />
 
-      <Card className="overflow-hidden border-none bg-gradient-to-br from-sand-50/80 to-lavender-50/80 shadow-xl dark:from-lavender-900/30 dark:to-sand-900/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white bg-white dark:bg-lavender-900">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-lavender-400 to-sand-300 high-contrast:bg-primary"></div>
+      <Card className="overflow-hidden border-none bg-linear-to-br from-sand-50/80 to-lavender-50/80 shadow-xl dark:from-lavender-900/30 dark:to-sand-900/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white bg-white dark:bg-lavender-900">
+        <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-lavender-400 to-sand-300 high-contrast:bg-primary"></div>
         <CardContent className="p-0">
           <div className="relative overflow-hidden p-6">
             <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-lavender-200/50 dark:bg-lavender-800/20 high-contrast:hidden"></div>
@@ -71,8 +71,8 @@ export const LatestEntryCard = ({ latestEntry }: LatestEntryCardProps) => {
                     text={getStimulationText(latestEntry.stimulationLevel)}
                     description={getStimulationDescription(latestEntry.stimulationLevel)}
                     icon={<Zap className="h-5 w-5 text-sand-600 dark:text-sand-400" />}
-                    backgroundColorClass="bg-gradient-to-br from-sand-100 to-lavender-100 dark:from-sand-900/30 dark:to-lavender-900/30"
-                    numberColorClass="bg-gradient-to-br from-sand-100 to-lavender-100 text-xl font-bold dark:from-sand-900/30 dark:to-lavender-900/30"
+                    backgroundColorClass="bg-linear-to-br from-sand-100 to-lavender-100 dark:from-sand-900/30 dark:to-lavender-900/30"
+                    numberColorClass="bg-linear-to-br from-sand-100 to-lavender-100 text-xl font-bold dark:from-sand-900/30 dark:to-lavender-900/30"
                     textColorClass="high-contrast:text-foreground"
                     progressColorClass={getStimulationColor(latestEntry.stimulationLevel)}
                     progressBackgroundClass="bg-lavender-100 dark:bg-lavender-900/50"

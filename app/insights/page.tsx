@@ -41,7 +41,7 @@ export default function InsightsPage() {
   const handleExport = () => exportCSV(filteredEntries)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8">
+    <div className="min-h-screen bg-linear-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8">
       <div className="container mx-auto max-w-5xl">
         <InsightsHeader
           timeRange={timeRange}

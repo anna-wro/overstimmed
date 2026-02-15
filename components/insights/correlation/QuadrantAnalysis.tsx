@@ -29,7 +29,7 @@ interface QuadrantAnalysisProps {
 export function QuadrantAnalysis({ data, colors }: QuadrantAnalysisProps) {
   if (data.length === 0) {
     return (
-      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
         <CardHeader>
           <CardTitle>Quadrant Analysis</CardTitle>
           <CardDescription>Understanding your energy-stimulation patterns</CardDescription>
@@ -47,7 +47,7 @@ export function QuadrantAnalysis({ data, colors }: QuadrantAnalysisProps) {
   const dominantQuadrant = [...stats.quadrants].sort((a, b) => b.total - a.total)[0]
 
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle>Quadrant Analysis</CardTitle>
         <CardDescription>Understanding your energy-stimulation patterns</CardDescription>
@@ -104,7 +104,7 @@ export function QuadrantAnalysis({ data, colors }: QuadrantAnalysisProps) {
                     content={({ active, payload }) => {
                       if (active && payload && payload.length) {
                         return (
-                          <div className="bg-background border rounded p-2 text-xs shadow-sm">
+                          <div className="bg-background border rounded p-2 text-xs shadow-xs">
                             <p>Energy: {payload[0].payload.energy}</p>
                             <p>Stimulation: {payload[0].payload.stimulation}</p>
                             <p>Type: {payload[0].payload.type}</p>

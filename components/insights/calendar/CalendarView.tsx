@@ -34,7 +34,7 @@ const getDayColor = (date: Date, entriesByDate: Record<string, any[]>) => {
 
 export default function CalendarView({ selectedDate, onSelectDate, entriesByDate }: CalendarViewProps) {
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle>Calendar View</CardTitle>
         <CardDescription>Select a date to view entries</CardDescription>

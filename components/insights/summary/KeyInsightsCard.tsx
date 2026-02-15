@@ -12,7 +12,7 @@ interface KeyInsightsCardProps {
 
 export default function KeyInsightsCard({ patterns, balancedStatesData }: KeyInsightsCardProps) {
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-lavender-500" />

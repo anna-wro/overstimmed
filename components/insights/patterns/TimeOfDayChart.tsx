@@ -22,7 +22,7 @@ export function TimeOfDayChart({ data, colors }: TimeOfDayChartProps) {
   )?.time
 
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle>Time of Day Analysis</CardTitle>
         <CardDescription>How your energy and stimulation vary throughout the day</CardDescription>
@@ -39,7 +39,7 @@ export function TimeOfDayChart({ data, colors }: TimeOfDayChartProps) {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload
                     return (
-                      <div className="bg-background border rounded p-2 text-xs shadow-sm">
+                      <div className="bg-background border rounded p-2 text-xs shadow-xs">
                         <p className="font-medium capitalize">{label}</p>
                         <p>Energy: {data.energy}</p>
                         <p>Stimulation: {data.stimulation}</p>

@@ -54,7 +54,7 @@ export function EnergyStimulationScatter({ data, colors }: EnergyStimulationScat
   }
 
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle>Energy-Stimulation Correlation</CardTitle>
         <CardDescription>Relationship between your energy and stimulation levels</CardDescription>

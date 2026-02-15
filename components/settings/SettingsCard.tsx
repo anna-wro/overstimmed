@@ -18,7 +18,7 @@ export function SettingsCard({
 }: SettingsCardProps) {
   return (
     <Card className="overflow-hidden border-none shadow-lg high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white">
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-lavender-400 to-sand-300 high-contrast:bg-primary"></div>
+      <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-lavender-400 to-sand-300 high-contrast:bg-primary"></div>
       <CardHeader className="flex flex-row items-center gap-4 bg-sand-100/50 dark:bg-sand-900/20 high-contrast:bg-accent">
         <div className={`rounded-full p-2 ${iconBgColor}`}>
           {icon}

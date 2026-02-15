@@ -70,7 +70,7 @@ export default function ArchivePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-linear-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         <HeaderCorner />
       </div>
@@ -133,7 +133,7 @@ export default function ArchivePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8">
+    <div className="min-h-screen bg-linear-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8">
       <div className="container mx-auto max-w-5xl">
         {error && (
           <Alert variant="destructive" className="mb-6">
@@ -194,7 +194,7 @@ export default function ArchivePage() {
                 {filteredEntries.map((entry) => (
                   <Card
                     key={entry.timestamp}
-                    className="overflow-hidden border bg-white/80 shadow-sm transition-all hover:shadow-md dark:bg-lavender-950/30"
+                    className="overflow-hidden border bg-white/80 shadow-xs transition-all hover:shadow-md dark:bg-lavender-950/30"
                   >
                     <div className="flex flex-col sm:flex-row">
                       <div className="flex items-center justify-between border-b p-3 sm:w-64 sm:border-b-0 sm:border-r">
@@ -255,7 +255,7 @@ export default function ArchivePage() {
                 {filteredEntries.map((entry) => (
                   <Card
                     key={entry.timestamp}
-                    className="overflow-hidden border-2 border-transparent bg-white/80 shadow-md backdrop-blur-sm transition-all hover:border-lavender-200 dark:bg-lavender-950/30 dark:hover:border-lavender-800"
+                    className="overflow-hidden border-2 border-transparent bg-white/80 shadow-md backdrop-blur-xs transition-all hover:border-lavender-200 dark:bg-lavender-950/30 dark:hover:border-lavender-800"
                   >
                     <CardHeader className="border-b bg-sand-100/50 pb-3 pt-3 dark:bg-sand-900/20">
                       <div className="flex items-center justify-between">
@@ -348,7 +348,7 @@ export default function ArchivePage() {
         </div>
 
         {filteredEntries.length === 0 ? (
-          <Card className="border-dashed bg-sand-50/80 shadow-sm backdrop-blur-sm dark:bg-lavender-950/30">
+          <Card className="border-dashed bg-sand-50/80 shadow-xs backdrop-blur-xs dark:bg-lavender-950/30">
             <CardContent className="flex flex-col items-center justify-center p-8 text-center">
               <Filter className="mb-2 h-10 w-10 text-muted-foreground" />
               <h2 className="mb-1 text-xl font-medium">{archivePageCopy.emptyState.title}</h2>

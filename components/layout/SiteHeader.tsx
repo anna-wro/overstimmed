@@ -39,7 +39,7 @@ export function SiteHeader({ showBackButton, backButtonHref = "/" }: SiteHeaderP
               : "Overstimmed home"
           }
         >
-          <h1 className="mb-3 bg-gradient-to-r from-lavender-600 to-sand-500 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent dark:from-lavender-400 dark:to-sand-300 high-contrast:text-foreground high-contrast:bg-clip-border cursor-pointer drop-shadow-lg">
+          <h1 className="mb-3 bg-linear-to-r from-lavender-600 to-sand-500 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent dark:from-lavender-400 dark:to-sand-300 high-contrast:text-foreground high-contrast:bg-clip-border cursor-pointer drop-shadow-lg">
             Overstimmed
           </h1>
         </Link>

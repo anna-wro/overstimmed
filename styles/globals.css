@@ -1,6 +1,191 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@source '../*.{js,ts,jsx,tsx,mdx}';
+
+@custom-variant dark (&:is(.dark *));
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-lavender-50: #f5f3ff;
+  --color-lavender-100: #ede9fe;
+  --color-lavender-200: #ddd6fe;
+  --color-lavender-300: #c4b5fd;
+  --color-lavender-400: #a78bfa;
+  --color-lavender-500: #8b5cf6;
+  --color-lavender-600: #7c3aed;
+  --color-lavender-700: #6d28d9;
+  --color-lavender-800: #5b21b6;
+  --color-lavender-900: #4c1d95;
+  --color-lavender-950: #2e1065;
+
+  --color-sage-50: #f6f7f6;
+  --color-sage-100: #e3e7e3;
+  --color-sage-200: #c6cfc5;
+  --color-sage-300: #a3b1a1;
+  --color-sage-400: #7d8f7a;
+  --color-sage-500: #5f6f5c;
+  --color-sage-600: #4a5548;
+  --color-sage-700: #3c4439;
+  --color-sage-800: #2f342e;
+  --color-sage-900: #272b26;
+  --color-sage-950: #171a16;
+
+  --color-sand-50: #f9f7f4;
+  --color-sand-100: #f0ebe3;
+  --color-sand-200: #e2d8c9;
+  --color-sand-300: #d1bea7;
+  --color-sand-400: #bea083;
+  --color-sand-500: #b08c6c;
+  --color-sand-600: #a07a5e;
+  --color-sand-700: #85634f;
+  --color-sand-800: #6d5244;
+  --color-sand-900: #5a453a;
+  --color-sand-950: #302319;
+
+  --color-blush-50: #fdf6f8;
+  --color-blush-100: #faedf1;
+  --color-blush-200: #f5dbe3;
+  --color-blush-300: #edc0cd;
+  --color-blush-400: #e0a0b3;
+  --color-blush-500: #d27f97;
+  --color-blush-600: #c0607d;
+  --color-blush-700: #a04967;
+  --color-blush-800: #833c56;
+  --color-blush-900: #6d3448;
+  --color-blush-950: #3e1a26;
+
+  --color-mint-50: #f2fbf7;
+  --color-mint-100: #e6f7ef;
+  --color-mint-200: #ceeede;
+  --color-mint-300: #a9dfc5;
+  --color-mint-400: #7cc9a3;
+  --color-mint-500: #57b185;
+  --color-mint-600: #3e906a;
+  --color-mint-700: #327456;
+  --color-mint-800: #2b5d47;
+  --color-mint-900: #254d3b;
+  --color-mint-950: #122b21;
+
+  --color-sky-50: #f4f9fd;
+  --color-sky-100: #e9f3fa;
+  --color-sky-200: #d4e7f5;
+  --color-sky-300: #b0d4ec;
+  --color-sky-400: #84b9df;
+  --color-sky-500: #5a9ad0;
+  --color-sky-600: #3f7dbc;
+  --color-sky-700: #3466a0;
+  --color-sky-800: #2f5584;
+  --color-sky-900: #2a486d;
+  --color-sky-950: #1c2e47;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility tag-input-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  & .badge {
+    display: inline-flex;
+    align-items: center;
+    height: 1.5rem;
+  }
+
+  & input {
+    height: 1.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 1.5rem;
+  }
+}
+
+@utility badge {
+  .tag-input-container & {
+    display: inline-flex;
+    align-items: center;
+    height: 1.5rem;
+  }
+}
 
 @layer base {
   :root {
@@ -132,27 +317,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-@layer utilities {
-  .tag-input-container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .tag-input-container .badge {
-    display: inline-flex;
-    align-items: center;
-    height: 1.5rem;
-  }
-
-  .tag-input-container input {
-    height: 1.5rem;
-    padding-top: 0;
-    padding-bottom: 0;
-    min-height: 1.5rem;
   }
 }

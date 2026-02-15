@@ -15,7 +15,7 @@ export const QuickInsightsPanel = ({ entries }: QuickInsightsPanelProps) => {
       <h3 className="text-lg font-medium mb-4">{dashboardCopy.insights.quickInsights.title}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Time of day insight */}
-        <div className="rounded-lg border bg-white/70 p-4 shadow-sm dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border high-contrast:border-black dark:high-contrast:border-white">
+        <div className="rounded-lg border bg-white/70 p-4 shadow-xs dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border high-contrast:border-black dark:high-contrast:border-white">
           <div className="flex items-center gap-2 mb-2">
             <Clock className="h-4 w-4 text-lavender-500" />
             <h4 className="font-medium">{dashboardCopy.insights.quickInsights.timeOfDay.title}</h4>
@@ -26,7 +26,7 @@ export const QuickInsightsPanel = ({ entries }: QuickInsightsPanelProps) => {
         </div>
 
         {/* Trigger insight */}
-        <div className="rounded-lg border bg-white/70 p-4 shadow-sm dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border high-contrast:border-black dark:high-contrast:border-white">
+        <div className="rounded-lg border bg-white/70 p-4 shadow-xs dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border high-contrast:border-black dark:high-contrast:border-white">
           <div className="flex items-center gap-2 mb-2">
             <AlertCircle className="h-4 w-4 text-mint-500" />
             <h4 className="font-medium">{dashboardCopy.insights.quickInsights.commonTriggers.title}</h4>

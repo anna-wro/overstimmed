@@ -10,7 +10,7 @@ export default function EntryList({ entries }: EntryListProps) {
   return (
     <div className="space-y-4">
       {entries.map((entry: any, index: number) => (
-        <Card key={index} className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+        <Card key={index} className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-3">
               <div className="font-medium">{format(new Date(entry.timestamp), "h:mm a")}</div>

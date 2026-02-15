@@ -26,7 +26,7 @@ export const LevelCard = ({
   progressBackgroundClass,
 }: LevelCardProps) => {
   return (
-    <div className="rounded-xl border bg-white/70 p-4 shadow-sm backdrop-blur-sm dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white">
+    <div className="rounded-xl border bg-white/70 p-4 shadow-xs backdrop-blur-xs dark:bg-lavender-950/30 high-contrast:bg-background high-contrast:border-2 high-contrast:border-black dark:high-contrast:border-white">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className={`mr-3 flex h-10 w-10 items-center justify-center rounded-full ${backgroundColorClass} high-contrast:bg-accent`}>

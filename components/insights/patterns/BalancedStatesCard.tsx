@@ -15,7 +15,7 @@ interface BalancedStatesCardProps {
 
 export function BalancedStatesCard({ data }: BalancedStatesCardProps) {
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Heart className="h-5 w-5 text-mint-500" />

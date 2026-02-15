@@ -9,7 +9,7 @@ interface RecentStatusCardProps {
 
 export default function RecentStatusCard({ mostRecentEntry }: RecentStatusCardProps) {
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Clock className="h-5 w-5 text-lavender-500" />

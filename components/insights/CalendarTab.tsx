@@ -50,7 +50,7 @@ export default function CalendarTab({ filteredEntries }: CalendarTabProps) {
             <EntryList entries={entriesForSelectedDate} />
           </div>
         ) : (
-          <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm h-full">
+          <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs h-full">
             <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
               <Calendar className="h-12 w-12 text-muted-foreground mb-4" />
               <h3 className="text-lg font-medium mb-2">No entries for this date</h3>

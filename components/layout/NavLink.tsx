@@ -34,9 +34,9 @@ export function NavLink({ href, icon, label }: NavLinkProps) {
 
   const baseClassName = cn(
     "group",
-    "flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2",
+    "flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full transition-colors duration-200 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2",
     isActive
-      ? "bg-accent/40 text-accent-foreground shadow"
+      ? "bg-accent/40 text-accent-foreground shadow-sm"
       : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
   )
 

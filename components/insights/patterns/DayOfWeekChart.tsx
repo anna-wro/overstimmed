@@ -27,7 +27,7 @@ export function DayOfWeekChart({ data, colors }: DayOfWeekChartProps) {
   )?.day
 
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle>Day of Week Analysis</CardTitle>
         <CardDescription>How your energy and stimulation vary by day of week</CardDescription>
@@ -44,7 +44,7 @@ export function DayOfWeekChart({ data, colors }: DayOfWeekChartProps) {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload
                     return (
-                      <div className="bg-background border rounded p-2 text-xs shadow-sm">
+                      <div className="bg-background border rounded p-2 text-xs shadow-xs">
                         <p className="font-medium capitalize">{label}</p>
                         <p>Energy: {data.energy}</p>
                         <p>Stimulation: {data.stimulation}</p>

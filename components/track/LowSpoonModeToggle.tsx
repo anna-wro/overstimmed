@@ -14,7 +14,7 @@ export const LowSpoonModeToggle: React.FC<LowSpoonModeToggleProps> = ({
   onToggle 
 }) => {
   return (
-    <div className="flex items-center justify-between p-6 rounded-lg bg-gradient-to-r from-mint-50 to-lavender-50 border border-mint-200 dark:from-mint-950/30 dark:to-lavender-950/30 dark:border-mint-800 high-contrast:bg-accent high-contrast:border-black dark:high-contrast:border-white">
+    <div className="flex items-center justify-between p-6 rounded-lg bg-linear-to-r from-mint-50 to-lavender-50 border border-mint-200 dark:from-mint-950/30 dark:to-lavender-950/30 dark:border-mint-800 high-contrast:bg-accent high-contrast:border-black dark:high-contrast:border-white">
       <div className="flex items-center space-x-4">
         <Zap className="h-6 w-6 text-mint-600 dark:text-mint-400 high-contrast:text-foreground" />
         <div>

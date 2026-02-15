@@ -35,7 +35,7 @@ export default function TriggersTab({ topTriggers, filteredEntries, colors }: Tr
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
         <CardHeader>
           <CardTitle>Common Triggers</CardTitle>
           <CardDescription>The most frequent triggers affecting your stimulation levels</CardDescription>
@@ -61,7 +61,7 @@ export default function TriggersTab({ topTriggers, filteredEntries, colors }: Tr
         </CardContent>
       </Card>
 
-      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
         <CardHeader>
           <CardTitle>Trigger Impact Analysis</CardTitle>
           <CardDescription>How different triggers affect your energy and stimulation</CardDescription>
@@ -160,7 +160,7 @@ export default function TriggersTab({ topTriggers, filteredEntries, colors }: Tr
                         <div className="flex items-center justify-between">
                           <span className="text-xs text-muted-foreground">Comfortable:</span>
                           <Badge
-                            variant={comfortablePercent >= 50 ? "outline" : "secondary"}
+                            variant={comfortablePercent >= 50 ? "outline-solid" : "secondary"}
                             className={
                               comfortablePercent >= 70
                                 ? "bg-mint-100 text-mint-800 dark:bg-mint-900/50 dark:text-mint-300"

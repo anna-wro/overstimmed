@@ -157,7 +157,7 @@ export function FirstVisitModal() {
                       selectedTheme === "system"
                         ? "border-primary ring-2 ring-primary/20"
                         : "border-muted hover:border-primary/50"
-                    } bg-gradient-to-br from-white to-zinc-900 p-4 text-black hover:bg-gradient-to-br hover:from-white hover:to-zinc-800 relative`}
+                    } bg-linear-to-br from-white to-zinc-900 p-4 text-black hover:bg-linear-to-br hover:from-white hover:to-zinc-800 relative`}
                   >
                     <Monitor className="mb-2 h-6 w-6 text-black" />
                     <span className="text-black">System</span>

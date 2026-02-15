@@ -27,7 +27,7 @@ type TrendsTabProps = {
 
 export default function TrendsTab({ chartData, colors }: TrendsTabProps) {
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle>Energy & Stimulation Trends</CardTitle>
         <CardDescription>Track how your energy and stimulation levels change over time</CardDescription>
@@ -44,7 +44,7 @@ export default function TrendsTab({ chartData, colors }: TrendsTabProps) {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload
                     return (
-                      <div className="bg-background border rounded p-2 text-xs shadow-sm">
+                      <div className="bg-background border rounded p-2 text-xs shadow-xs">
                         <p className="font-medium">{label}</p>
                         <p>Energy: {data.energy}</p>
                         <p>Stimulation: {data.stimulation}</p>

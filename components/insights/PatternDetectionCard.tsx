@@ -20,7 +20,7 @@ export function PatternDetectionCard({ patterns }: PatternDetectionCardProps) {
   if (patterns.length === 0) return null
 
   return (
-    <Card className="mb-8 bg-white/80 dark:bg-lavender-950/30 shadow-sm border-lavender-200 dark:border-lavender-800">
+    <Card className="mb-8 bg-white/80 dark:bg-lavender-950/30 shadow-xs border-lavender-200 dark:border-lavender-800">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <AlertCircle className="h-5 w-5 text-lavender-500" />

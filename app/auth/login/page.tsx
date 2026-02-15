@@ -34,7 +34,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-linear-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Sign in</CardTitle>
@@ -88,7 +88,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950">Loading…</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center px-4 bg-linear-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950">Loading…</div>}>
       <LoginForm />
     </Suspense>
   )

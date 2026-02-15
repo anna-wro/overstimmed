@@ -22,7 +22,7 @@ export default function RecommendationCard({
   emptyMessage,
 }: RecommendationCardProps) {
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           {icon}

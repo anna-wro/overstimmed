@@ -22,7 +22,7 @@ export function SummaryCards({
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       {/* Entry Count Card */}
-      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center gap-2">
             <Activity className="h-5 w-5 text-mint-500" />
@@ -51,7 +51,7 @@ export function SummaryCards({
       </Card>
 
       {/* Energy Level Card */}
-      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center gap-2">
             <Battery className="h-5 w-5 text-sand-500" />
@@ -62,7 +62,7 @@ export function SummaryCards({
         <CardContent>
           <div className="h-3 overflow-hidden rounded-full bg-gray-100 p-0.5 dark:bg-gray-800">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blush-400 via-sand-400 to-mint-400 dark:from-blush-500 dark:via-sand-500 dark:to-mint-500"
+              className="h-full rounded-full bg-linear-to-r from-blush-400 via-sand-400 to-mint-400 dark:from-blush-500 dark:via-sand-500 dark:to-mint-500"
               style={{ width: `${avgEnergyLevel * 10}%` }}
             ></div>
           </div>
@@ -75,7 +75,7 @@ export function SummaryCards({
       </Card>
 
       {/* Stimulation Level Card */}
-      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+      <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center gap-2">
             <Zap className="h-5 w-5 text-lavender-500" />
@@ -86,7 +86,7 @@ export function SummaryCards({
         <CardContent>
           <div className="h-3 overflow-hidden rounded-full bg-gray-100 p-0.5 dark:bg-gray-800">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-sand-400 via-lavender-400 to-blush-400 dark:from-sand-500 dark:via-lavender-500 dark:to-blush-500"
+              className="h-full rounded-full bg-linear-to-r from-sand-400 via-lavender-400 to-blush-400 dark:from-sand-500 dark:via-lavender-500 dark:to-blush-500"
               style={{ width: `${avgStimulationLevel * 10}%` }}
             ></div>
           </div>

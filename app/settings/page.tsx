@@ -80,7 +80,7 @@ export default function SettingsPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8 high-contrast:bg-white dark:high-contrast:bg-black">
+    <div className="min-h-screen bg-linear-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 px-4 py-8 high-contrast:bg-white dark:high-contrast:bg-black">
       <div className="container mx-auto max-w-3xl">
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-3xl font-bold">{settingsPageCopy.pageTitle}</h1>

@@ -30,7 +30,7 @@ export default function DateSummaryCard({ selectedDate, entries }: DateSummaryCa
   const mostCommonExperienceType = sortedTypes.length > 0 ? sortedTypes[0][0] : "neutral"
 
   return (
-    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-sm">
+    <Card className="bg-white/80 dark:bg-lavender-950/30 shadow-xs">
       <CardHeader>
         <CardTitle>{format(selectedDate, "MMMM d, yyyy")}</CardTitle>
         <CardDescription>

@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-gradient-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 high-contrast:bg-white dark:high-contrast:bg-black`}>
+      <body className={`${inter.className} bg-linear-to-b from-sand-50 to-lavender-50 dark:from-lavender-950 dark:to-sand-950 high-contrast:bg-white dark:high-contrast:bg-black`}>
         <ClientLayout>
           <ConditionalHeader />
           {children}
