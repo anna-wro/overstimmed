@@ -1,3 +1,4 @@
+/** @fileoverview Grid of summary statistics cards for the dashboard. */
 import { dashboardCopy } from '@/copy/dashboard'
 
 type DashboardStats = {

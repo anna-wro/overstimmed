@@ -1,3 +1,4 @@
+/** @fileoverview Exports filtered tracking entries as a downloadable CSV file. */
 import { format } from "date-fns"
 import type { TrackingEntry } from "@/lib/entries"
 import { insightsPageCopy } from "@/copy/insights"

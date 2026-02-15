@@ -1,3 +1,4 @@
+/** @fileoverview Footer with link to detailed insights page. */
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'

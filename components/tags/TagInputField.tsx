@@ -1,3 +1,4 @@
+/** @fileoverview Text input field for searching and adding tags. */
 import React from "react"
 import { Input } from "@/components/ui/Input"
 import { Search } from "lucide-react"

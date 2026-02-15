@@ -1,3 +1,4 @@
+/** @fileoverview Badge component for displaying status or category labels. */
 import type * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 

@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Chart wrapper components and utilities for Recharts integration. */
 import {
   LineChart as RechartsLineChart,
   Line,

@@ -1,3 +1,4 @@
+/** @fileoverview UI copy strings for the archive page. */
 export const archivePageCopy = {
   pageTitle: "Overstimmed",
   navigation: {

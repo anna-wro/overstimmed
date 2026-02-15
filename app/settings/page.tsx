@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Settings page for appearance, accessibility, and data management. */
+
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"

@@ -1,3 +1,4 @@
+/** @fileoverview UI copy strings for error messages. */
 export const errorsCopy = {
   loadEntries: {
     title: "Could not load entries",

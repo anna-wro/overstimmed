@@ -1,3 +1,4 @@
+/** @fileoverview UI copy strings for the insights page. */
 export const insightsPageCopy = {
   pageTitle: "Insights & Patterns",
   pageDescription: "Analyze your energy and stimulation data to identify patterns",

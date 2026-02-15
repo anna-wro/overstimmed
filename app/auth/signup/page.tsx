@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Sign-up page with email/password registration. */
+
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"

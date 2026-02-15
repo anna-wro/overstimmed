@@ -1,3 +1,4 @@
+/** @fileoverview Color, text, and icon formatters for energy and stimulation levels. */
 import { ReactNode } from 'react'
 import { Battery, BatteryLow } from 'lucide-react'
 

@@ -1,3 +1,4 @@
+/** @fileoverview Aggregates entries, derived stats, and insights for the dashboard page. */
 import { useEntries } from "./useEntries"
 import { useDashboardDerived } from "./dashboard/useDashboardDerived"
 

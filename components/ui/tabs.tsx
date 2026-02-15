@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Tab navigation component built on Radix UI. */
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 

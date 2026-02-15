@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Archive page for browsing and managing past tracking entries. */
+
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/Button"

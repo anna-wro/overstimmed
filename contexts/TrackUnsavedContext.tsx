@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview React context tracking unsaved changes in the tracking form. */
+
 import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react"
 
 export type TrackUnsavedValue = {

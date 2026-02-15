@@ -1,3 +1,4 @@
+/** @fileoverview Appearance settings panel for theme selection. */
 import type React from "react"
 import { useTheme } from "next-themes"
 import { Switch } from "@/components/ui/Switch"

@@ -1,8 +1,8 @@
-import { useEffect, type RefObject } from "react"
-
 /**
- * Calls handler when a mousedown happens outside all of the given refs.
+ * @fileoverview Calls a handler when a click occurs outside the given ref elements.
+ * @example useClickOutside(handleClose, dropdownRef, buttonRef)
  */
+import { useEffect, type RefObject } from "react"
 export function useClickOutside(
   handler: () => void,
   ...refs: RefObject<HTMLElement | null>[]

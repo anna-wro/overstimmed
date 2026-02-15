@@ -1,7 +1,4 @@
-/**
- * Shared layout and email definitions for Supabase Auth templates.
- * Generated files preserve Go template vars (e.g. {{ .ConfirmationURL }}) for Supabase.
- */
+/** @fileoverview Shared HTML partials and styles for Supabase email templates. */
 
 /** Colors (match app palette: tailwind lavender/sand). */
 const COLORS = {

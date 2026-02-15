@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Journal page for writing and reviewing journal entries. */
+
 import { useJournalEntries } from "@/hooks/features/journal/useJournalEntries"
 import {
   JournalHeader,

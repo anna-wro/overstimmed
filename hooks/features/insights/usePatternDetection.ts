@@ -1,3 +1,4 @@
+/** @fileoverview Detects recurring patterns in tracking entries: high stimulation, low energy, and positive experiences. */
 import { useMemo } from "react"
 import type { TrackingEntry } from "@/lib/entries"
 import { insightsPageCopy } from "@/copy/insights"

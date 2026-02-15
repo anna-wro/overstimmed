@@ -1,3 +1,4 @@
+/** @fileoverview Supportive message generator based on energy and stimulation levels. */
 import { ReactElement } from 'react'
 import { Battery, Shield, Heart, Sparkles, Activity, Zap } from 'lucide-react'
 import { dashboardCopy } from '@/copy/dashboard'

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Generic localStorage-backed state hook with SSR safety.
+ * @example const [value, setValue] = useLocalStorage<string>('key', 'default')
+ */
 import { useState, useEffect, useRef } from "react"
 
 export function useLocalStorage<T>(key: string, defaultValue: T): [T, (value: T) => void] {

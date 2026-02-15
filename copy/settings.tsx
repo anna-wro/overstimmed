@@ -1,3 +1,4 @@
+/** @fileoverview UI copy strings for the settings page. */
 export const settingsPageCopy = {
   pageTitle: "Settings",
   pageDescription: "Customize your experience and manage your data",

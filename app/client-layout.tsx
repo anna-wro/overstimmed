@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Client-side layout wrapper with providers and toast container. */
+
 import type React from "react"
 import { ThemeProvider, useTheme } from "next-themes"
 import { useEffect } from "react"

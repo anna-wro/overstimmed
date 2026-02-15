@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Dashboard page displaying latest entry, stats, and insights. */
+
 import { Loader2 } from "lucide-react"
 import { HeaderCorner } from "@/components/layout/HeaderCorner"
 import { useDashboardData } from "@/hooks/features"

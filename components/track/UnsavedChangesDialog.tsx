@@ -1,3 +1,4 @@
+/** @fileoverview Confirmation dialog warning about unsaved tracking form changes. */
 import React from "react"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/Dialog"
 import { Button } from "@/components/ui/Button"

@@ -1,3 +1,4 @@
+/** @fileoverview Badge displaying the experience type with color coding. */
 import { dashboardCopy } from '@/copy/dashboard'
 
 type ExperienceTypeBadgeProps = {

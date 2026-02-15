@@ -1,3 +1,4 @@
+/** @fileoverview Quadrant analysis chart breaking down energy-stimulation combinations. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import {
   ScatterChart,

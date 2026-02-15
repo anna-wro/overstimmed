@@ -1,3 +1,4 @@
+/** @fileoverview Submit button for saving a tracking entry. */
 import React from "react"
 import { Button } from "@/components/ui/Button"
 import { Save } from "lucide-react"

@@ -1,3 +1,4 @@
+/** @fileoverview Card displaying detected behavioral patterns with severity badges. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { AlertCircle, AlertTriangle, Zap, Battery, Activity, Info } from "lucide-react"
 import { cn } from "@/lib/utils"

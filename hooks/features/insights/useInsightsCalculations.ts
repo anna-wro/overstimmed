@@ -1,3 +1,4 @@
+/** @fileoverview Comprehensive insights calculations: averages, charts, triggers, time/day analysis, correlations, and environmental factors. */
 import { useMemo } from "react"
 import { format } from "date-fns"
 import type { TrackingEntry } from "@/lib/entries"

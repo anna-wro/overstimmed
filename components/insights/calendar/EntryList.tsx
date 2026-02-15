@@ -1,3 +1,4 @@
+/** @fileoverview List of tracking entries for a selected calendar date. */
 import { Card, CardContent } from "@/components/ui/Card"
 import { format } from "date-fns"
 import { getExperienceTypeText, getExperienceTypeColor } from "@/utils/experienceTypeHelpers"

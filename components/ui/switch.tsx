@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Toggle switch component built on Radix UI. */
 import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
 

@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Tracking page for logging energy, stimulation, and experience data. */
+
 import { useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useTrackUnsaved } from "@/contexts/TrackUnsavedContext"

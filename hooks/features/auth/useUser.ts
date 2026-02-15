@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Hook for accessing the authenticated Supabase user. */
+
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { User } from "@supabase/supabase-js"

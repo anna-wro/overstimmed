@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Calendar view tab for browsing entries by date. */
 import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/Card"
 import { Calendar } from "@/components/ui/Calendar"

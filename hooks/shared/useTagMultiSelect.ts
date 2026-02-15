@@ -1,3 +1,4 @@
+/** @fileoverview Multi-select tag input with suggestions, keyboard navigation, and localStorage persistence. */
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useClickOutside } from "./useClickOutside"
 import { useLocalStorage } from "./useLocalStorage"

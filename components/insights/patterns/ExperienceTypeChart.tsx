@@ -1,3 +1,4 @@
+/** @fileoverview Pie chart showing distribution of positive, neutral, and negative experiences. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "@/components/ui/Chart"
 

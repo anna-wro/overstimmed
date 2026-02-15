@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview React context providing the authenticated user's display name profile. */
+
 import { createContext, useContext, useState, useEffect, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { Profile, ProfileUpdate } from "@/lib/profile"

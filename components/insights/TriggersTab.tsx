@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Triggers analysis tab with bar chart of most common triggers. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Badge } from "@/components/ui/Badge"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "@/components/ui/Chart"

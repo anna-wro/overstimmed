@@ -1,3 +1,4 @@
+/** @fileoverview Header for the latest entry card with timestamp and experience badge. */
 import { format } from 'date-fns'
 import { Clock } from 'lucide-react'
 import { dashboardCopy } from '@/copy/dashboard'

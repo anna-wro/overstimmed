@@ -1,3 +1,4 @@
+/** @fileoverview Card displaying the most recent tracking entry with levels and details. */
 import { Zap } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/Card'
 import { SupportiveMessage } from '../shared/SupportiveMessage'

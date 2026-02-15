@@ -1,3 +1,4 @@
+/** @fileoverview UI copy strings for the dashboard page. */
 export const dashboardCopy = {
   // Main header
   header: {

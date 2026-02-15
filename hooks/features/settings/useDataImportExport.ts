@@ -1,3 +1,4 @@
+/** @fileoverview Import/export tracking data as CSV with validation and error handling. */
 import { useState } from "react"
 import { useToast } from "@/hooks/shared/useToast"
 import { entriesToCSV, csvToEntries, validateCSV } from "@/utils/CsvUtils"

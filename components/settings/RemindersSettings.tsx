@@ -1,3 +1,4 @@
+/** @fileoverview Reminder notification settings panel. */
 import type React from "react"
 import { Switch } from "@/components/ui/Switch"
 import { Label } from "@/components/ui/Label"

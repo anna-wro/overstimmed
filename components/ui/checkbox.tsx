@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Checkbox input component built on Radix UI. */
 import * as React from "react"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { Check } from "lucide-react"

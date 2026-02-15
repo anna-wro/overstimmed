@@ -1,3 +1,5 @@
+/** @fileoverview Barrel exports for feature hooks. */
+
 // Dashboard hooks
 export { useDashboardData } from './useDashboardData'
 export { useEntries } from './useEntries'

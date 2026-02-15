@@ -1,3 +1,4 @@
+/** @fileoverview Predefined feeling/emotion tag constants with categories. */
 import {
   Heart,
   CloudRain,

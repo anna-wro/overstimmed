@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Login page with email/password authentication. */
+
 import { Suspense, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"

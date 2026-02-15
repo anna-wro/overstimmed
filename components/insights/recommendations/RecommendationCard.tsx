@@ -1,3 +1,4 @@
+/** @fileoverview Individual recommendation card with icon and description. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 
 interface Recommendation {

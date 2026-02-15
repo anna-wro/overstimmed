@@ -1,3 +1,4 @@
+/** @fileoverview Server-side Supabase client using cookie store. */
 
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";

@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Trends tab with energy and stimulation line chart over time. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import {
   LineChart,

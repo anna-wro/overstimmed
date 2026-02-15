@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Range slider component built on Radix UI. */
 import * as React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 

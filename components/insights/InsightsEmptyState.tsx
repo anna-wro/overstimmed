@@ -1,3 +1,4 @@
+/** @fileoverview Empty state for the insights page when no data is available. */
 import Link from "next/link"
 import { Button } from "@/components/ui/Button"
 import { Card, CardContent } from "@/components/ui/Card"

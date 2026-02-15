@@ -1,3 +1,4 @@
+/** @fileoverview Auth proxy that redirects unauthenticated users and prevents authed users from accessing login. */
 import { type NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/middleware";
 

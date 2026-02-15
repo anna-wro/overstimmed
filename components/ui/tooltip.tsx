@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Tooltip component built on Radix UI. */
 import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 

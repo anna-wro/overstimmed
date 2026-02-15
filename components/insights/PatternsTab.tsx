@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Patterns tab with time-of-day, day-of-week, and experience charts. */
 import {
   TimeOfDayChart,
   DayOfWeekChart,

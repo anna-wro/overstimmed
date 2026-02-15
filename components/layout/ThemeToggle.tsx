@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Theme toggle button cycling through light, dark, and system modes. */
+
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/Button"

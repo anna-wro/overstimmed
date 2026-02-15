@@ -1,3 +1,4 @@
+/** @fileoverview Experience type selector with positive, neutral, and negative options. */
 import React from "react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Label } from "@/components/ui/Label"

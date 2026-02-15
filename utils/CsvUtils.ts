@@ -1,3 +1,4 @@
+/** @fileoverview CSV serialization, parsing, and validation for tracking entries. */
 import { format } from "date-fns"
 import type { TrackingEntry } from "@/lib/entries"
 

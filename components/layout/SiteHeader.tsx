@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Site-wide header with navigation and user controls. */
+
 import type React from "react"
 
 import Link from "next/link"

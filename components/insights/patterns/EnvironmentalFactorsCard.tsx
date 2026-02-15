@@ -1,3 +1,4 @@
+/** @fileoverview Card analyzing environmental factors and their impact on energy. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Badge } from "@/components/ui/Badge"
 import { Home } from "lucide-react"

@@ -1,3 +1,4 @@
+/** @fileoverview Navigation cards linking to track, archive, and settings pages. */
 import Link from 'next/link'
 import { Activity, Calendar, Sliders, ArrowRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/Card'

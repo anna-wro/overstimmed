@@ -1,3 +1,4 @@
+/** @fileoverview Expandable details section for the latest tracking entry. */
 import { AlertCircle, Activity, FileText } from 'lucide-react'
 import { dashboardCopy } from '@/copy/dashboard'
 

@@ -1,3 +1,4 @@
+/** @fileoverview Panel displaying quick pattern insights on the dashboard. */
 import { Clock, AlertCircle } from 'lucide-react'
 import { useDashboardInsights } from '@/hooks/features/dashboard/useDashboardInsights'
 import { dashboardCopy } from '@/copy/dashboard'

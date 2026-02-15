@@ -1,3 +1,4 @@
+/** @fileoverview Manages journal entries: create, edit, delete, and load with localStorage persistence. */
 import { useState } from "react"
 import { useToast } from "@/hooks/shared/useToast"
 import { useLocalStorage } from "@/hooks/shared/useLocalStorage"

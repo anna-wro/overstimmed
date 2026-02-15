@@ -1,3 +1,4 @@
+/** @fileoverview Badge color and icon helpers for detected behavioral patterns. */
 import { AlertTriangle, Zap, Battery, Activity, Info, AlertCircle } from "lucide-react"
 
 export const getPatternBadgeColor = (severity: string): string => {

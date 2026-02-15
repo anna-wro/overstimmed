@@ -1,3 +1,4 @@
+/** @fileoverview Utility functions for the tracking form. */
 import React from "react"
 
 export type CategoryType = {

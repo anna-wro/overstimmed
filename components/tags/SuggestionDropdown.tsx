@@ -1,3 +1,4 @@
+/** @fileoverview Dropdown container for tag suggestion list. */
 import React, { useState, useRef, useEffect } from "react"
 import { CategoryFilter } from "./CategoryFilter"
 import { SuggestionList } from "./SuggestionList"

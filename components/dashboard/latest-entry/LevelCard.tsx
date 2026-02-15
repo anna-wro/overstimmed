@@ -1,3 +1,4 @@
+/** @fileoverview Card displaying an energy or stimulation level with progress bar. */
 import { ReactNode } from 'react'
 
 type LevelCardProps = {

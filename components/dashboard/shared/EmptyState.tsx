@@ -1,3 +1,4 @@
+/** @fileoverview Empty state placeholder when no tracking entries exist. */
 import Link from 'next/link'
 import { AlertCircle } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/Card'

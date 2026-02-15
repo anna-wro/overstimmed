@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Welcome modal shown on first visit with app introduction. */
+
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import {

@@ -1,3 +1,4 @@
+/** @fileoverview Scrollable list of tag suggestions with keyboard navigation. */
 import React from "react"
 import { Tag } from "@/hooks/shared/useTagMultiSelect"
 import { getCategoryIcon, CategoryType } from "../track/utils"

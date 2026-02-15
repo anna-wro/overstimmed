@@ -1,3 +1,4 @@
+/** @fileoverview Reusable card wrapper for settings sections. */
 import type React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 

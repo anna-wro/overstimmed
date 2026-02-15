@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Calendar date picker component built on react-day-picker. */
 import type * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"

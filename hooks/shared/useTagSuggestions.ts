@@ -1,3 +1,4 @@
+/** @fileoverview Filtered tag suggestions based on search query, selected categories, and existing tags. */
 import { useEffect, useState } from "react"
 import { TriggerTag, DEFAULT_TRIGGERS } from "@/consts/triggerConstants"
 import { useLocalStorage } from "./useLocalStorage"

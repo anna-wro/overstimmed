@@ -1,3 +1,4 @@
+/** @fileoverview Contextual supportive message based on current energy and stimulation levels. */
 import { getSupportiveMessage } from '@/utils/dashboardHelpers'
 
 type SupportiveMessageProps = {

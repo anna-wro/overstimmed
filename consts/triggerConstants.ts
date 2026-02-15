@@ -1,3 +1,4 @@
+/** @fileoverview Predefined trigger tag constants with categories. */
 import { Ear, Eye, Hand, Coffee, Globe, Thermometer, Users, Heart, Star } from "lucide-react"
 
 export type TriggerCategory = {

@@ -1,3 +1,4 @@
+/** @fileoverview Supabase client factory for proxy/middleware with cookie-based auth. */
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 

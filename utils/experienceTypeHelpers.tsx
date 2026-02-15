@@ -1,3 +1,4 @@
+/** @fileoverview Color and label helpers for positive, neutral, and negative experience types. */
 export const getExperienceTypeText = (type: string): string => {
   if (type === "positive") return "Positive/Energizing"
   if (type === "neutral") return "Neutral/Balanced"

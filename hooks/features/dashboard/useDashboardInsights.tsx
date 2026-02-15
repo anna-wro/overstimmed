@@ -1,3 +1,4 @@
+/** @fileoverview Quick insight generators for dashboard time-of-day and trigger patterns. */
 import { dashboardCopy } from '@/copy/dashboard'
 import type { TrackingEntry } from '@/lib/entries'
 

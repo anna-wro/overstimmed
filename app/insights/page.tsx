@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Insights page with charts, patterns, and data analysis. */
+
 import { useInsightsData } from "@/hooks/features/insights/useInsightsData"
 import { useInsightsCalculations } from "@/hooks/features/insights/useInsightsCalculations"
 import { usePatternDetection } from "@/hooks/features/insights/usePatternDetection"

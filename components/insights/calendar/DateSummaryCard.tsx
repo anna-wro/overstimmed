@@ -1,3 +1,4 @@
+/** @fileoverview Summary card for a selected date showing averages and experience counts. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Battery, Zap, AlertCircle } from "lucide-react"
 import { format } from "date-fns"

@@ -1,3 +1,4 @@
+/** @fileoverview Root layout with font, theme provider, and conditional header. */
 import type React from "react"
 import type { Metadata } from "next"
 import "@/styles/globals.css"

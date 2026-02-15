@@ -1,3 +1,4 @@
+/** @fileoverview Card showing recent tracking status and trends. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Clock } from "lucide-react"
 import { format } from "date-fns"

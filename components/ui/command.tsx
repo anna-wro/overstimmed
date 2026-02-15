@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Command palette component built on cmdk. */
 import * as React from "react"
 import { type DialogProps } from "@radix-ui/react-dialog"
 import { Command as CommandPrimitive } from "cmdk"

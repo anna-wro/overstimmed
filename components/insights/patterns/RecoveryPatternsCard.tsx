@@ -1,3 +1,4 @@
+/** @fileoverview Card analyzing recovery patterns after high-stimulation episodes. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Badge } from "@/components/ui/Badge"
 import { Leaf } from "lucide-react"

@@ -1,3 +1,4 @@
+/** @fileoverview Dashboard insights section combining chart, stats, and quick insights. */
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/Card'
 import { InsightsHeader } from './InsightsHeader'
 import { InsightsStatsGrid } from './InsightsStatsGrid'

@@ -1,3 +1,4 @@
+/** @fileoverview Journal page header. */
 import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
 import { journalPageCopy } from "@/copy/journal"

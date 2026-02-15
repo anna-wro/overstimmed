@@ -1,3 +1,4 @@
+/** @fileoverview UI copy strings for the journal page. */
 export const journalPageCopy = {
   pageTitle: "Overstimmed",
   navigation: {

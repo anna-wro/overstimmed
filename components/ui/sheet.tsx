@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Slide-out sheet/drawer component built on Radix UI Dialog. */
 import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"

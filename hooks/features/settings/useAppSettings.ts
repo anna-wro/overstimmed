@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Application settings persisted to localStorage with sensible defaults.
+ * @example const [settings, setSettings] = useAppSettings()
+ */
 import { useLocalStorage } from "@/hooks/shared/useLocalStorage"
 
 export type AppSettings = {

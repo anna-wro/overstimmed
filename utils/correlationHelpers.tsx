@@ -1,3 +1,4 @@
+/** @fileoverview Quadrant statistics calculator for energy-stimulation correlation data. */
 type CorrelationDataPoint = {
   energy: number
   stimulation: number

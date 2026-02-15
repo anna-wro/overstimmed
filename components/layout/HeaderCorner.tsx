@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Top-right corner of the header with theme toggle and auth menu. */
+
 import { AuthMenu } from "@/components/layout/AuthMenu"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
 

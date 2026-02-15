@@ -1,3 +1,4 @@
+/** @fileoverview Header label and toggle button for the tag input. */
 import React from "react"
 import { Button } from "@/components/ui/Button"
 import { ChevronDown, ChevronUp } from "lucide-react"

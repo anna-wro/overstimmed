@@ -1,3 +1,4 @@
+/** @fileoverview Recommendation generator producing personalized suggestions from tracking data. */
 import { Battery, Zap, Calendar, Clock, Activity, Lightbulb, AlertCircle } from "lucide-react"
 
 interface Recommendation {

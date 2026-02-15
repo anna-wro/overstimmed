@@ -1,3 +1,4 @@
+/** @fileoverview Header for the dashboard insights section. */
 import Link from 'next/link'
 import { TrendingUp } from 'lucide-react'
 import { Button } from '@/components/ui/Button'

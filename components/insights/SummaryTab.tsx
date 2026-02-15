@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Summary tab combining cards, experience breakdown, and key insights. */
 import { RecentStatusCard, ExperienceBreakdownCard, KeyInsightsCard } from "./summary"
 
 type SummaryTabProps = {

@@ -1,3 +1,4 @@
+/** @fileoverview Dashboard page header with title and track button. */
 import Link from 'next/link'
 import { BarChart3 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'

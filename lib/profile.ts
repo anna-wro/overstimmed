@@ -1,6 +1,4 @@
-/**
- * Types and helpers for user profile (name, theme prefs) stored in Supabase.
- */
+/** @fileoverview Supabase profile CRUD operations: fetch and update display name. */
 
 export type Profile = {
   id: string

@@ -1,3 +1,4 @@
+/** @fileoverview Data management settings for import, export, and deletion. */
 import type React from "react"
 import { useRef } from "react"
 import { Label } from "@/components/ui/Label"

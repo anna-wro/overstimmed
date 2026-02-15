@@ -1,3 +1,4 @@
+/** @fileoverview Complete tag multi-select input combining all tag sub-components. */
 import React from "react"
 import { useClickOutside } from "@/hooks/shared/useClickOutside"
 import { TagBadge } from "./TagBadge"

@@ -1,3 +1,4 @@
+/** @fileoverview Barrel exports for settings components. */
 export { SettingsCard } from "./SettingsCard"
 export { AppearanceSettings } from "./AppearanceSettings"
 export { RemindersSettings } from "./RemindersSettings"

@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview User authentication dropdown menu with sign out. */
+
 import { useRouter } from "next/navigation"
 import { LogOut, Settings, User } from "lucide-react"
 import { useUser, useProfile } from "@/hooks/features"

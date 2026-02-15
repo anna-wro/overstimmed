@@ -1,3 +1,4 @@
+/** @fileoverview Line chart showing energy and stimulation trends over time. */
 import { LineChart } from 'lucide-react'
 import {
   LineChart as RechartsLineChart,

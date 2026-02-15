@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Conditionally renders the site header based on the current route. */
+
 import { usePathname } from "next/navigation"
 import { SiteHeader } from "@/components/layout/SiteHeader"
 

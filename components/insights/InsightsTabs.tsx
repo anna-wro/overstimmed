@@ -1,3 +1,4 @@
+/** @fileoverview Tab container for all insights analysis views. */
 import { useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 import { 

@@ -1,3 +1,4 @@
+/** @fileoverview Removable tag badge displaying selected tag text. */
 import React from "react"
 import { Badge } from "@/components/ui/Badge"
 import { X } from "lucide-react"

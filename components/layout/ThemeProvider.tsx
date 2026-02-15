@@ -1,4 +1,7 @@
 "use client"
+
+/** @fileoverview next-themes provider with system, light, and dark mode support. */
+
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import type { ThemeProviderProps } from "next-themes"
 

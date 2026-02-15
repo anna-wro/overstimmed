@@ -1,3 +1,4 @@
+/** @fileoverview Summary statistic cards for entry count, energy, and stimulation averages. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Activity, Battery, Zap } from "lucide-react"
 import { insightsPageCopy } from "@/copy/insights"

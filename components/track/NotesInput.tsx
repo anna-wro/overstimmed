@@ -1,3 +1,4 @@
+/** @fileoverview Notes text area for the tracking form. */
 import React from "react"
 import { Label } from "@/components/ui/Label"
 import { Textarea } from "@/components/ui/Textarea"

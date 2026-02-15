@@ -1,3 +1,4 @@
+/** @fileoverview Main tracking form card assembling all input controls. */
 import React from "react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card"
 

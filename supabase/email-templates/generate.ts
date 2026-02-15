@@ -1,9 +1,5 @@
 #!/usr/bin/env node
-/**
- * Generates Supabase Auth email HTML files from shared layout and definitions.
- * Run: npm run email-templates:generate
- * Or: npx tsx supabase/email-templates/generate.ts
- */
+/** @fileoverview Script to generate Supabase email templates from shared partials. */
 
 import fs from 'fs';
 import path from 'path';

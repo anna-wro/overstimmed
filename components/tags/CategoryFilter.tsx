@@ -1,3 +1,4 @@
+/** @fileoverview Category filter buttons for narrowing tag suggestions. */
 import React from "react"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"

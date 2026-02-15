@@ -1,3 +1,4 @@
+/** @fileoverview UI copy strings for the tracking page. */
 export const trackingPageCopy = {
   lowSpoonMode: {
     label: {

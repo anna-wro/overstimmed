@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Correlation analysis tab with scatter plot and quadrant breakdown. */
 import { EnergyStimulationScatter, QuadrantAnalysis } from "./correlation"
 
 type CorrelationDataPoint = {

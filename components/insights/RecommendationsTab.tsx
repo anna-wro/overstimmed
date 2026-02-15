@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Recommendations tab with personalized suggestions based on tracking data. */
 import { Battery, Zap, Clock } from "lucide-react"
 import { generateRecommendations } from "@/utils/recommendations"
 import { RecommendationCard } from "./recommendations"

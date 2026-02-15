@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Derived dashboard statistics and chart data from tracking entries.
+ * @example const { latestEntry, recentEntries, stats } = useDashboardDerived(entries)
+ */
 import { useMemo } from "react"
 import { subDays, format } from "date-fns"
 import type { TrackingEntry } from "@/lib/entries"

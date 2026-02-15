@@ -1,3 +1,4 @@
+/** @fileoverview Slider control for setting energy or stimulation level. */
 import React from "react"
 import { Button } from "@/components/ui/Button"
 import { Slider } from "@/components/ui/Slider"

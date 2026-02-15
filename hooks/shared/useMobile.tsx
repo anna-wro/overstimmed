@@ -1,3 +1,4 @@
+/** @fileoverview Returns whether the viewport width is below the mobile breakpoint (768px). */
 import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768

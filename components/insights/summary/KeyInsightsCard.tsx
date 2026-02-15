@@ -1,3 +1,4 @@
+/** @fileoverview Card highlighting key insights from tracking data. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Battery, Zap, Calendar, Clock, Activity, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"

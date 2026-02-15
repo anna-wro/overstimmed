@@ -1,3 +1,4 @@
+/** @fileoverview Bar chart showing energy and stimulation averages by time of day. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "@/components/ui/Chart"
 

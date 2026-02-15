@@ -1,3 +1,4 @@
+/** @fileoverview Scatter plot showing energy vs stimulation correlation. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/Card"
 import {
   ScatterChart,

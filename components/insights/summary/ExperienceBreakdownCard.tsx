@@ -1,3 +1,4 @@
+/** @fileoverview Card showing breakdown of experience types with percentages. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Activity } from "lucide-react"
 

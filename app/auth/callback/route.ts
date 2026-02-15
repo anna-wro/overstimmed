@@ -1,3 +1,4 @@
+/** @fileoverview OAuth callback route handler that exchanges auth code for session. */
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { createClient } from "@/lib/supabase/server"

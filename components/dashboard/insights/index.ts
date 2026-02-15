@@ -1,3 +1,4 @@
+/** @fileoverview Barrel exports for dashboard insights components. */
 export { InsightsSection } from './InsightsSection'
 export { InsightsHeader } from './InsightsHeader'
 export { InsightsStatsGrid } from './InsightsStatsGrid'

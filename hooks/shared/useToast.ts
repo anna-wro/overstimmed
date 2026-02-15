@@ -1,5 +1,7 @@
 "use client"
 
+/** @fileoverview Toast notification state management with add, update, dismiss, and remove actions. */
+
 // Inspired by react-hot-toast library
 import * as React from "react"
 

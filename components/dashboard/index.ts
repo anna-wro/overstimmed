@@ -1,3 +1,5 @@
+/** @fileoverview Barrel exports for dashboard components. */
+
 // Shared components
 export { DashboardHeader, EmptyState, SupportiveMessage, NavigationCards } from './shared'
 

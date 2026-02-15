@@ -1,3 +1,4 @@
+/** @fileoverview Side effects for settings changes: theme, font size, and high contrast mode. */
 import { useEffect } from "react"
 import type { AppSettings } from "@/hooks/features/settings/useAppSettings"
 

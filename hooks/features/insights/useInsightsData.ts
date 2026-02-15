@@ -1,3 +1,4 @@
+/** @fileoverview Manages insights page state: time range filtering and entry filtering. */
 import { useState, useEffect } from "react"
 import { isWithinInterval, startOfDay, endOfDay, subDays } from "date-fns"
 import { useEntries } from "@/hooks/features/useEntries"

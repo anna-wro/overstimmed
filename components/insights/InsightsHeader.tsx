@@ -1,3 +1,4 @@
+/** @fileoverview Insights page header with time range selector and export button. */
 import { Button } from "@/components/ui/Button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import { Calendar, Download } from "lucide-react"

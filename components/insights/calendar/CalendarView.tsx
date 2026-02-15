@@ -1,3 +1,4 @@
+/** @fileoverview Calendar grid for selecting dates with entry count indicators. */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Calendar } from "@/components/ui/Calendar"
 import { format } from "date-fns"

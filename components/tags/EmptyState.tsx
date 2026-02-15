@@ -1,3 +1,4 @@
+/** @fileoverview Empty state message when no tag suggestions match. */
 import React from "react"
 import { Button } from "@/components/ui/Button"
 import { PlusCircle } from "lucide-react"

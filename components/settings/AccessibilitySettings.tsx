@@ -1,3 +1,4 @@
+/** @fileoverview Accessibility settings panel for font size and high contrast mode. */
 import type React from "react"
 import { Switch } from "@/components/ui/Switch"
 import { Label } from "@/components/ui/Label"

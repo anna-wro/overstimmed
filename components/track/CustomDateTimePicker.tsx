@@ -1,3 +1,4 @@
+/** @fileoverview Custom date and time picker for overriding entry timestamp. */
 import React, { useState, useEffect } from "react"
 import { Label } from "@/components/ui/Label"
 import { Button } from "@/components/ui/Button"

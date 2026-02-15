@@ -1,3 +1,4 @@
+/** @fileoverview Container for the tag multi-select input with badges. */
 import React from "react"
 
 interface TagInputContainerProps {

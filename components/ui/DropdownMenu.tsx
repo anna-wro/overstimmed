@@ -1,5 +1,6 @@
 "use client"
 
+/** @fileoverview Dropdown menu component built on Radix UI. */
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"
